@@ -52,7 +52,7 @@ class DB:
 
 
     ##########################
-    ###MASTER LIST FUNCTION###
+    ###MASTER LIST FUNCTIONMASTERLOL###
     ##########################
     def listDrinks(self, sql, values):
         cursor = self.grab_cursor()
