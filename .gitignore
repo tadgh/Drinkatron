@@ -4,3 +4,15 @@ pythonwork/__pycache__/
 /__pycache__
 /.idea/
 /.idea
+
+#python specific
+*.pyc
+
+## generic files to ignore
+*~
+*.lock
+#fuckin macs
+*.DS_Store
+*.swp
+*.out
+
