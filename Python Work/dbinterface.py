@@ -4,7 +4,7 @@ import logging
 import drinks
 
 logging.basicConfig(file="runLog.txt", level=logging.INFO)
-log = logging.getLogger("DB")
+log = logging.getLogger("Master")
 
 class DB:
     def __init__(self):
