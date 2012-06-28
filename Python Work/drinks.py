@@ -1,4 +1,6 @@
 import re
+import serial
+
 class drink:
 
     def __init__(self):
@@ -22,6 +24,15 @@ class drink:
         self.cost = 0.00
         self.ingredientListCleaned = []
 
+
+    def dispenseDrinkInParallel(self):
+        pass
+
+    def isDispensable(self):
+        pass
+
+    def dispenseDrinkInSequence(self):
+        pass
 
     def hasGarnish(self):
         pass
