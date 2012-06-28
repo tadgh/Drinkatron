@@ -1,16 +1,19 @@
-from Tkinter import *
+from tkinter import * #need Tkinter for 2.7 and before
 import constants
-import tkMessageBox
+#import tkMessageBox
+from tkinter import messagebox
 import logging
-import thread
 
-logging.basicConfig(file="runLog.txt", level=logging.INFO)
-log = logging.getLogger("master")
+
+
+
 
 class UI:
     def __init__(self):
+        logging.basicConfig(file="runLog.txt", level=logging.INFO)
+        self.log = logging.getLogger("master")
         self.currentListSelection = 0
-        log.info("Entering -> GUI -> Constructor()")
+        self.log.info("Entering -> GUI -> Constructor()")
 
         #TOPLEVEL FRAMEWORK
         self.root = Tk()
@@ -27,23 +30,24 @@ class UI:
         self.menu.add_cascade(label="About", menu = self.aboutMenu)
         self.aboutMenu.add_command(label="About", command=self.aboutMessageBox)
         self.fileMenu.add_command(label="Quit", command=self.menuQuit)
-        log.info("Entering -> GUI -> mainLoop()")
+        self.log.info("Entering -> GUI -> mainLoop()")
 
         self.root.mainloop()
-        log.info("Leaving  -> GUI -> Constructor()")
+        self.log.info("Leaving  -> GUI -> Constructor()")
 
     def aboutMessageBox(self):
         msgbox = tkMessageBox.showinfo("About", "Drinkatron is a personal bartender\n version: %s\nCopyright 2012"%constants.VERSION) 
-
+        #fix for 3.2
     def menuQuit(self):
-        log.info("Leaving  -> GUI -> mainLoop, quit was called")
+        self.log.info("Leaving  -> GUI -> mainLoop, quit was called")
         self.root.destroy()
 
     def pourIt(self):
-        log.info("Entering -> GUI ->  PourIt()"
+        self.log.info("Entering -> GUI ->  PourIt()")
         #drinkSelected = grab current selection from thing.
-        #thread.start_new_thread(drink.dispenseDrink, [drinkSelected.id,])
-        log.info("Leaving  -> GUI -> Pourit()")
+        #thread.start_new_thread(arduino.dispenseDrink, [drinkSelected.id,])
+        self.log.info("Leaving  -> GUI -> Pourit()")
+        pass
     
         
 
