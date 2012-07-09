@@ -14,6 +14,7 @@ class drink:
         self.ing10 = 0
         self.ing11 = 0
         self.ing12 = 0
+
         self.hasGarnish = False
         self.dispenseCount = 0
         self.popularity = 0
@@ -21,6 +22,7 @@ class drink:
         self.drinkName = ""
         self.cost = 0.00
         self.ingredientListCleaned = []
+        self.ozSize = 0
 
 
     def hasGarnish(self):

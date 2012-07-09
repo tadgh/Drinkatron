@@ -19,18 +19,10 @@ class Drink{
   byte _grenadine;
   byte _lime;
   byte _whiskey;  
-
-  byte _ozSize;
-  byte _cost;
-  byte _numberDispensed;
-  
-  String _bmpName;
-
+  boolean _garnished;
   
  public:
 
-   
-   //constructor
    Drink();
    
    //Dispensers
@@ -52,22 +44,14 @@ class Drink{
    void setBlueCuracao(byte x);
    void setWhiskey(byte x);
    
-   void setOzSize(byte x);
-   void setBmpName(char x[]);
-   void setCost(byte x);
-   String getBmpName();
-   
    //drink stats
+   byte getValvesInUse();
    void printDrink();
    byte componentCount();
-   byte longestCycle();
-   byte getNumberDispensed();
-   byte getValvesInUse();
-   
    //Checks
    boolean isDispensable();
+   byte longestCycle();
 
-     
 };
 
 #endif

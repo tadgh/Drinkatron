@@ -91,7 +91,6 @@
         digitalWrite(MASTER_DISPENSE_PIN, LOW);
      }
      this->finalDump();
-     this->_numberDispensed++;
 
      
    }
@@ -100,9 +99,8 @@
    void Drink::finalDump(){
      digitalWrite(MASTER_DISPENSE_PIN, LOW);
      Serial.println("Opened master dispense valve");
-     delay(LOWVIS_DELAY * this->componentCount());
+     delay(15000);
      Serial.print("componentCount = ");
-     Serial.println(this->componentCount());
      digitalWrite(MASTER_DISPENSE_PIN, HIGH);
      Serial.println("Closed master dispense valve");
    }
@@ -171,17 +169,8 @@
      Serial.print("blue curacao: ");
      Serial.println(_blueCuracao);
      
-     Serial.println("******OTHER VARIABLES****");
-     Serial.print("Size in OZ: ");
-     Serial.println(_ozSize);
-     Serial.print("BMP fileName: " );
-     Serial.println(_bmpName);   
    }
    
-   //Getter for the BMP name.
-   String Drink::getBmpName(){
-     return _bmpName;
-   }
    
    byte Drink::getValvesInUse(){
      byte valvesInUse = 0;
@@ -217,9 +206,7 @@
    byte Drink::componentCount(){
      return(_vodka + _rum + _orangeJuice + _cocaCola + _sprite + _gin + _rum + _whiteRum + _lime + _grenadine + _whiskey + _blueCuracao); 
    }
-   byte Drink::getNumberDispensed(){
-     return _numberDispensed;
-   }
+
    
    
    //All the setters
@@ -261,16 +248,3 @@
    void Drink::setBlueCuracao(byte x){
    _blueCuracao = x;
    }
-   
-
-   void Drink::setCost(byte x){
-   _cost = x;
-   }   
-   void Drink::setOzSize(byte x){
-   _ozSize = x;
-   }
-   void Drink::setBmpName(char x[]){
-     for(int i = 0; i < 13; i++)
-     _bmpName += x[i];
-   }
-   

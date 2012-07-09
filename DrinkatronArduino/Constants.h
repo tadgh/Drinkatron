@@ -3,7 +3,6 @@
 #define __CONSTANTS_H__
 
 #include "Arduino.h"
-#define nextLine myFile.position()+2
 
 const int SERIAL_DELAY = 5;
 const int BAUD_RATE = 9600;
@@ -30,15 +29,6 @@ const int  LOWVIS_DELAY = 500;
 const int  MEDVIS_DELAY = 500;
 const int  HIGHVIS_DELAY = 500;
 
-//LCD Constants and SD constants
-#define sclk 52
-#define mosi 51
-// You can also just connect the reset pin to +5V (we do a software reset)
-#define rst 8
-// these pins are required
-#define cs 53
-#define dc 9
-#define SD_CS 4    // Set the chip select line to whatever you use (4 doesnt conflict with the library)
 
 
 //MIXER CONSTANTS
@@ -53,18 +43,6 @@ const int FLUSH_PIN = 2;
 
 //Master Delay
 const int MASTER_VALVE_DELAY = 12000;
-
-//COLOUR CONSTANTS
-#define	BLACK           0x0000
-#define	BLUE            0x001F
-#define	RED             0xF800
-#define	GREEN           0x07E0
-#define CYAN            0x07FF
-#define MAGENTA         0xF81F
-#define YELLOW          0xFFE0  
-#define WHITE           0xFFFF
-
-
 
 #endif
 

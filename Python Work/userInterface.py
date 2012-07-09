@@ -3,6 +3,7 @@ import constants
 #import tkMessageBox
 from tkinter import messagebox
 import logging
+import arduinocomm
 
 
 
@@ -22,6 +23,8 @@ class StatusBar(Frame):
 
 class UI:
     def __init__(self):
+        self.arduino = arduinocomm.Connection()
+
         logging.basicConfig(file="runLog.txt", level=logging.INFO)
         self.log = logging.getLogger("master")
         self.currentListSelection = 0
@@ -83,6 +86,9 @@ class UI:
         pass
     
     def createNewDrink(self):
+        var = self.arduino.readDrinkResponse() #this is temp in order to see if comms are working.
+        self.log.info("Arduino sent back : %s" %var)
+
         pass
 
 
