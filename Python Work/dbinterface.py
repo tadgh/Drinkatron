@@ -2,6 +2,7 @@ import re
 import sqlite3
 import logging
 import drinks
+import constants
 
 
 logging.basicConfig(file="runLog.txt", level=logging.INFO)
@@ -13,9 +14,9 @@ class DB:
         self.log = logging.getLogger("DB")
         self.log.info("Initializing DB Connection...")
         try:
-            self.conn = sqlite3.connect('D:\Drinkatron\DB\Drinkatron.s3db')
+            self.conn = sqlite3.connect(constants.DBLOCATION)
         except :
-            self.log.critical("Could not open connection to DB!!")
+            self.log.critical("Could not open connection to DB at %s"%constants.DBLOCATION)
             return
         if self.conn:
             self.log.info("Connection to DB established.")

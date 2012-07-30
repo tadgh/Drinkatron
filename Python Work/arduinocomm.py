@@ -2,15 +2,22 @@ import drinks
 import constants
 import time
 import serial
+import logging
+
 
 class Connection:
 
     def __init__(self):
+        logging.basicConfig(file="runLog.txt", level=logging.INFO)
+        self.log = logging.getLogger("COMM")
+        self.log.info("Entering -> arduinoComm Consructor")
         self.ser = serial.Serial('COM6',9600)#com6 is back most Keyboard USB port
         self.isDispensing = False
+        self.log.info("Leaving -> arduinoComm Consructor")
 
 
     def sendDrink(self,drink):
+        self.log.info("Entering -> sendDrink")
         self.isDispensing = True
         for ingredient in drink.ingredientListCleaned:
             self.ser.write(int(ingredient))
