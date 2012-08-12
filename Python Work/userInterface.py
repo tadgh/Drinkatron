@@ -5,6 +5,8 @@ from tkinter import messagebox
 import logging
 import arduinocomm
 import dbinterface
+import threading
+import drinks
 
 
 
@@ -25,9 +27,13 @@ class StatusBar(Frame):
 
 class UI:
     def __init__(self):
+
+
+
         self.db = dbinterface.DB()
         self.drinkList = []
         self.arduino = arduinocomm.Connection()
+        self.currentDrink = None
 
         logging.basicConfig(file="runLog.txt", level=logging.INFO)
         self.log = logging.getLogger("GUI ")
@@ -49,11 +55,30 @@ class UI:
         self.listboxDrinkList.grid(row=0,column = 0)
         self.populateList()
 
+        #star image loading
+        self.stars = []
+        self.initStars()
+
         #toolbar work
         self.toolbar = Frame(self.frame)
         self.buttonAddDrink = Button(self.toolbar,text="Add Drink", width = 9, command = self.createNewDrink)
         self.buttonAddDrink.grid(column = 0, row = 2)
         self.toolbar.grid(column = 0, row = 1, columnspan=10)
+
+        #detail view work
+        self.detailViewFrame = Frame(self.root)
+        self.drinkImage = PhotoImage(file = "C:\\Users\\Tadgh\Documents\GitHub\Drinkatron\Resources\Images\\vodka.gif")
+        self.drinkImageLabel = Label(self.detailViewFrame, image=self.drinkImage)
+        self.starImageLabel = Label(self.detailViewFrame, image=self.stars[0])
+        self.nameLabel = Label(self.detailViewFrame, text="Placeholder")
+
+        #gridding
+        self.drinkImageLabel.grid(row = 0, column = 0)
+        self.nameLabel.grid(row = 0, column = 1)
+        self.starImageLabel.grid(row=1, column = 0, columnspan=2)
+        self.detailViewFrame.grid(row = 0, column = 1, sticky=N+W)
+
+
 
 
 
@@ -68,6 +93,10 @@ class UI:
         self.buttonNameSort.grid(column=0, row=0)
         self.buttonPopularitySort.grid(column=1, row=0)
         self.buttonDispenseCountSort.grid(column=2, row=0)
+
+        #dispenseButton
+        self.dispenseButton = Button(self.root, text='dispense', command=self.pourIt)
+        self.dispenseButton.grid(column=0, row=6)
 
         #MENUWORK
         self.menu = Menu(self.root)
@@ -102,27 +131,35 @@ class UI:
         self.log.info("Entering -> GUI ->  PourIt()")
         if messagebox.askyesno("Drinkin' Time?", "Are you sure the cup is in place and this is the drink you want?"):
             pass
-        #drinkSelected = grab current selection from thing.
-        #thread.start_new_thread(arduino.dispenseDrink, [drinkSelected.id,])
+        selection = self.listboxDrinkList.curselection()[0]
+        selection = int(selection)
+        theDrink = drinks.drink(*self.drinkList[selection])
+        theDrink.printDrink()
+        #self.currentDrink
+        #self.arduino.sendDrink()
         self.log.info("Leaving  -> GUI -> Pourit()")
         pass
     
     def createNewDrink(self):
-        var = self.arduino.readDrinkResponse() #this is temp in order to see if comms are working.
-        self.log.info("Arduino sent back : %s" %var)
+        selection = self.listboxDrinkList.curselection()[0]
+        selection = int(selection)
+        self.log.info("SELECTED INDEX: %s "%selection)
+        self.log.info("DRINK SELECTED: %s " %self.drinkList[selection][1])
+        #var = self.arduino.readDrinkResponse() #this is temp in order to see if comms are working.
+        #self.log.info("Arduino sent back : %s" %var)
 
-        pass
+        
 
     def populateList(self):
         self.drinkList = self.db.listDrinksByName()
-
+        
         self.cloneList = list(self.drinkList)
 
         self.log.info(type(self.drinkList))
         self.reloadList()
 
     def reloadList(self):
-        self.log.info("Entering -> reloadList()")
+        self.log.info("Entering -> GUI -> reloadList()")
         self.log.info(self.drinkList)
         
         #empty the list
@@ -131,11 +168,11 @@ class UI:
         for drink in self.drinkList:
             self.listboxDrinkList.insert(END,drink[1])
 
-        self.log.info("Leaving  -> reloadList()")
+        self.log.info("Leaving  -> GUI -> reloadList()")
 
     def sortByName(self):
         self.log.info("Entering -> sortByName()")
-        self.drinkList = sorted(self.drinkList, key=lambda derf : derf[1])
+        self.drinkList = sorted(self.drinkList, key=lambda derf : derf[1]) # The first column when it draws from DB is the name
         self.reloadList()
         self.log.info("Leaving -> sortByName()")
         for button in self.buttonList:
@@ -144,7 +181,7 @@ class UI:
 
     def sortByPopularity(self):
         self.log.info("Entering -> sortByPopularity")
-        self.drinkList = sorted(self.drinkList, key=lambda derf : derf[17], reverse=True)
+        self.drinkList = sorted(self.drinkList, key=lambda derf : derf[17], reverse=True) #Key 17 is popularity in the columns
         self.reloadList()
         self.log.info("Leaving -> sortByPopularity")
         for button in self.buttonList:
@@ -159,6 +196,14 @@ class UI:
         for button in self.buttonList:
             button.config(relief=RAISED)
         self.buttonDispenseCountSort.config(relief = SUNKEN)
+
+    def initStars(self):
+        self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh\Documents\GitHub\Drinkatron\Resources\Images\\zeroStars.gif"))
+        self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh\Documents\GitHub\Drinkatron\Resources\Images\\oneStar.gif"))
+        self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh\Documents\GitHub\Drinkatron\Resources\Images\\twoStars.gif"))
+        self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh\Documents\GitHub\Drinkatron\Resources\Images\\threeStars.gif"))
+        self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh\Documents\GitHub\Drinkatron\Resources\Images\\fourStars.gif"))
+        self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh\Documents\GitHub\Drinkatron\Resources\Images\\fiveStars.gif"))
 
 
 

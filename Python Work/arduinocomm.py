@@ -3,7 +3,8 @@ import constants
 import time
 import serial
 import logging
-
+from threading import *
+from time import sleep
 
 class Connection:
 
@@ -14,6 +15,8 @@ class Connection:
         self.ser = serial.Serial('COM6',9600)#com6 is back most Keyboard USB port
         self.isDispensing = False
         self.log.info("Leaving -> arduinoComm Consructor")
+        threadArduinoListener = Timer(3.0, self.readResponse)
+        threadArduinoListener.start()
 
 
     def sendDrink(self,drink):
@@ -21,16 +24,7 @@ class Connection:
         self.isDispensing = True
         for ingredient in drink.ingredientListCleaned:
             self.ser.write(int(ingredient))
-            #todo Look for proper timeouts.
-
-
-    def readDrinkResponse(self):
-        result = []
-        while self.ser.inWaiting() != 0:
-            result.append(self.ser.readline())
-        if result == []: return None
-        return result
-
+            sleep(0.5)
 
     def requestStatus(self):
         self.ser.write("RQ###")
@@ -39,6 +33,22 @@ class Connection:
         return
 
         pass
+
+    def readResponse(self):
+        while True:
+            result = []
+
+            while self.ser.inWaiting() != 0:
+                result.append(self.ser.readline())
+                self.log.info("Arduino Response: %s" %result)
+            if result == []:
+                pass
+
+            sleep(3)
+
+
+
+
 
 
   

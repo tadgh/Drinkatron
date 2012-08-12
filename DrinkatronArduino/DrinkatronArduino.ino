@@ -52,11 +52,7 @@ void loop() {
 
 
   
-  while (true)
-  {
-    Serial.println("hello broheim");
-    delay(2500);
-  }  
+
   while (Serial.available()) {
     const char c = Serial.read();
     if (c != -1 && c != '\n')
@@ -66,36 +62,7 @@ void loop() {
 
 
   }
-  //Check for serial input
-  if (command == '-'){
-    if(currVal == 0){
-      currVal = NUM_DRINKS - 1;
-    }
-    else{
-      currVal--;
-    }
-  }
-  else if(command == '+'){
-    if(currVal == NUM_DRINKS -1)
-      currVal = 0;
-    else
-      currVal++;
-  }
-  else if(command == '1'){
-    drinks[currVal].parallelDispense();
-    command = 'z';
-  }
-  else if(command == '2'){
-    digitalWrite(MASTER_DISPENSE_PIN, LOW);
-    delay(1000);
-    digitalWrite(MASTER_DISPENSE_PIN, HIGH);
-    command = 'z';
-  }
-    
-  if(currVal != prevVal){
-    Serial.println("entered changer");
-
-  }
+ 
 }
 
 
