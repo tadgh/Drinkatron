@@ -12,7 +12,13 @@ class Connection:
         logging.basicConfig(file="runLog.txt", level=logging.INFO)
         self.log = logging.getLogger("COMM")
         self.log.info("Entering -> arduinoComm Consructor")
-        self.ser = serial.Serial('COM6',9600)#com6 is back most Keyboard USB port
+
+        try:
+            self.ser = serial.Serial('COM6',9600)#com6 is back most Keyboard USB port
+        except:
+            pass
+        finally:
+            pass
         self.isDispensing = False
         self.log.info("Leaving -> arduinoComm Consructor")
         threadArduinoListener = Timer(3.0, self.readResponse)
