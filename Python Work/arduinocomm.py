@@ -16,7 +16,7 @@ class Connection:
         try:
             self.ser = serial.Serial('COM6',9600)#com6 is back most Keyboard USB port
         except:
-            pass
+            self.log.error("COULD NOT FIND ARDUINO. THINGS WILL FAIL.")
         finally:
             pass
         self.isDispensing = False
@@ -46,9 +46,11 @@ class Connection:
 
             while self.ser.inWaiting() != 0:
                 result.append(self.ser.readline())
-                self.log.info("Arduino Response: %s" %result)
+
             if result == []:
                 pass
+            else:
+                self.log.info("Arduino Response: %s" %result)
 
             sleep(3)
 

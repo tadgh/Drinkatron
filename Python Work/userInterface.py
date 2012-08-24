@@ -53,6 +53,7 @@ class UI:
         #LISTBOX WORK
         self.listboxDrinkList = Listbox(self.root, font = ("Helvetica", 24 ))
         self.listboxDrinkList.grid(row=0,column = 0)
+        self.listboxDrinkList.bind('<<ListboxSelect>>', self.refreshDetailView)#This is some wonky code that binds self.refreshDetailView as a callback when the ListBoxSelect TKAction is called.
         self.populateList()
 
         #star image loading
@@ -68,14 +69,17 @@ class UI:
         #detail view work
         self.detailViewFrame = Frame(self.root)
         self.drinkImage = PhotoImage(file = "C:\\Users\\Tadgh\Documents\GitHub\Drinkatron\Resources\Images\\vodka.gif")
-        self.drinkImageLabel = Label(self.detailViewFrame, image=self.drinkImage)
-        self.starImageLabel = Label(self.detailViewFrame, image=self.stars[0])
-        self.nameLabel = Label(self.detailViewFrame, text="Placeholder")
+        self.drinkImageLabel = Label(self.detailViewFrame, image=self.drinkImage, anchor=W)
+        self.starImageLabel = Label(self.detailViewFrame, image=self.stars[0], anchor=W)
+        self.nameLabel = Label(self.detailViewFrame, text="Placeholder", font = ("Helvetica", 24), anchor=W)
+        self.descLabel = Label(self.detailViewFrame, text="Placeholder", wraplength=150, anchor=W)
+
 
         #gridding
-        self.drinkImageLabel.grid(row = 0, column = 0)
-        self.nameLabel.grid(row = 0, column = 1)
-        self.starImageLabel.grid(row=1, column = 0, columnspan=2)
+        self.drinkImageLabel.grid(row = 0, column = 0, sticky = W)
+        self.nameLabel.grid(row = 0, column = 1, sticky = W)
+        self.starImageLabel.grid(row=2, column = 0, columnspan=2, sticky = W)
+        self.descLabel.grid(row=1, column =0, sticky = W)
         self.detailViewFrame.grid(row = 0, column = 1, sticky=N+W)
 
 
@@ -145,10 +149,16 @@ class UI:
         selection = int(selection)
         self.log.info("SELECTED INDEX: %s "%selection)
         self.log.info("DRINK SELECTED: %s " %self.drinkList[selection][1])
+        self.log.info("DRINK Description: %s " %self.drinkList[int(self.listboxDrinkList.curselection()[0])][15])
         #var = self.arduino.readDrinkResponse() #this is temp in order to see if comms are working.
         #self.log.info("Arduino sent back : %s" %var)
 
-        
+    def refreshDetailView(self,garbage):
+        selection = self.listboxDrinkList.curselection()[0]
+        selection = int(selection)
+        selectedDrink = self.drinkList[selection]
+        self.descLabel.config(text=selectedDrink[15])
+        self.nameLabel.config(text=selectedDrink[1])
 
     def populateList(self):
         self.drinkList = self.db.listDrinksByName()
@@ -167,6 +177,7 @@ class UI:
         #Refill the list with now sorted data
         for drink in self.drinkList:
             self.listboxDrinkList.insert(END,drink[1])
+        self.listboxDrinkList.select_set(0)
 
         self.log.info("Leaving  -> GUI -> reloadList()")
 
