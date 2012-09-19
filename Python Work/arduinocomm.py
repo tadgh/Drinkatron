@@ -29,8 +29,9 @@ class Connection:
         self.log.info("Entering -> sendDrink")
         self.isDispensing = True
         for ingredient in drink.ingredientListCleaned:
-            self.ser.write(int(ingredient))
-            sleep(0.5)
+            self.log.info("Sending ingredient: %s" %ingredient)
+            #self.ser.write(int(ingredient)) # ONLY COMMENTED OUT BECAUSE I LACK MY ARDUINO.
+            sleep(0.1)
 
     def requestStatus(self):
         self.ser.write("RQ###")

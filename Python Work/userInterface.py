@@ -7,7 +7,7 @@ import arduinocomm
 import dbinterface
 import threading
 import drinks
-
+import random
 
 
 class StatusBar(Frame):
@@ -34,6 +34,7 @@ class UI:
         self.drinkList = []
         self.arduino = arduinocomm.Connection()
         self.currentDrink = None
+        self.drinkObjArray = []
 
         logging.basicConfig(file="runLog.txt", level=logging.INFO)
         self.log = logging.getLogger("GUI ")
@@ -71,7 +72,7 @@ class UI:
         self.drinkImage = PhotoImage(file = "C:\\Users\\Tadgh\Documents\GitHub\Drinkatron\Resources\Images\\vodka.gif")
         self.drinkImageLabel = Label(self.detailViewFrame, image=self.drinkImage, anchor=W)
         self.starImageLabel = Label(self.detailViewFrame, image=self.stars[0], anchor=W)
-        self.nameLabel = Label(self.detailViewFrame, text="Placeholder", font = ("Helvetica", 24), anchor=W)
+        self.nameLabel = Label(self.detailViewFrame, text="Placeholder",wraplength=300 , font = ("Helvetica", 24), anchor=W)
         self.descLabel = Label(self.detailViewFrame, text="Placeholder", wraplength=150, anchor=W)
 
 
@@ -131,16 +132,16 @@ class UI:
         self.log.info("Leaving  -> GUI -> mainLoop, quit was called")
         self.root.destroy()
 
+
     def pourIt(self):
         self.log.info("Entering -> GUI ->  PourIt()")
         if messagebox.askyesno("Drinkin' Time?", "Are you sure the cup is in place and this is the drink you want?"):
             pass
         selection = self.listboxDrinkList.curselection()[0]
         selection = int(selection)
-        theDrink = drinks.drink(*self.drinkList[selection])
-        theDrink.printDrink()
-        #self.currentDrink
-        #self.arduino.sendDrink()
+        drinkToPour = self.drinkObjArray[selection]
+        self.log.info("Information -> GUI -> Drink to Pour is: %s" %drinkToPour.drinkName)
+        self.arduino.sendDrink(drinkToPour)
         self.log.info("Leaving  -> GUI -> Pourit()")
         pass
     
@@ -156,34 +157,54 @@ class UI:
     def refreshDetailView(self,garbage):
         selection = self.listboxDrinkList.curselection()[0]
         selection = int(selection)
-        selectedDrink = self.drinkList[selection]
-        self.descLabel.config(text=selectedDrink[15])
-        self.nameLabel.config(text=selectedDrink[1])
+        #selectedDrink = self.drinkList[selection]
+        selectedDrink = self.drinkObjArray[selection]
+        #self.descLabel.config(text=selectedDrink[15])
+        self.descLabel.config(text=selectedDrink.description)
+        #self.nameLabel.config(text=selectedDrink[1])
+        self.nameLabel.config(text=selectedDrink.drinkName)
+        self.drinkImageLabel.config(image=selectedDrink.image)
+        self.starImageLabel.config(image=self.stars[random.randrange(0,6)])
 
     def populateList(self):
         self.drinkList = self.db.listDrinksByName()
         
         self.cloneList = list(self.drinkList)
 
+        ########################################
+        #This is temp work to see if dumping EVERYTHING into an array of objects is easier)
+        for currentDrink in range(len(self.drinkList)):
+            self.drinkObjArray.append(drinks.drink(*self.drinkList[currentDrink]))
+            self.log.info(self.drinkObjArray[currentDrink].drinkName)
+        self.log.info(self.drinkObjArray)
+        #######################################
+
+
         self.log.info(type(self.drinkList))
         self.reloadList()
 
     def reloadList(self):
         self.log.info("Entering -> GUI -> reloadList()")
-        self.log.info(self.drinkList)
         
         #empty the list
         self.listboxDrinkList.delete(0, END)
         #Refill the list with now sorted data
-        for drink in self.drinkList:
-            self.listboxDrinkList.insert(END,drink[1])
+        #for drink in self.drinkList:
+        #    self.listboxDrinkList.insert(END,drink[1])#1 is the drink's name
+
+        for drink in self.drinkObjArray:
+            self.listboxDrinkList.insert(END,drink.drinkName)
+
         self.listboxDrinkList.select_set(0)
 
         self.log.info("Leaving  -> GUI -> reloadList()")
 
     def sortByName(self):
         self.log.info("Entering -> sortByName()")
-        self.drinkList = sorted(self.drinkList, key=lambda derf : derf[1]) # The first column when it draws from DB is the name
+        #self.drinkList = sorted(self.drinkList, key=lambda derf : derf[1]) # The first column when it draws from DB is the name
+        self.drinkObjArray = sorted(self.drinkObjArray, key=lambda derf : derf.drinkName)#grabs Drink Name
+        self.log.info(self.drinkObjArray)
+
         self.reloadList()
         self.log.info("Leaving -> sortByName()")
         for button in self.buttonList:
@@ -192,7 +213,9 @@ class UI:
 
     def sortByPopularity(self):
         self.log.info("Entering -> sortByPopularity")
-        self.drinkList = sorted(self.drinkList, key=lambda derf : derf[17], reverse=True) #Key 17 is popularity in the columns
+       #self.drinkList = sorted(self.drinkList, key=lambda derf : derf[17], reverse=True) #Key 17 is popularity in the columns
+        self.drinkObjArray = sorted(self.drinkObjArray, key=lambda derf : derf.positiveVoteCount, reverse = True)#grabs Drink Name
+        self.log.info(self.drinkObjArray)
         self.reloadList()
         self.log.info("Leaving -> sortByPopularity")
         for button in self.buttonList:
@@ -201,7 +224,10 @@ class UI:
 
     def sortByDispenseCount(self):
         self.log.info("Entering -> sortByDispenseCount")
-        self.drinkList = sorted(self.drinkList, key=lambda derf : derf[19], reverse=True)
+        #self.drinkList = sorted(self.drinkList, key=lambda derf : derf[19], reverse=True)
+        self.drinkObjArray = sorted(self.drinkObjArray, key=lambda derf : derf.dispenseCount, reverse = True)#grabs Drink Name
+        self.log.info(self.drinkObjArray)
+
         self.reloadList()
         self.log.info("Leaving -> sortByDispenseCount")
         for button in self.buttonList:

@@ -1,5 +1,7 @@
 import re
 import logging
+from tkinter import PhotoImage
+
 class drink:
     def __init__(self,drinkID, drinkName, ing1, ing2, ing3, ing4, ing5, ing6, ing7, ing8, ing9, ing10, ing11, ing12, garnish, description, positiveVoteCount, cost, dispenseCount, imagePath):
         logging.basicConfig(file="runLog.txt", level=logging.INFO)
@@ -29,6 +31,7 @@ class drink:
             self.ingredientListCleaned = []
             self.ozSize = 0
             self.description = "Placeholder"
+            self.image = None
         else:
             self.id = drinkID
             self.log.info("DRINK ID OF DISPENSE IS : %s" %str(self.id))
@@ -51,10 +54,12 @@ class drink:
             self.cost = cost
             self.dispenseCount = dispenseCount
             self.imagePath = imagePath
+            self.image = PhotoImage(file = imagePath)
 
 
-
+        self.hasBeenModded = False
         self.generateListForArduino()
+        self.log.info("Drink Generated: name: %s dispense: %s popularity: %s" %(self.drinkName, self.positiveVoteCount, self.dispenseCount))
 
 
 
@@ -63,9 +68,11 @@ class drink:
 
     def dispenseIncrement(self):
         self.dispenseCount += 1
+        self.hasBeenModded = False
 
     def popularityIncrement(self):
         self.popularity += 1
+        self.hasBeenModded = False
 
     def getDispenseTime(self):
         return max(self.ingredientListCleaned)
