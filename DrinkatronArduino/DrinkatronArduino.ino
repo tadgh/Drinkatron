@@ -7,25 +7,14 @@
 #include <SD.h>
 #include <SPI.h>
 
-
-
-Drink drinks[5];
-
-char command;
-boolean dispense = true;
-
-
-
 void setup(){
   Serial.begin(9600);
 
 
-
-
-  for(int i = 31; i <= 43; i++){
+ for(int i = 31; i <= 43; i++){
     pinMode(i, OUTPUT);
-
   }
+  
   digitalWrite(38, HIGH);
   digitalWrite(39, HIGH);
   digitalWrite(32, HIGH);
@@ -41,26 +30,53 @@ void setup(){
   digitalWrite(31, HIGH);
 }
 
-
 byte ingredientList[12];
 int index = 0;
-int incByte;
+Drink toBeDispensed; // STRANGELY, you do not need a new Drink() call to instantiate. Odd stuff. 
 void loop() {
  
-  while(Serial.available() && index < 12){
-    incByte = Serial.read();
-    ingredientList[index] =  incByte - 48; //FUCKING ASCII CONVERSION SHIT NIGGER FUCKS.
-    Serial.println(ingredientList[index]);
-    Serial.print("index: ");
-    Serial.println(index);
-    index++;
-    delay(5);
+  
+  if(Serial.available()){
+    delay(1000);
+    while(Serial.available() && index < 12){
+      const char c = Serial.read();
+      ingredientList[index] =  c - 48; //FUCKING ASCII CONVERSION SHIT NIGGER FUCKS.
+     // Serial.print(ingredientList[index]);
+     // Serial.print("   index: ");
+     // Serial.println(index);
+      index++;
+      delay(3);
     }
+  }
  
   if(index >= 12){
-    for(int i = 0; i < 12; i++)
-    Serial.print(ingredientList[i]);
+    int sum = 0;
+    digitalWrite(13,HIGH);
+    Serial.print("Values found: ");
+    for(int i = 0; i < 12; i++){
+      //sum += ingredientList[i];
+      Serial.print(ingredientList[i]);
+    }
+    Serial.println(sum);
     index = 0;
+   //**********************************************************
+   //super ugly initialization code, but it
+   //we dont do it this way, we end up blowing the stack space.
+   //********************************************************** 
+   toBeDispensed.setVodka(ingredientList[0]);
+   toBeDispensed.setRum(ingredientList[1]);
+   toBeDispensed.setOrangeJuice(ingredientList[2]);
+   toBeDispensed.setCocaCola(ingredientList[3]);
+   toBeDispensed.setSprite(ingredientList[4]);
+   toBeDispensed.setLime(ingredientList[5]);
+   toBeDispensed.setCranberry(ingredientList[6]);
+   toBeDispensed.setWhiteRum(ingredientList[7]);
+   toBeDispensed.setGrenadine(ingredientList[8]);
+   toBeDispensed.setGin(ingredientList[9]);
+   toBeDispensed.setBlueCuracao(ingredientList[10]);
+   toBeDispensed.setWhiskey(ingredientList[11]);
+   
+   toBeDispensed.printDrink();
   }
     
 }
