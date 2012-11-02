@@ -54,6 +54,7 @@ class drink:
             self.cost = cost
             self.dispenseCount = dispenseCount
             self.imagePath = imagePath
+            #TODO remove the god damn hardcoding, use THIS fn = os.path.join(os.path.dirname(__file__), 'my_file') instead, in the database just refer to actual FILENAME. NOT FULL DIRS.
             self.image = PhotoImage(file = imagePath)
 
 

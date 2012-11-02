@@ -130,6 +130,7 @@ class UI:
         #fix for 3.2
     def menuQuit(self):
         self.log.info("Leaving  -> GUI -> mainLoop, quit was called")
+        self.arduino.disconnect()
         self.root.destroy()
 
 
@@ -234,6 +235,7 @@ class UI:
             button.config(relief=RAISED)
         self.buttonDispenseCountSort.config(relief = SUNKEN)
 
+    #TODO remove the god damn hardcoding, use THIS fn = os.path.join(os.path.dirname(__file__), 'my_file') instead
     def initStars(self):
         self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh1\Documents\GitHub\Drinkatron\Resources\Images\\zeroStars.gif"))
         self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh1\Documents\GitHub\Drinkatron\Resources\Images\\oneStar.gif"))

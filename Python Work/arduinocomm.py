@@ -1,3 +1,4 @@
+import os
 import drinks
 import constants
 import time
@@ -12,7 +13,7 @@ class Connection:
         logging.basicConfig(file="runLog.txt", level=logging.INFO)
         self.log = logging.getLogger("COMM")
         self.log.info("Entering -> arduinoComm Consructor")
-
+        self.listening = True
         try:
             self.ser = serial.Serial('COM3',9600)#com6 is back most Keyboard USB port
         except:
@@ -21,8 +22,8 @@ class Connection:
             pass
         self.isDispensing = False
         self.log.info("Leaving -> arduinoComm Consructor")
-        threadArduinoListener = Timer(3.0, self.readResponse)
-        threadArduinoListener.start()
+        self.threadArduinoListener = Timer(3.0, self.readResponse)
+        self.threadArduinoListener.start()
         self.log.info("Arduino Listener Started!!!!!")
 
 
@@ -45,8 +46,13 @@ class Connection:
 
         pass
 
+    def disconnect(self):
+        self.log.info("Disconnecting -> Arduino on " + self.ser.port)
+        self.listening = False #This is a switch to dump out the reader Thread
+        self.ser.close()
+
     def readResponse(self):
-        while True:
+        while self.listening == True:
             print("waiting...")
             result = []
 
