@@ -16,10 +16,6 @@ boolean dispense = true;
 
 
 
-int prevVal = 1;
-int currVal = 1;
-
-
 void setup(){
   Serial.begin(9600);
 
@@ -46,24 +42,31 @@ void setup(){
 }
 
 
-
-
+byte ingredientList[12];
+int index = 0;
+int incByte;
 void loop() {
-
-
+ 
+  while(Serial.available() && index < 12){
+    incByte = Serial.read();
+    ingredientList[index] =  incByte - 48; //FUCKING ASCII CONVERSION SHIT NIGGER FUCKS.
+    Serial.println(ingredientList[index]);
+    Serial.print("index: ");
+    Serial.println(index);
+    index++;
+    delay(5);
+    }
+ 
+  if(index >= 12){
+    for(int i = 0; i < 12; i++)
+    Serial.print(ingredientList[i]);
+    index = 0;
+  }
+    
+}
   
 
-  while (Serial.available()) {
-    const char c = Serial.read();
-    if (c != -1 && c != '\n')
-      command = c;
-    delay(5);
-    Serial.println(command);
 
-
-  }
- 
-}
 
 
 

@@ -96,22 +96,22 @@
    }
    
    
-   void Drink::finalDump(){
+   void Drink::finalDump(){    
      digitalWrite(MASTER_DISPENSE_PIN, LOW);
      Serial.println("Opened master dispense valve");
      delay(15000);
      Serial.print("componentCount = ");
-     digitalWrite(MASTER_DISPENSE_PIN, HIGH);
-     Serial.println("Closed master dispense valve");
-   }
-   
+   digitalWrite(MASTER_DISPENSE_PIN, HIGH);
+   Serial.println("Closed master dispense valve");
+ }
+ 
 
-   //boolean isAvailable(){}  
-    
-   byte Drink::longestCycle(){
-       byte maxCycle = 0;
-       if(_vodka > maxCycle)
-         maxCycle = _vodka;
+ //boolean isAvailable(){}  
+  
+ byte Drink::longestCycle(){
+     byte maxCycle = 0;
+     if(_vodka > maxCycle)
+       maxCycle = _vodka;
        if(_rum > maxCycle)
          maxCycle = _rum;
        if(_orangeJuice > maxCycle)

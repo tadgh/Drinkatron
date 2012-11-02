@@ -14,7 +14,7 @@ class Connection:
         self.log.info("Entering -> arduinoComm Consructor")
 
         try:
-            self.ser = serial.Serial('COM6',9600)#com6 is back most Keyboard USB port
+            self.ser = serial.Serial('COM3',9600)#com6 is back most Keyboard USB port
         except:
             self.log.error("COULD NOT FIND ARDUINO. THINGS WILL FAIL.")
         finally:
@@ -23,18 +23,22 @@ class Connection:
         self.log.info("Leaving -> arduinoComm Consructor")
         threadArduinoListener = Timer(3.0, self.readResponse)
         threadArduinoListener.start()
+        self.log.info("Arduino Listener Started!!!!!")
 
 
     def sendDrink(self,drink):
         self.log.info("Entering -> sendDrink")
         self.isDispensing = True
+
         for ingredient in drink.ingredientListCleaned:
-            self.log.info("Sending ingredient: %s" %ingredient)
-            #self.ser.write(int(ingredient)) # ONLY COMMENTED OUT BECAUSE I LACK MY ARDUINO.
-            sleep(0.1)
+           self.log.info("Sending ingredient: %s" %ingredient)
+           self.ser.write(str(ingredient).encode()) # ONLY COMMENTED OUT BECAUSE I LACK MY ARDUINO.        self.ser.write(bytes('*', encoding='ascii'))
+
+            #sleep(0.1)
+        self.log.info("Leaving -> sendDrink")
 
     def requestStatus(self):
-        self.ser.write("RQ###")
+        self.ser.write("#")
         time.sleep(5)
         ardResp = self.readDrinkResponse()
         return
@@ -43,15 +47,21 @@ class Connection:
 
     def readResponse(self):
         while True:
+            print("waiting...")
             result = []
 
-            while self.ser.inWaiting() != 0:
-                result.append(self.ser.readline())
+
+            try:
+                while self.ser.inWaiting() > 0:
+                    result.append(self.ser.readline())
+                    print(result)
+            except:
+                self.log.warning("Something wrong with reading Arduino Serial!!!")
 
             if result == []:
                 pass
             else:
-                self.log.info("Arduino Response: %s" %result)
+                self.log.info("Arduino callback response: %s" %result)
 
             sleep(3)
 

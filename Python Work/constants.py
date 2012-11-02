@@ -1,3 +1,3 @@
 NUMBEROFINGREDIENTS = 12
 VERSION = 0.01
-DBLOCATION = "D:\\Users\\Tadgh\Documents\GitHub\Drinkatron\DB\Drinkatron.s3db"
+DBLOCATION = "C:\\Users\\Tadgh1\Documents\GitHub\Drinkatron\DB\Drinkatron.s3db"

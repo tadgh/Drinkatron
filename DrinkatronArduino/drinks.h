@@ -6,7 +6,6 @@
 
 class Drink{
  private:
-
   byte _vodka;
   byte _rum;
   byte _gin;
@@ -22,7 +21,6 @@ class Drink{
   boolean _garnished;
   
  public:
-
    Drink();
    
    //Dispensers

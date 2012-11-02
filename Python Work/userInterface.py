@@ -69,7 +69,7 @@ class UI:
 
         #detail view work
         self.detailViewFrame = Frame(self.root)
-        self.drinkImage = PhotoImage(file = "C:\\Users\\Tadgh\Documents\GitHub\Drinkatron\Resources\Images\\vodka.gif")
+        self.drinkImage = PhotoImage(file = "C:\\Users\\Tadgh1\Documents\GitHub\Drinkatron\Resources\Images\\vodka.gif")
         self.drinkImageLabel = Label(self.detailViewFrame, image=self.drinkImage, anchor=W)
         self.starImageLabel = Label(self.detailViewFrame, image=self.stars[0], anchor=W)
         self.nameLabel = Label(self.detailViewFrame, text="Placeholder",wraplength=300 , font = ("Helvetica", 24), anchor=W)
@@ -235,12 +235,12 @@ class UI:
         self.buttonDispenseCountSort.config(relief = SUNKEN)
 
     def initStars(self):
-        self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh\Documents\GitHub\Drinkatron\Resources\Images\\zeroStars.gif"))
-        self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh\Documents\GitHub\Drinkatron\Resources\Images\\oneStar.gif"))
-        self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh\Documents\GitHub\Drinkatron\Resources\Images\\twoStars.gif"))
-        self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh\Documents\GitHub\Drinkatron\Resources\Images\\threeStars.gif"))
-        self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh\Documents\GitHub\Drinkatron\Resources\Images\\fourStars.gif"))
-        self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh\Documents\GitHub\Drinkatron\Resources\Images\\fiveStars.gif"))
+        self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh1\Documents\GitHub\Drinkatron\Resources\Images\\zeroStars.gif"))
+        self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh1\Documents\GitHub\Drinkatron\Resources\Images\\oneStar.gif"))
+        self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh1\Documents\GitHub\Drinkatron\Resources\Images\\twoStars.gif"))
+        self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh1\Documents\GitHub\Drinkatron\Resources\Images\\threeStars.gif"))
+        self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh1\Documents\GitHub\Drinkatron\Resources\Images\\fourStars.gif"))
+        self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh1\Documents\GitHub\Drinkatron\Resources\Images\\fiveStars.gif"))
 
 
 
