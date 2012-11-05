@@ -54,7 +54,7 @@ class drink:
             self.cost = cost
             self.dispenseCount = dispenseCount
             self.imagePath = imagePath
-            self.image = PhotoImage(file = os.path.join(os.path.dirname(__file__),"..", "Resources", "Images", imagePath))
+            self.image = PhotoImage(file = os.path.join(os.path.dirname(__file__),"..", "Resources", "Images", self.imagePath))
 
 
         self.hasBeenModded = False

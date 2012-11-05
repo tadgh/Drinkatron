@@ -53,7 +53,7 @@ class UI:
         self.status.set("Initializing UI...")
 
         #LISTBOX WORK
-        self.listboxDrinkList = Listbox(self.root, font = ("Helvetica", 24 ))
+        self.listboxDrinkList = Listbox(self.root, font = ("Helvetica", 24 ), height=13)
         self.listboxDrinkList.grid(row=0,column = 0)
         self.listboxDrinkList.bind('<<ListboxSelect>>', self.refreshDetailView)#This is some wonky code that binds self.refreshDetailView as a callback when the ListBoxSelect TKAction is called.
         self.populateList()
@@ -62,11 +62,12 @@ class UI:
         self.stars = []
         self.initStars()
 
+        #TODO this isn't really a toolbar i don't know why I named it that. Fix this once we find out what UI should look like.
         #toolbar work
         self.toolbar = Frame(self.frame)
         self.buttonAddDrink = Button(self.toolbar,text="Add Drink", width = 9, command = self.createNewDrink)
         self.buttonAddDrink.grid(column = 0, row = 2)
-        self.toolbar.grid(column = 0, row = 1, columnspan=10)
+        self.toolbar.grid(column = 0, row = 1, columnspan=10, rowspan=15)
 
         #detail view work
         self.detailViewFrame = Frame(self.root)
@@ -118,7 +119,7 @@ class UI:
 
         #pack the frame first as both frame and status bar are children to root, this sets them up well.
         self.frame.grid()
-        self.frameSortButtons.grid(column=0,row=5)
+        self.frameSortButtons.grid(column=0,row=5, sticky= N+W)
 
         self.status.grid(column=0,row=5)
 
@@ -159,22 +160,16 @@ class UI:
     def refreshDetailView(self,garbage):
         selection = self.listboxDrinkList.curselection()[0]
         selection = int(selection)
-        #selectedDrink = self.drinkList[selection]
         selectedDrink = self.drinkObjArray[selection]
-        #self.descLabel.config(text=selectedDrink[15])
         self.descLabel.config(text=selectedDrink.description)
-        #self.nameLabel.config(text=selectedDrink[1])
         self.nameLabel.config(text=selectedDrink.drinkName)
         self.drinkImageLabel.config(image=selectedDrink.image)
         self.starImageLabel.config(image=self.stars[random.randrange(0,6)])
 
     def populateList(self):
         self.drinkList = self.db.listDrinksByName()
-        
-        self.cloneList = list(self.drinkList)
-
         ########################################
-        #This is temp work to see if dumping EVERYTHING into an array of objects is easier)
+        #THIS IS CRUCIAL. this code initializes ALL drinks into an array, all at once. DO NOT FUCK WITH THIS CODE.
         for currentDrink in range(len(self.drinkList)):
             self.drinkObjArray.append(drinks.drink(*self.drinkList[currentDrink]))
             self.log.info(self.drinkObjArray[currentDrink].drinkName)
