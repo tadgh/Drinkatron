@@ -18,13 +18,18 @@ class Connection:
             self.ser = serial.Serial('COM3',9600)#com6 is back most Keyboard USB port
         except:
             self.log.error("COULD NOT FIND ARDUINO. THINGS WILL FAIL.")
+            self.ser = None
         finally:
             pass
         self.isDispensing = False
         self.log.info("Leaving -> arduinoComm Consructor")
-        self.threadArduinoListener = Timer(3.0, self.readResponse)
-        self.threadArduinoListener.start()
-        self.log.info("Arduino Listener Started!!!!!")
+
+        if self.ser:
+            self.threadArduinoListener = Timer(3.0, self.readResponse)
+            self.threadArduinoListener.start()
+            self.log.info("Arduino Listener Started!!!!!")
+        else:
+            self.log.warning("Unable to start arduino, therefore not starting the listener thread!!")
 
 
     def sendDrink(self,drink):

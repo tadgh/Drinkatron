@@ -35,7 +35,6 @@ class drink:
             self.image = None
         else:
             self.id = drinkID
-            self.log.info("DRINK ID OF DISPENSE IS : %s" %str(self.id))
             self.drinkName = drinkName
             self.ing1 = ing1
             self.ing2 = ing2
@@ -55,14 +54,11 @@ class drink:
             self.cost = cost
             self.dispenseCount = dispenseCount
             self.imagePath = imagePath
-            #TODO remove the god damn hardcoding, use THIS fn = os.path.join(os.path.dirname(__file__), 'my_file') instead, in the database just refer to actual FILENAME. NOT FULL DIRS.
-            self.image = PhotoImage(file = os.path.join(os.path.dirname(__file__),"..", "Resources", "Images", "vodka2.gif"))
+            self.image = PhotoImage(file = os.path.join(os.path.dirname(__file__),"..", "Resources", "Images", imagePath))
 
 
         self.hasBeenModded = False
         self.generateListForArduino()
-        self.log.info("Drink Generated: name: %s dispense: %s popularity: %s" %(self.drinkName, self.positiveVoteCount, self.dispenseCount))
-
 
 
     def hasGarnish(self):
