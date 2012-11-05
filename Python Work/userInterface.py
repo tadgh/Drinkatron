@@ -8,6 +8,7 @@ import dbinterface
 import threading
 import drinks
 import random
+import os
 
 
 class StatusBar(Frame):
@@ -69,7 +70,7 @@ class UI:
 
         #detail view work
         self.detailViewFrame = Frame(self.root)
-        self.drinkImage = PhotoImage(file = "C:\\Users\\Tadgh1\Documents\GitHub\Drinkatron\Resources\Images\\vodka.gif")
+        self.drinkImage = PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "vodka.gif"))
         self.drinkImageLabel = Label(self.detailViewFrame, image=self.drinkImage, anchor=W)
         self.starImageLabel = Label(self.detailViewFrame, image=self.stars[0], anchor=W)
         self.nameLabel = Label(self.detailViewFrame, text="Placeholder",wraplength=300 , font = ("Helvetica", 24), anchor=W)
@@ -207,6 +208,7 @@ class UI:
         self.log.info(self.drinkObjArray)
 
         self.reloadList()
+        self.refreshDetailView("crap")
         self.log.info("Leaving -> sortByName()")
         for button in self.buttonList:
             button.config(relief=RAISED)
@@ -218,6 +220,7 @@ class UI:
         self.drinkObjArray = sorted(self.drinkObjArray, key=lambda derf : derf.positiveVoteCount, reverse = True)#grabs Drink Name
         self.log.info(self.drinkObjArray)
         self.reloadList()
+        self.refreshDetailView("crap")
         self.log.info("Leaving -> sortByPopularity")
         for button in self.buttonList:
             button.config(relief=RAISED)
@@ -230,6 +233,7 @@ class UI:
         self.log.info(self.drinkObjArray)
 
         self.reloadList()
+        self.refreshDetailView("crap")
         self.log.info("Leaving -> sortByDispenseCount")
         for button in self.buttonList:
             button.config(relief=RAISED)
@@ -237,12 +241,18 @@ class UI:
 
     #TODO remove the god damn hardcoding, use THIS fn = os.path.join(os.path.dirname(__file__), 'my_file') instead
     def initStars(self):
-        self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh1\Documents\GitHub\Drinkatron\Resources\Images\\zeroStars.gif"))
-        self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh1\Documents\GitHub\Drinkatron\Resources\Images\\oneStar.gif"))
-        self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh1\Documents\GitHub\Drinkatron\Resources\Images\\twoStars.gif"))
-        self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh1\Documents\GitHub\Drinkatron\Resources\Images\\threeStars.gif"))
-        self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh1\Documents\GitHub\Drinkatron\Resources\Images\\fourStars.gif"))
-        self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh1\Documents\GitHub\Drinkatron\Resources\Images\\fiveStars.gif"))
+        #self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh1\Documents\GitHub\Drinkatron\Resources\Images\\zeroStars.gif"))
+        self.stars.append(PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "zerostars.gif")))
+        #self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh1\Documents\GitHub\Drinkatron\Resources\Images\\oneStar.gif"))
+        self.stars.append(PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "oneStar.gif")))
+        #self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh1\Documents\GitHub\Drinkatron\Resources\Images\\twoStars.gif"))
+        self.stars.append(PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "twoStars.gif")))
+        #self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh1\Documents\GitHub\Drinkatron\Resources\Images\\threeStars.gif"))
+        self.stars.append(PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "threestars.gif")))
+        #self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh1\Documents\GitHub\Drinkatron\Resources\Images\\fourStars.gif"))
+        self.stars.append(PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "fourStars.gif")))
+        #self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh1\Documents\GitHub\Drinkatron\Resources\Images\\fiveStars.gif"))
+        self.stars.append(PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "fiveStars.gif")))
 
 
 

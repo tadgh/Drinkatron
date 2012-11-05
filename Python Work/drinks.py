@@ -1,6 +1,7 @@
 import re
 import logging
 from tkinter import PhotoImage
+import os
 
 class drink:
     def __init__(self,drinkID, drinkName, ing1, ing2, ing3, ing4, ing5, ing6, ing7, ing8, ing9, ing10, ing11, ing12, garnish, description, positiveVoteCount, cost, dispenseCount, imagePath):
@@ -55,7 +56,7 @@ class drink:
             self.dispenseCount = dispenseCount
             self.imagePath = imagePath
             #TODO remove the god damn hardcoding, use THIS fn = os.path.join(os.path.dirname(__file__), 'my_file') instead, in the database just refer to actual FILENAME. NOT FULL DIRS.
-            self.image = PhotoImage(file = imagePath)
+            self.image = PhotoImage(file = os.path.join(os.path.dirname(__file__),"..", "Resources", "Images", "vodka2.gif"))
 
 
         self.hasBeenModded = False
