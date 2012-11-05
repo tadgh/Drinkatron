@@ -239,19 +239,12 @@ class UI:
             button.config(relief=RAISED)
         self.buttonDispenseCountSort.config(relief = SUNKEN)
 
-    #TODO remove the god damn hardcoding, use THIS fn = os.path.join(os.path.dirname(__file__), 'my_file') instead
     def initStars(self):
-        #self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh1\Documents\GitHub\Drinkatron\Resources\Images\\zeroStars.gif"))
         self.stars.append(PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "zerostars.gif")))
-        #self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh1\Documents\GitHub\Drinkatron\Resources\Images\\oneStar.gif"))
         self.stars.append(PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "oneStar.gif")))
-        #self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh1\Documents\GitHub\Drinkatron\Resources\Images\\twoStars.gif"))
         self.stars.append(PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "twoStars.gif")))
-        #self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh1\Documents\GitHub\Drinkatron\Resources\Images\\threeStars.gif"))
         self.stars.append(PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "threestars.gif")))
-        #self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh1\Documents\GitHub\Drinkatron\Resources\Images\\fourStars.gif"))
         self.stars.append(PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "fourStars.gif")))
-        #self.stars.append(PhotoImage(file = "C:\\Users\\Tadgh1\Documents\GitHub\Drinkatron\Resources\Images\\fiveStars.gif"))
         self.stars.append(PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "fiveStars.gif")))
 
 
