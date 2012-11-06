@@ -235,12 +235,12 @@ class UI:
         self.buttonDispenseCountSort.config(relief = SUNKEN)
 
     def initStars(self):
-        self.stars.append(PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "zerostars.gif")))
-        self.stars.append(PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "oneStar.gif")))
-        self.stars.append(PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "twoStars.gif")))
-        self.stars.append(PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "threestars.gif")))
-        self.stars.append(PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "fourStars.gif")))
-        self.stars.append(PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "fiveStars.gif")))
+        self.stars.append(PhotoImage(file = os.path.join(os.getcwd(),"..","Resources","Images", "zerostars.gif")))
+        self.stars.append(PhotoImage(file = os.path.join(os.getcwd(),"..","Resources","Images", "oneStar.gif")))
+        self.stars.append(PhotoImage(file = os.path.join(os.getcwd(),"..","Resources","Images", "twoStars.gif")))
+        self.stars.append(PhotoImage(file = os.path.join(os.getcwd(),"..","Resources","Images", "threestars.gif")))
+        self.stars.append(PhotoImage(file = os.path.join(os.getcwd(),"..","Resources","Images", "fourStars.gif")))
+        self.stars.append(PhotoImage(file = os.path.join(os.getcwd(),"..","Resources","Images", "fiveStars.gif")))
 
 
 
