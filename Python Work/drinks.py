@@ -4,7 +4,7 @@ from tkinter import PhotoImage
 import os
 
 class drink:
-    def __init__(self,drinkID, drinkName, ing1, ing2, ing3, ing4, ing5, ing6, ing7, ing8, ing9, ing10, ing11, ing12, garnish, description, positiveVoteCount, cost, dispenseCount, imagePath):
+    def __init__(self,drinkID, drinkName, ing1, ing2, ing3, ing4, ing5, ing6, ing7, ing8, ing9, ing10, ing11, ing12, garnish, description, positiveVoteCount, cost, dispenseCount, imagePath, negativeVoteCount):
         logging.basicConfig(file="runLog.txt", level=logging.INFO)
         self.log = logging.getLogger("DRINKS")
         self.log.info("Entering -> drinks.py Consructor")
@@ -52,14 +52,33 @@ class drink:
             self.description = description
             self.positiveVoteCount = positiveVoteCount
             self.cost = cost
-            self.dispenseCount = dispenseCount
+            self.dispenseCount = dispenseCount#TODO cast this to int for linux shit
             self.imagePath = imagePath
-            self.image = PhotoImage(file = os.path.join(os.getcwd(),"..", "Resources", "Images", self.imagePath))
+            self.image = PhotoImage(file = os.path.join(os.path.dirname(__file__),"..", "Resources", "Images", self.imagePath))
+            self.negativeVoteCount = negativeVoteCount #todo verify functionality
+            self.starRating = None
+            self.determineStarRating()
 
 
         self.hasBeenModded = False
         self.generateListForArduino()
 
+    def determineStarRating(self):
+        totalVotes = self.negativeVoteCount + self.positiveVoteCount
+        positiveVoteRatio = self.positiveVoteCount / totalVotes
+
+        if positiveVoteRatio > 0 and positiveVoteRatio < 0.21:
+            self.starRating = 1
+        elif positiveVoteRatio >= 0.21 and positiveVoteRatio < 0.41:
+            self.starRating = 2
+        elif positiveVoteRatio >= 0.41 and positiveVoteRatio < 0.61:
+            self.starRating = 3
+        elif positiveVoteRatio >= 0.61 and positiveVoteRatio < 0.81:
+            self.starRating = 4
+        elif positiveVoteRatio >= 0.81 and positiveVoteRatio < 1.1:
+            self.starRating = 5
+        else:
+            self.log.warning("ERROR: -> %s star rating cannot be computed. Determined Ratio: %s "%(self.drinkName, positiveVoteRatio))
 
     def hasGarnish(self):
         pass

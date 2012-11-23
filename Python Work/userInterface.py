@@ -5,7 +5,6 @@ from tkinter import messagebox
 import logging
 import arduinocomm
 import dbinterface
-import threading
 import drinks
 import random
 import os
@@ -129,7 +128,6 @@ class UI:
 
     def aboutMessageBox(self):
         msgbox = messagebox.showinfo("About", "Drinkatron is a personal bartender\n version: %s\nCopyright 2012"%constants.VERSION) 
-        #fix for 3.2
     def menuQuit(self):
         self.log.info("Leaving  -> GUI -> mainLoop, quit was called")
         self.arduino.disconnect()
@@ -157,7 +155,7 @@ class UI:
         #var = self.arduino.readDrinkResponse() #this is temp in order to see if comms are working.
         #self.log.info("Arduino sent back : %s" %var)
 
-    def refreshDetailView(self,garbage):
+    def refreshDetailView(self, temp):
         selection = self.listboxDrinkList.curselection()[0]
         selection = int(selection)
         selectedDrink = self.drinkObjArray[selection]
@@ -165,6 +163,7 @@ class UI:
         self.nameLabel.config(text=selectedDrink.drinkName)
         self.drinkImageLabel.config(image=selectedDrink.image)
         self.starImageLabel.config(image=self.stars[random.randrange(0,6)])
+        self.starImageLabel.config(image=self.stars[selectedDrink.starRating])
 
     def populateList(self):
         self.drinkList = self.db.listDrinksByName()
@@ -173,7 +172,6 @@ class UI:
         for currentDrink in range(len(self.drinkList)):
             self.drinkObjArray.append(drinks.drink(*self.drinkList[currentDrink]))
             self.log.info(self.drinkObjArray[currentDrink].drinkName)
-        self.log.info(self.drinkObjArray)
         #######################################
 
 
@@ -203,7 +201,7 @@ class UI:
         self.log.info(self.drinkObjArray)
 
         self.reloadList()
-        self.refreshDetailView("crap")
+        self.refreshDetailView("")
         self.log.info("Leaving -> sortByName()")
         for button in self.buttonList:
             button.config(relief=RAISED)
@@ -215,7 +213,7 @@ class UI:
         self.drinkObjArray = sorted(self.drinkObjArray, key=lambda derf : derf.positiveVoteCount, reverse = True)#grabs Drink Name
         self.log.info(self.drinkObjArray)
         self.reloadList()
-        self.refreshDetailView("crap")
+        self.refreshDetailView("")
         self.log.info("Leaving -> sortByPopularity")
         for button in self.buttonList:
             button.config(relief=RAISED)
@@ -228,19 +226,19 @@ class UI:
         self.log.info(self.drinkObjArray)
 
         self.reloadList()
-        self.refreshDetailView("crap")
+        self.refreshDetailView("")
         self.log.info("Leaving -> sortByDispenseCount")
         for button in self.buttonList:
             button.config(relief=RAISED)
         self.buttonDispenseCountSort.config(relief = SUNKEN)
 
     def initStars(self):
-        self.stars.append(PhotoImage(file = os.path.join(os.getcwd(),"..","Resources","Images", "zerostars.gif")))
-        self.stars.append(PhotoImage(file = os.path.join(os.getcwd(),"..","Resources","Images", "oneStar.gif")))
-        self.stars.append(PhotoImage(file = os.path.join(os.getcwd(),"..","Resources","Images", "twoStars.gif")))
-        self.stars.append(PhotoImage(file = os.path.join(os.getcwd(),"..","Resources","Images", "threestars.gif")))
-        self.stars.append(PhotoImage(file = os.path.join(os.getcwd(),"..","Resources","Images", "fourStars.gif")))
-        self.stars.append(PhotoImage(file = os.path.join(os.getcwd(),"..","Resources","Images", "fiveStars.gif")))
+        self.stars.append(PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "zeroStars.gif")))
+        self.stars.append(PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "oneStar.gif")))
+        self.stars.append(PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "twoStars.gif")))
+        self.stars.append(PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "threeStars.gif")))
+        self.stars.append(PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "fourStars.gif")))
+        self.stars.append(PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "fiveStars.gif")))
 
 
 
