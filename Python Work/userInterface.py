@@ -46,7 +46,7 @@ class UI:
         self.root = Tk()
         self.root.title("Drinkatron v%s"%constants.VERSION)
         self.root.geometry("800x600")
-        self.frame = Frame(self.root, width=800, height=550)
+        self.frame = Frame(self.root, width=800, height=600)
 
         self.status = StatusBar(self.root)
         self.status.set("Initializing UI...")
@@ -77,12 +77,17 @@ class UI:
         self.descLabel = Label(self.detailViewFrame, text="Placeholder", wraplength=150, anchor=W)
 
 
+
         #gridding
-        self.drinkImageLabel.grid(row = 0, column = 0, sticky = W)
-        self.nameLabel.grid(row = 0, column = 1, sticky = W)
-        self.starImageLabel.grid(row=2, column = 0, columnspan=2, sticky = W)
-        self.descLabel.grid(row=1, column =0, sticky = W)
+        self.drinkImageLabel.grid(row = 1, column = 0, sticky = W)
+        self.nameLabel.grid(row = 0, column = 0, sticky = W)
+        self.starImageLabel.grid(row=3, column = 0, columnspan=2, sticky = W)
+        self.descLabel.grid(row=2, column =0, sticky = W)
         self.detailViewFrame.grid(row = 0, column = 1, sticky=N+W)
+
+        #slider view work
+        self.sliderFrame = Frame(self.root)
+        self.sliderFrame.grid(row = 1, column = 1, sticky = N+W)
 
 
 
@@ -164,6 +169,30 @@ class UI:
         self.drinkImageLabel.config(image=selectedDrink.image)
         self.starImageLabel.config(image=self.stars[random.randrange(0,6)])
         self.starImageLabel.config(image=self.stars[selectedDrink.starRating])
+
+        #adding stiffness sliders
+        currentRow = 0
+        drinkIndex = 0
+        sliderList = []
+        currentSlider = 0
+        totalSize = 0
+        for ingredient in selectedDrink.ingredientListCleaned:
+            totalSize += ingredient;
+        for ingredient in selectedDrink.ingredientListCleaned:
+            if ingredient != 0:
+                Label(self.sliderFrame, text = "\n" + constants.INGREDIENTLIST[drinkIndex]).grid(row = currentRow, column = 0, sticky=N+W)
+                sliderList.append(Scale(self.sliderFrame, from_ = 0, to = 100, orient = HORIZONTAL))
+                sliderList[currentSlider].grid(row = currentRow, column = 1, sticky = N+W)
+                currentRow += 1
+                currentSlider += 1
+            elif ingredient == 0:
+                pass
+            drinkIndex += 1
+
+
+
+
+
 
     def populateList(self):
         self.drinkList = self.db.listDrinksByName()

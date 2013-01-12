@@ -58,10 +58,11 @@ class drink:
             self.negativeVoteCount = negativeVoteCount #todo verify functionality
             self.starRating = None
             self.determineStarRating()
+            self.hasBeenModded = False
 
 
-        self.hasBeenModded = False
-        self.generateListForArduino()
+            self.ingredientListCleaned = self.generateListForArduino()
+            self.printDrink()
 
     def determineStarRating(self):
         totalVotes = self.negativeVoteCount + self.positiveVoteCount
@@ -97,8 +98,15 @@ class drink:
         return max(self.ingredientListCleaned)
 
     def generateListForArduino(self):
-        self.ingredientListCleaned = [self.ing1, self.ing2, self.ing3, self.ing4, self.ing5, self.ing6, self.ing7, self.ing8, self.ing9, self.ing10, self.ing11, self.ing12]
-        return self.ingredientListCleaned
+        theIngredientList = [self.ing1, self.ing2, self.ing3, self.ing4, self.ing5, self.ing6, self.ing7, self.ing8, self.ing9, self.ing10, self.ing11, self.ing12]
+        index = 0
+
+        #this is correction code for the shitty sqlite character-0 grabbing. Any time you grab a zero, it comes in as a string, this is conversion to Int.
+        for ingredient in theIngredientList:
+            if isinstance(ingredient, str):
+                theIngredientList[index] = 0
+            index +=1
+        return theIngredientList
 
     def printDrink(self):
         self.log.info("******\nName: %s\nIngList:%s\n******************" %(self.drinkName, self.ingredientListCleaned))

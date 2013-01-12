@@ -29,7 +29,7 @@ class DB:
     def listDrinksByName(self):
         self.log.info("Entering -> listDrinksByName()")
         sql = "SELECT * FROM drinks ORDER BY drink_name ASC"
-        results = self.listDrinks(sql, None)
+        results = self.executeSql(sql, None)
         self.log.info("Leaving -> listDrinksByName()")
         return results
 
@@ -37,7 +37,7 @@ class DB:
     def listDrinksByIngredient(self, ingredient):
         self.log.info("Entering -> listDrinksByIngredient()")
         sql = "SELECT * FROM drinks WHERE ? <> 0 "
-        results = self.listDrinks(sql, ingredient)
+        results = self.executeSql(sql, ingredient)
         self.log.info("Leaving -> listDrinksByIngredient(%)"%ingredient)
         return results
 
@@ -45,24 +45,29 @@ class DB:
         self.log.info("Entering -> listDrinksByPopularity()")
         sql = "SELECT * FROM drinks ORDER BY popularity DESC"
 
-        results = self.listDrinks(sql)
+        results = self.executeSql(sql)
         self.log.info("Leaving -> listDrinksByPopularity()")
         return results
 
     def listDrinksByDateCreated(self):
         self.log.info("Entering -> listDrinksByDateCreated()")
         sql = "SELECT * FROM drinks ORDER BY date_created DESC"
-        results = self.listDrinks(sql)
+        results = self.executeSql(sql)
         self.log.info("Leaving -> listDrinksByDateCreated()")
         return results
+
+    def getOverdueCustomers(self):
+        self.log.info("Entering -> getOverdueCustomers")
+        sql = "SELECT * FROM customers WHERE current_balance > 0 AND last_paid_date > today() - 30" #TODO fix this for sqlite
+        results = self.executeSql(sql)
 
 
 
     ##########################
     ###MASTER LIST FUNCTIONMASTERLOL###
     ##########################
-    def listDrinks(self, sql, values):
-        self.log.info("Entering-> listDrinks()")
+    def executeSql(self, sql, values):
+        self.log.info("Entering-> executeSql()")
         cursor = self.grab_cursor()
 
         #Shooting off SQL to DB and pulling returned list as tuples.
@@ -73,18 +78,21 @@ class DB:
         else:
             self.log.error("listDrinks -> Cannot resolve Values parameter")
 
-        drinkList = cursor.fetchall()
-        #cursor.commit()
+        resultSet = cursor.fetchall()
 
-        #Checking integrity and returning to Drinkatron.py
-        if drinkList == None:
+        #Checking integrity and returning
+        if resultSet == None:
             self.log.error("No rows returned, empty DB? Wrong Table?")
         else:
-            self.log.info("Grabbed Drink list...")
+            self.log.info("Grabbed resultSet list...")
+            for record in resultSet:
+                for column in record:
+                    if column == "'0'":
+                        column = 0
 
-        self.log.info("Leaving -> listDrinks")
+        self.log.info("Leaving -> executeSql")
 
-        return drinkList
+        return resultSet
 
 
 
