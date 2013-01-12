@@ -80,6 +80,8 @@ class drink:
         else:
             self.log.warning("ERROR: -> %s star rating cannot be computed. Determined Ratio: %s "%(self.drinkName, positiveVoteRatio))
 
+        assert self.starRating > 0
+
     def hasGarnish(self):
         pass
 

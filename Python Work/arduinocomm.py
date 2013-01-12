@@ -38,7 +38,7 @@ class Connection:
 
         for ingredient in drink.ingredientListCleaned:
            self.log.info("Sending ingredient: %s" %ingredient)
-           self.ser.write(str(ingredient).encode()) # ONLY COMMENTED OUT BECAUSE I LACK MY ARDUINO.        self.ser.write(bytes('*', encoding='ascii'))
+           self.ser.write(str(ingredient).encode())
 
             #sleep(0.1)
         self.log.info("Leaving -> sendDrink")
