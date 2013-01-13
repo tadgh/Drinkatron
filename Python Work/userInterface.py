@@ -119,6 +119,37 @@ class UI:
         self.buttonPopularitySort.grid(column=1, row=0)
         self.buttonDispenseCountSort.grid(column=2, row=0)
 
+
+########################
+########################
+########################
+
+	#Changing sorting buttons to drop down list (Olivia 12.01.13)
+        self.varSort = StringVar()
+        self.varSort.set("A-Z")
+        self.sortMenu = OptionMenu(self.root, self.varSort, "A-Z", "Popularity", "Dispense Count")
+        self.sortMenu.grid(column=1, row=5 )
+        
+        self.whichSort = self.varSort.get()
+        if self.whichSort == "A-Z":
+                self.sortByName
+        elif self.whichSort == "Popularity":
+                self.sortByPopularity
+        elif self.whichSort == "Dispense Count":
+                self.sortByDispenseCount
+
+        #self.sortMenu = Menu()
+        #self.sortMenu.add_command(label='A-Z', command=self.sortByName)
+        #self.sortMenu.add_command(label='Popularity', command=self.sortByPopularity)
+        #self.sortMenu.add_command(label='Dispense Count', command=self.sortByDispenseCount)
+        #self.sortMenu.post(self.frame, 600, 100)
+
+########################
+########################
+########################
+
+
+
         #dispenseButton
         self.dispenseButton = Button(self.root, text='dispense', command=self.pourIt)
         self.dispenseButton.grid(column=0, row=2, sticky=N+W)
