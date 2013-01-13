@@ -120,33 +120,15 @@ class UI:
         self.buttonDispenseCountSort.grid(column=2, row=0)
 
 
-########################
-########################
-########################
 
-	#Changing sorting buttons to drop down list (Olivia 12.01.13)
+        #Sorting dropdown Menu
         self.varSort = StringVar()
         self.varSort.set("A-Z")
         self.sortMenu = OptionMenu(self.root, self.varSort, "A-Z", "Popularity", "Dispense Count")
-        self.sortMenu.grid(column=1, row=5 )
-        
-        self.whichSort = self.varSort.get()
-        if self.whichSort == "A-Z":
-                self.sortByName
-        elif self.whichSort == "Popularity":
-                self.sortByPopularity
-        elif self.whichSort == "Dispense Count":
-                self.sortByDispenseCount
+        self.sortMenu.grid(column=0, row=5 )
+        #this trace follows the value of self.varSort and binds it to self.sortingChanged
+        self.varSort.trace('w', self.sortingChanged)
 
-        #self.sortMenu = Menu()
-        #self.sortMenu.add_command(label='A-Z', command=self.sortByName)
-        #self.sortMenu.add_command(label='Popularity', command=self.sortByPopularity)
-        #self.sortMenu.add_command(label='Dispense Count', command=self.sortByDispenseCount)
-        #self.sortMenu.post(self.frame, 600, 100)
-
-########################
-########################
-########################
 
 
 
@@ -255,9 +237,6 @@ class UI:
         
         #empty the list
         self.listboxDrinkList.delete(0, END)
-        #Refill the list with now sorted data
-        #for drink in self.drinkList:
-        #    self.listboxDrinkList.insert(END,drink[1])#1 is the drink's name
 
         for drink in self.drinkObjArray:
             self.listboxDrinkList.insert(END,drink.drinkName)
@@ -265,6 +244,17 @@ class UI:
         self.listboxDrinkList.select_set(0)
 
         self.log.info("Leaving  -> GUI -> reloadList()")
+
+    def sortingChanged(self,t1,t2,t3):#these are garbage variables due to the widget returning 4 positional args
+        #This gets callbacked when the dropdown changes.
+        self.whichSort = self.varSort.get()
+        if self.whichSort == "A-Z":
+            self.sortByName()
+        elif self.whichSort == "Popularity":
+            self.sortByPopularity()
+        elif self.whichSort == "Dispense Count":
+            self.sortByDispenseCount()
+
 
     def sortByName(self):
         self.log.info("Entering -> sortByName()")
