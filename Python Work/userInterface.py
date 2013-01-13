@@ -45,11 +45,13 @@ class UI:
         #TOPLEVEL FRAMEWORK
         self.root = Tk()
         self.root.title("Drinkatron v%s"%constants.VERSION)
-        self.root.geometry("800x600")
-        self.frame = Frame(self.root, width=800, height=600)
+        self.root.geometry("800x800")
+        self.frame = Frame(self.root, width=800, height=800)
 
         self.status = StatusBar(self.root)
         self.status.set("Initializing UI...")
+
+
 
         #LISTBOX WORK
         self.listboxDrinkList = Listbox(self.root, font = ("Helvetica", 24 ), height=13)
@@ -65,16 +67,16 @@ class UI:
         #toolbar work
         self.toolbar = Frame(self.frame)
         self.buttonAddDrink = Button(self.toolbar,text="Add Drink", width = 9, command = self.createNewDrink)
-        self.buttonAddDrink.grid(column = 0, row = 2)
-        self.toolbar.grid(column = 0, row = 1, columnspan=10, rowspan=15)
+        self.buttonAddDrink.grid(column = 0, row = 1)
+        self.toolbar.grid(column = 0, row = 1, columnspan=10, rowspan=15, sticky=N+W)
 
         #detail view work
         self.detailViewFrame = Frame(self.root)
         self.drinkImage = PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "vodka.gif"))
         self.drinkImageLabel = Label(self.detailViewFrame, image=self.drinkImage, anchor=W)
         self.starImageLabel = Label(self.detailViewFrame, image=self.stars[0], anchor=W)
-        self.nameLabel = Label(self.detailViewFrame, text="Placeholder",wraplength=300 , font = ("Helvetica", 24), anchor=W)
-        self.descLabel = Label(self.detailViewFrame, text="Placeholder", wraplength=150, anchor=W)
+        self.nameLabel = Label(self.detailViewFrame, text="Placeholder",wraplength=500 , font = ("Helvetica", 24), anchor=W)
+        self.descLabel = Label(self.detailViewFrame, text="Placeholder", wraplength=500, anchor=W)
 
 
 
@@ -87,13 +89,25 @@ class UI:
 
         #slider view work
         self.sliderFrame = Frame(self.root)
-        self.sliderFrame.grid(row = 1, column = 1, sticky = N+W)
+        self.sliderList = []
+        self.sliderLabelList = []
+
+        currentRow = 0
+        for i in range(0,5):
+            self.sliderLabelList.append(Label(self.sliderFrame, text = "\n" + " ").grid(row = currentRow, column = 0, sticky=N+W))
+            self.sliderList.append(Scale(self.sliderFrame, from_ = 0, to = 100, orient = HORIZONTAL).grid(row = currentRow, column = 1, sticky=N+W))
+            currentRow += 1
+
+        print(self.sliderLabelList)
+
+
+        self.sliderFrame.grid(row = 1, column = 1, rowspan=5, sticky = N+W)
 
 
 
 
 
-        #Sorting button work
+            #Sorting button work
         self.frameSortButtons = Frame(self.root)
         self.buttonNameSort = Button(self.frameSortButtons,text = "A-Z",width = 9,height = 4, command = self.sortByName)
         self.buttonPopularitySort = Button(self.frameSortButtons,text = "Popularity",width = 9,height = 4, command = self.sortByPopularity)
@@ -107,7 +121,7 @@ class UI:
 
         #dispenseButton
         self.dispenseButton = Button(self.root, text='dispense', command=self.pourIt)
-        self.dispenseButton.grid(column=0, row=6)
+        self.dispenseButton.grid(column=0, row=2, sticky=N+W)
 
         #MENUWORK
         self.menu = Menu(self.root)
@@ -123,9 +137,9 @@ class UI:
 
         #pack the frame first as both frame and status bar are children to root, this sets them up well.
         self.frame.grid()
-        self.frameSortButtons.grid(column=0,row=5, sticky= N+W)
+        self.frameSortButtons.grid(column=0,row=1, sticky= N+W)
 
-        self.status.grid(column=0,row=5)
+        self.status.grid(column=0,row=3, sticky = N+W)
 
 
         self.root.mainloop()
@@ -173,16 +187,14 @@ class UI:
         #adding stiffness sliders
         currentRow = 0
         drinkIndex = 0
-        sliderList = []
         currentSlider = 0
-        totalSize = 0
-        for ingredient in selectedDrink.ingredientListCleaned:
-            totalSize += ingredient;
+
+        #todo find out why the list appears to be all nonetypes.
         for ingredient in selectedDrink.ingredientListCleaned:
             if ingredient != 0:
-                Label(self.sliderFrame, text = "\n" + constants.INGREDIENTLIST[drinkIndex]).grid(row = currentRow, column = 0, sticky=N+W)
-                sliderList.append(Scale(self.sliderFrame, from_ = 0, to = 100, orient = HORIZONTAL))
-                sliderList[currentSlider].grid(row = currentRow, column = 1, sticky = N+W)
+                self.sliderLabelList[currentRow].config(text = constants.INGREDIENTLIST[drinkIndex])
+                #self.sliderList.append(Scale(self.sliderFrame, from_ = 0, to = 100, orient = HORIZONTAL))
+                self.sliderList[currentSlider].grid(row = currentRow, column = 1, sticky = N+W)
                 currentRow += 1
                 currentSlider += 1
             elif ingredient == 0:
