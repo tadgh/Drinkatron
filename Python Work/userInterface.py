@@ -50,7 +50,7 @@ class UI:
 
         #LISTBOX WORK
         self.listboxDrinkList = Listbox(self.root, font = ("Helvetica", 24 ), height=13)
-        self.listboxDrinkList.grid(row=0,column = 0)
+        self.listboxDrinkList.grid(row=0,column = 0, sticky=N+W)
         self.listboxDrinkList.bind('<<ListboxSelect>>', self.refreshDetailView)#This is some wonky code that binds self.refreshDetailView as a callback when the ListBoxSelect TKAction is called.
         self.populateList()
 
@@ -61,24 +61,26 @@ class UI:
         #TODO this isn't really a toolbar i don't know why I named it that. Fix this once we find out what UI should look like.
         #toolbar work
         self.toolbar = Frame(self.frame)
-        self.buttonAddDrink = Button(self.toolbar,text="Add Drink", width = 9, command = self.createNewDrink)
-        self.buttonAddDrink.grid(column = 0, row = 1)
-        self.toolbar.grid(column = 0, row = 1, columnspan=10, rowspan=15, sticky=N+W)
+        #self.buttonAddDrink = Button(self.toolbar,text="Add Drink", width = 9, command = self.createNewDrink)
+        #self.buttonAddDrink.grid(column = 0, row = 1)
+        self.toolbar.grid(column = 0, row = 1)#, columnspan=10, rowspan=15, sticky=N+W)
 
         #detail view work
-        self.detailViewFrame = Frame(self.root)
+        self.detailViewFrame = Frame(self.root, width = 600)
         self.drinkImage = PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "vodka.gif"))
         self.drinkImageLabel = Label(self.detailViewFrame, image=self.drinkImage, anchor=W)
         self.starImageLabel = Label(self.detailViewFrame, image=self.stars[0], anchor=W)
         self.nameLabel = Label(self.detailViewFrame, text="Placeholder",wraplength=500 , font = ("Helvetica", 24), anchor=W)
-        self.descLabel = Label(self.detailViewFrame, text="Placeholder", wraplength=500, anchor=W)
+        self.descLabel = Label(self.detailViewFrame, text="Placeholder", anchor=W,height = 1)
+        self.dummyDescLabel = Label(self.detailViewFrame,text="\n\n\n")
 
         #gridding
-        self.drinkImageLabel.grid(row = 1, column = 0, sticky = W)
-        self.nameLabel.grid(row = 0, column = 0, sticky = W)
-        self.starImageLabel.grid(row=3, column = 0, columnspan=2, sticky = W)
-        self.descLabel.grid(row=2, column =0, sticky = W)
-        self.detailViewFrame.grid(row = 0, column = 1, sticky=N+W)
+        self.drinkImageLabel.grid(row = 1, column = 0,columnspan=10, padx=50)#to allow space for the dispense button
+        self.nameLabel.grid(row = 0, column = 0,sticky = N)
+        self.starImageLabel.grid(row=3, column = 0, columnspan=2, sticky = W, padx=50)
+        self.dummyDescLabel.grid(row=2,column=0, sticky=W, padx=50)
+        self.descLabel.grid(row=2, column =0, sticky = W, padx=53)
+        self.detailViewFrame.grid(row = 0, column = 1)
 
         #slider view work
         self.sliderFrame = Frame(self.root)
@@ -86,16 +88,16 @@ class UI:
         self.sliderLabelList = []
         self.sliderVariables = [DoubleVar, DoubleVar, DoubleVar, DoubleVar, DoubleVar]
 
-        fsl1 = Label(self.sliderFrame, text = "\n" + "Placeholder")
-        fsl1.grid(row = 0, column = 0, sticky=N+W)
-        fsl2 = Label(self.sliderFrame, text = "\n" + "Placeholder")
-        fsl2.grid(row = 1, column = 0, sticky=N+W)
-        fsl3 = Label(self.sliderFrame, text = "\n" + "Placeholder")
-        fsl3.grid(row = 2, column = 0, sticky=N+W)
-        fsl4 = Label(self.sliderFrame, text = "\n" + "Placeholder")
-        fsl4.grid(row = 3, column = 0, sticky=N+W)
-        fsl5 = Label(self.sliderFrame, text = "\n" + "Placeholder")
-        fsl5.grid(row = 4, column = 0, sticky=N+W)
+        fsl1 = Label(self.sliderFrame, text = " \n" + "Placeholder",justify=LEFT)
+        fsl1.grid(row = 0, column = 0, sticky=N+W,padx=50)
+        fsl2 = Label(self.sliderFrame, text = " \n" + "Placeholder",justify=LEFT)
+        fsl2.grid(row = 1, column = 0, sticky=N+W,padx=50)
+        fsl3 = Label(self.sliderFrame, text = " \n" + "Placeholder",justify=LEFT)
+        fsl3.grid(row = 2, column = 0, sticky=N+W,padx=50)
+        fsl4 = Label(self.sliderFrame, text = " \n" + "Placeholder",justify=LEFT)
+        fsl4.grid(row = 3, column = 0, sticky=N+W,padx=50)
+        fsl5 = Label(self.sliderFrame, text = " \n" + "Placeholder",justify=LEFT)
+        fsl5.grid(row = 4, column = 0, sticky=N+W,padx=50)
 
         s1 = Scale(self.sliderFrame, from_ = 0, to = 100, orient = HORIZONTAL)
         s1.grid(row = 0, column = 1, sticky=N+W)
@@ -135,23 +137,23 @@ class UI:
         self.varSort = StringVar()
         self.varSort.set("A-Z")
         self.sortMenu = OptionMenu(self.root, self.varSort, "A-Z", "Popularity", "Dispense Count")
-        self.sortMenu.grid(column=0, row=5 )
+        self.sortMenu.grid(column=0, row=3,sticky=N+W )
         #this trace follows the value of self.varSort and binds it to self.sortingChanged
         self.varSort.trace('w', self.sortingChanged)
 
         #random button
         self.randomButton = Button(self.root, text='Random', command=self.chooseRandomDrink)
-        self.randomButton.grid(column=1, row=3)
+        self.randomButton.grid(column=0, row=4, sticky=N+W)
 
         #'Surprise me' button
         self.surpriseButton = Button(self.root, text='Surprise me!', command=None)
-        self.surpriseButton.grid(column=1, row=2)
+        self.surpriseButton.grid(column=0, row=5,sticky=N+W)
 
 
 
         #dispenseButton
         self.dispenseButton = Button(self.root, text='dispense', command=self.pourIt)
-        self.dispenseButton.grid(column=0, row=2, sticky=N+W)
+        self.dispenseButton.grid(column=1, row=1, sticky=S+E)
 
         #MENUWORK
         self.menu = Menu(self.root)
@@ -215,22 +217,22 @@ class UI:
         drinkIndex = 0
 
         for ingredient in selectedDrink.ingredientListCleaned:
-            #self.sliderLabelList[currentRow].grid_forget()
-            #self.sliderList[currentRow].grid_forget()
+
 
             if ingredient != 0:
-                self.sliderLabelList[currentRow].config(text = constants.INGREDIENTLIST[drinkIndex])
-                self.sliderLabelList[currentRow].grid()
-                self.sliderLabelList[currentRow].grid()
+                self.sliderLabelList[currentRow].config(text = "\n" + constants.INGREDIENTLIST[drinkIndex])
+                self.sliderLabelList[currentRow].grid(column = 0, row = currentRow, sticky=W)
+                self.sliderList[currentRow].grid(column = 1, row=currentRow,sticky=W)
                 proportion = DoubleVar()
                 proportion = ingredient / float(selectedDrink.totalSize)
-                print("ingredient Proportion: " + str(proportion) + "\n")
                 self.sliderList[currentRow].set(proportion * 100)
-                print("printed proportion is: " + str(float(self.sliderList[currentRow].get())))
                 currentRow += 1
             elif ingredient == 0:
                 pass
             drinkIndex += 1
+        for i in range(currentRow - 1 ,5):
+            self.sliderLabelList[currentRow].grid_forget()
+            self.sliderList[currentRow].grid_forget()
 
     def populateList(self):
         self.drinkList = self.db.listDrinksByName()
@@ -283,6 +285,7 @@ class UI:
         self.log.info(self.drinkObjArray)
 
         self.reloadList()
+        self.listboxDrinkList.select_set(0)
         self.refreshDetailView("")
         self.log.info("Leaving -> sortByName()")
         for button in self.buttonList:
@@ -295,6 +298,7 @@ class UI:
         self.drinkObjArray = sorted(self.drinkObjArray, key=lambda derf : derf.positiveVoteCount, reverse = True)#grabs Drink Name
         self.log.info(self.drinkObjArray)
         self.reloadList()
+        self.listboxDrinkList.select_set(0)
         self.refreshDetailView("") #requires garbage argument
         self.log.info("Leaving -> sortByPopularity")
         for button in self.buttonList:
@@ -308,6 +312,7 @@ class UI:
         self.log.info(self.drinkObjArray)
 
         self.reloadList()
+        self.listboxDrinkList.select_set(0)
         self.refreshDetailView("")
         self.log.info("Leaving -> sortByDispenseCount")
         for button in self.buttonList:
