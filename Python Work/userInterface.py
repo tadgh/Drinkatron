@@ -139,6 +139,16 @@ class UI:
         #this trace follows the value of self.varSort and binds it to self.sortingChanged
         self.varSort.trace('w', self.sortingChanged)
 
+        #random button
+        self.randomButton = Button(self.root, text='Random', command=self.chooseRandomDrink)
+        self.randomButton.grid(column=1, row=3)
+
+        #'Surprise me' button
+        self.surpriseButton = Button(self.root, text='Surprise me!', command=None)
+        self.surpriseButton.grid(column=1, row=2)
+
+
+
         #dispenseButton
         self.dispenseButton = Button(self.root, text='dispense', command=self.pourIt)
         self.dispenseButton.grid(column=0, row=2, sticky=N+W)
@@ -247,6 +257,14 @@ class UI:
         self.listboxDrinkList.select_set(0)
 
         self.log.info("Leaving  -> GUI -> reloadList()")
+
+    def chooseRandomDrink(self): #function called when 'Random' button is selected
+        num_drinks = self.listboxDrinkList.size()
+        which_drink = random.randint(0, num_drinks-1)
+        self.reloadList()
+        self.listboxDrinkList.select_set(which_drink)
+        self.listboxDrinkList.see(which_drink)
+        self.refreshDetailView("")
 
     def sortingChanged(self,t1,t2,t3):#these are garbage variables due to the widget returning 4 positional args
         #This gets callbacked when the dropdown changes.
