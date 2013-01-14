@@ -27,9 +27,6 @@ class StatusBar(Frame):
 
 class UI:
     def __init__(self):
-
-
-
         self.db = dbinterface.DB()
         self.drinkList = []
         self.arduino = arduinocomm.Connection()
@@ -46,12 +43,10 @@ class UI:
         self.root = Tk()
         self.root.title("Drinkatron v%s"%constants.VERSION)
         self.root.geometry("800x800")
-        self.frame = Frame(self.root, width=800, height=800)
 
+        self.frame = Frame(self.root, width=800, height=800)
         self.status = StatusBar(self.root)
         self.status.set("Initializing UI...")
-
-
 
         #LISTBOX WORK
         self.listboxDrinkList = Listbox(self.root, font = ("Helvetica", 24 ), height=13)
@@ -78,8 +73,6 @@ class UI:
         self.nameLabel = Label(self.detailViewFrame, text="Placeholder",wraplength=500 , font = ("Helvetica", 24), anchor=W)
         self.descLabel = Label(self.detailViewFrame, text="Placeholder", wraplength=500, anchor=W)
 
-
-
         #gridding
         self.drinkImageLabel.grid(row = 1, column = 0, sticky = W)
         self.nameLabel.grid(row = 0, column = 0, sticky = W)
@@ -91,35 +84,52 @@ class UI:
         self.sliderFrame = Frame(self.root)
         self.sliderList = []
         self.sliderLabelList = []
+        self.sliderVariables = [DoubleVar, DoubleVar, DoubleVar, DoubleVar, DoubleVar]
 
-        currentRow = 0
-        for i in range(0,5):
-            self.sliderLabelList.append(Label(self.sliderFrame, text = "\n" + " ").grid(row = currentRow, column = 0, sticky=N+W))
-            self.sliderList.append(Scale(self.sliderFrame, from_ = 0, to = 100, orient = HORIZONTAL).grid(row = currentRow, column = 1, sticky=N+W))
-            currentRow += 1
+        fsl1 = Label(self.sliderFrame, text = "\n" + "Placeholder")
+        fsl1.grid(row = 0, column = 0, sticky=N+W)
+        fsl2 = Label(self.sliderFrame, text = "\n" + "Placeholder")
+        fsl2.grid(row = 1, column = 0, sticky=N+W)
+        fsl3 = Label(self.sliderFrame, text = "\n" + "Placeholder")
+        fsl3.grid(row = 2, column = 0, sticky=N+W)
+        fsl4 = Label(self.sliderFrame, text = "\n" + "Placeholder")
+        fsl4.grid(row = 3, column = 0, sticky=N+W)
+        fsl5 = Label(self.sliderFrame, text = "\n" + "Placeholder")
+        fsl5.grid(row = 4, column = 0, sticky=N+W)
 
+        s1 = Scale(self.sliderFrame, from_ = 0, to = 100, orient = HORIZONTAL)
+        s1.grid(row = 0, column = 1, sticky=N+W)
+        s2 = Scale(self.sliderFrame, from_ = 0, to = 100, orient = HORIZONTAL)
+        s2.grid(row = 1, column = 1, sticky=N+W)
+        s3 = Scale(self.sliderFrame, from_ = 0, to = 100, orient = HORIZONTAL)
+        s3.grid(row = 2, column = 1, sticky=N+W)
+        s4 = Scale(self.sliderFrame, from_ = 0, to = 100, orient = HORIZONTAL)
+        s4.grid(row = 3, column = 1, sticky=N+W)
+        s5 = Scale(self.sliderFrame, from_ = 0, to = 100, orient = HORIZONTAL)
+        s5.grid(row = 4, column = 1, sticky=N+W)
+
+        self.sliderLabelList = [fsl1, fsl2, fsl3, fsl4, fsl5]
+        self.sliderList = [s1,s2,s3,s4,s5]
+
+
+
+        #todo remove this print once i get it working
         print(self.sliderLabelList)
-
+        print(self.sliderList)
 
         self.sliderFrame.grid(row = 1, column = 1, rowspan=5, sticky = N+W)
 
-
-
-
-
-            #Sorting button work
-        self.frameSortButtons = Frame(self.root)
-        self.buttonNameSort = Button(self.frameSortButtons,text = "A-Z",width = 9,height = 4, command = self.sortByName)
-        self.buttonPopularitySort = Button(self.frameSortButtons,text = "Popularity",width = 9,height = 4, command = self.sortByPopularity)
-        self.buttonDispenseCountSort = Button(self.frameSortButtons,text = "Dispenses",width = 9,height = 4, command = self.sortByDispenseCount)
+        #TODO reminder: These are not gridded because we swapped to a dropdown.
+        #Sorting button work
+        #self.frameSortButtons = Frame(self.root)
+        #self.buttonNameSort = Button(self.frameSortButtons,text = "A-Z",width = 9,height = 4, command = self.sortByName)
+        #self.buttonPopularitySort = Button(self.frameSortButtons,text = "Popularity",width = 9,height = 4, command = self.sortByPopularity)
+        #self.buttonDispenseCountSort = Button(self.frameSortButtons,text = "Dispenses",width = 9,height = 4, command = self.sortByDispenseCount)
         #list of buttons in order to change relief and colour.
-        self.buttonList = [self.buttonNameSort,self.buttonDispenseCountSort,self.buttonPopularitySort]
-
-        self.buttonNameSort.grid(column=0, row=0)
-        self.buttonPopularitySort.grid(column=1, row=0)
-        self.buttonDispenseCountSort.grid(column=2, row=0)
-
-
+        #self.buttonList = [self.buttonNameSort,self.buttonDispenseCountSort,self.buttonPopularitySort]
+        #self.buttonNameSort.grid(column=0, row=0)
+        #self.buttonPopularitySort.grid(column=1, row=0)
+        #self.buttonDispenseCountSort.grid(column=2, row=0)
 
         #Sorting dropdown Menu
         self.varSort = StringVar()
@@ -128,9 +138,6 @@ class UI:
         self.sortMenu.grid(column=0, row=5 )
         #this trace follows the value of self.varSort and binds it to self.sortingChanged
         self.varSort.trace('w', self.sortingChanged)
-
-
-
 
         #dispenseButton
         self.dispenseButton = Button(self.root, text='dispense', command=self.pourIt)
@@ -147,24 +154,20 @@ class UI:
         self.fileMenu.add_command(label="Quit", command=self.menuQuit)
         self.log.info("Entering -> GUI -> mainLoop()")
 
-
         #pack the frame first as both frame and status bar are children to root, this sets them up well.
         self.frame.grid()
-        self.frameSortButtons.grid(column=0,row=1, sticky= N+W)
-
-        self.status.grid(column=0,row=3, sticky = N+W)
-
-
+        #self.frameSortButtons.grid(column=0,row=1, sticky= N+W) THIS IS COMMENTED AS IT IS BUTTON RELATED AND NOT DROPDOWN RELATED
+        self.status.set("Ready...")
         self.root.mainloop()
         self.log.info("Leaving  -> GUI -> Constructor()")
 
     def aboutMessageBox(self):
-        msgbox = messagebox.showinfo("About", "Drinkatron is a personal bartender\n version: %s\nCopyright 2012"%constants.VERSION) 
+        msgbox = messagebox.showinfo("About", "Drinkatron is a personal bartender\n version: %s\nCopyright 2012"%constants.VERSION)
+
     def menuQuit(self):
         self.log.info("Leaving  -> GUI -> mainLoop, quit was called")
         self.arduino.disconnect()
         self.root.destroy()
-
 
     def pourIt(self):
         self.log.info("Entering -> GUI ->  PourIt()")
@@ -177,7 +180,7 @@ class UI:
         self.arduino.sendDrink(drinkToPour)
         self.log.info("Leaving  -> GUI -> Pourit()")
         pass
-    
+
     def createNewDrink(self):
         selection = self.listboxDrinkList.curselection()[0]
         selection = int(selection)
@@ -200,24 +203,24 @@ class UI:
         #adding stiffness sliders
         currentRow = 0
         drinkIndex = 0
-        currentSlider = 0
 
-        #todo find out why the list appears to be all nonetypes.
         for ingredient in selectedDrink.ingredientListCleaned:
+            #self.sliderLabelList[currentRow].grid_forget()
+            #self.sliderList[currentRow].grid_forget()
+
             if ingredient != 0:
                 self.sliderLabelList[currentRow].config(text = constants.INGREDIENTLIST[drinkIndex])
-                #self.sliderList.append(Scale(self.sliderFrame, from_ = 0, to = 100, orient = HORIZONTAL))
-                self.sliderList[currentSlider].grid(row = currentRow, column = 1, sticky = N+W)
+                self.sliderLabelList[currentRow].grid()
+                self.sliderLabelList[currentRow].grid()
+                proportion = DoubleVar()
+                proportion = ingredient / float(selectedDrink.totalSize)
+                print("ingredient Proportion: " + str(proportion) + "\n")
+                self.sliderList[currentRow].set(proportion * 100)
+                print("printed proportion is: " + str(float(self.sliderList[currentRow].get())))
                 currentRow += 1
-                currentSlider += 1
             elif ingredient == 0:
                 pass
             drinkIndex += 1
-
-
-
-
-
 
     def populateList(self):
         self.drinkList = self.db.listDrinksByName()
@@ -234,7 +237,7 @@ class UI:
 
     def reloadList(self):
         self.log.info("Entering -> GUI -> reloadList()")
-        
+
         #empty the list
         self.listboxDrinkList.delete(0, END)
 
@@ -255,7 +258,6 @@ class UI:
         elif self.whichSort == "Dispense Count":
             self.sortByDispenseCount()
 
-
     def sortByName(self):
         self.log.info("Entering -> sortByName()")
         #self.drinkList = sorted(self.drinkList, key=lambda derf : derf[1]) # The first column when it draws from DB is the name
@@ -275,7 +277,7 @@ class UI:
         self.drinkObjArray = sorted(self.drinkObjArray, key=lambda derf : derf.positiveVoteCount, reverse = True)#grabs Drink Name
         self.log.info(self.drinkObjArray)
         self.reloadList()
-        self.refreshDetailView("")
+        self.refreshDetailView("") #requires garbage argument
         self.log.info("Leaving -> sortByPopularity")
         for button in self.buttonList:
             button.config(relief=RAISED)
@@ -302,9 +304,6 @@ class UI:
         self.stars.append(PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "fourStars.gif")))
         self.stars.append(PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "fiveStars.gif")))
 
-
-
-
 app = UI()
 
-        
+

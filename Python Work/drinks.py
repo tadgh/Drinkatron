@@ -48,6 +48,8 @@ class drink:
             self.ing10 = ing10
             self.ing11 = ing11
             self.ing12 = ing12
+            self.totalSize = 0
+            self.totalIngredients = 0
             self.garnish = garnish
             self.description = description
             self.positiveVoteCount = positiveVoteCount
@@ -62,7 +64,18 @@ class drink:
 
 
             self.ingredientListCleaned = self.generateListForArduino()
+            self.totalSize, self.totalIngredients = self.determineDrinkStats()
             self.printDrink()
+
+    def determineDrinkStats(self):
+        totSize = 0
+        totIng = 0
+        for ingredient in self.ingredientListCleaned:
+            if ingredient != 0:
+                totSize += ingredient
+                totIng += 1
+
+        return totSize, totIng
 
     def determineStarRating(self):
         totalVotes = self.negativeVoteCount + self.positiveVoteCount
@@ -109,5 +122,5 @@ class drink:
         return theIngredientList
 
     def printDrink(self):
-        self.log.info("******\nName: %s\nIngList:%s\n******************" %(self.drinkName, self.ingredientListCleaned))
+        self.log.info("******\nName: %s\nIngList:%s\nTOTALSIZE: %s\n******************" %(self.drinkName, self.ingredientListCleaned, self.totalSize))
 
