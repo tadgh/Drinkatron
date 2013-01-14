@@ -254,7 +254,7 @@ class UI:
         for drink in self.drinkObjArray:
             self.listboxDrinkList.insert(END,drink.drinkName)
 
-        self.listboxDrinkList.select_set(0)
+        #self.listboxDrinkList.select_set(0)
 
         self.log.info("Leaving  -> GUI -> reloadList()")
 
