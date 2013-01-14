@@ -146,7 +146,7 @@ class UI:
         self.randomButton.grid(column=0, row=4, sticky=N+W)
 
         #'Surprise me' button
-        self.surpriseButton = Button(self.root, text='Surprise me!', command=None)
+        self.surpriseButton = Button(self.root, text='Surprise me!', command=self.chooseSurpriseDrink)
         self.surpriseButton.grid(column=0, row=5,sticky=N+W)
 
 
@@ -267,6 +267,15 @@ class UI:
         self.listboxDrinkList.select_set(which_drink)
         self.listboxDrinkList.see(which_drink)
         self.refreshDetailView("")
+
+    def chooseSurpriseDrink(self): #function called when 'Surprise me!' button is selected
+        num_drinks = self.listboxDrinkList.size()
+        which_drink = random.randint(0, num_drinks-1)
+        self.reloadList()
+        self.listboxDrinkList.select_set(which_drink)
+        self.listboxDrinkList.see(which_drink)
+        self.refreshDetailView("")
+        self.pourIt()
 
     def sortingChanged(self,t1,t2,t3):#these are garbage variables due to the widget returning 4 positional args
         #This gets callbacked when the dropdown changes.
