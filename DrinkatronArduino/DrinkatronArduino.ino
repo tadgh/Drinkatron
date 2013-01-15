@@ -30,56 +30,72 @@ void setup(){
   digitalWrite(31, HIGH);
 }
 
-byte ingredientList[12];
-int index = 0;
+int ingredientList[12];
+
 Drink toBeDispensed; // STRANGELY, you do not need a new Drink() call to instantiate. Odd stuff. 
+char incomingByte;
+int index = 0;
+int integerValue=0;
+int drinkSize = 0;
 void loop() {
  
   
-  if(Serial.available()){
-    delay(1000);
-    while(Serial.available() && index < 12){
-      const char c = Serial.read();
-      ingredientList[index] =  c - 48; //FUCKING ASCII CONVERSION SHIT NIGGER FUCKS.
-     // Serial.print(ingredientList[index]);
-     // Serial.print("   index: ");
-     // Serial.println(index);
-      index++;
-      delay(3);
-    }
+    while (Serial.available()) {   // something came across serial
+      integerValue = 0;         // throw away previous integerValue
+      while(1) 
+      {            
+        incomingByte = Serial.read();
+        if (incomingByte == '*')
+        {
+          break;
+        }   // exit the while(1)
+        if (incomingByte == -1) continue;  // if no characters are in the buffer read() returns -1
+        
+        integerValue *= 10;  // shift left 1 decimal place
+        integerValue = ((incomingByte - 48) + integerValue);// convert ASCII to integer, add, and shift left 1 decimal place
+      }
+    ingredientList[index] = integerValue;
+    drinkSize += integerValue;
+    index++;
   }
- 
-  if(index >= 12){
-    int sum = 0;
+  
+  if(index==12){
     digitalWrite(13,HIGH);
-    Serial.print("Values found: ");
-    for(int i = 0; i < 12; i++){
-      //sum += ingredientList[i];
-      Serial.print(ingredientList[i]);
+    if(drinkSize==100)
+    {
+      ;
     }
-    Serial.println(sum);
-    index = 0;
+    else
+    {
+      for(int x = 0; x < 12; x++)
+        ingredientList[x] = (float(ingredientList[x]) / float(drinkSize)) * 100;
+    }
+
+
    //**********************************************************
    //super ugly initialization code, but it
    //we dont do it this way, we end up blowing the stack space.
    //********************************************************** 
-   toBeDispensed.setVodka(ingredientList[0]);
-   toBeDispensed.setRum(ingredientList[1]);
-   toBeDispensed.setOrangeJuice(ingredientList[2]);
-   toBeDispensed.setCocaCola(ingredientList[3]);
-   toBeDispensed.setSprite(ingredientList[4]);
-   toBeDispensed.setLime(ingredientList[5]);
-   toBeDispensed.setCranberry(ingredientList[6]);
-   toBeDispensed.setWhiteRum(ingredientList[7]);
-   toBeDispensed.setGrenadine(ingredientList[8]);
-   toBeDispensed.setGin(ingredientList[9]);
-   toBeDispensed.setBlueCuracao(ingredientList[10]);
+   toBeDispensed.setCocaCola(ingredientList[0]);
+   toBeDispensed.setSprite(ingredientList[1]);
+   toBeDispensed.setCranberry(ingredientList[2]);
+   toBeDispensed.setLime(ingredientList[3]);
+   toBeDispensed.setOrangeJuice(ingredientList[4]);
+   toBeDispensed.setGrenadine(ingredientList[5]);
+   toBeDispensed.setBlueCuracao(ingredientList[6]);
+   toBeDispensed.setGin(ingredientList[7]);
+   toBeDispensed.setRum(ingredientList[8]);
+   toBeDispensed.setTripleSec(ingredientList[9]);
+   toBeDispensed.setVodka(ingredientList[10]);
    toBeDispensed.setWhiskey(ingredientList[11]);
    
    toBeDispensed.printDrink();
+   Serial.println(drinkSize);
+   drinkSize = 0;
+   index=0;
   }
-    
 }
+
   
 
 

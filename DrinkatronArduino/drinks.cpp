@@ -58,10 +58,10 @@
        }else
          digitalWrite(GIN_RELAY_PIN, HIGH);       
 
-       if(_whiteRum > i){
-         digitalWrite(WHITERUM_RELAY_PIN, LOW);Serial.println("Dispensing white rum.");
+       if(_tripleSec > i){
+         digitalWrite(TRIPLESEC_RELAY_PIN, LOW);Serial.println("Dispensing white rum.");
        }else
-         digitalWrite(WHITERUM_RELAY_PIN, HIGH);   
+         digitalWrite(TRIPLESEC_RELAY_PIN, HIGH);   
 
        if(_lime > i){
          digitalWrite(LIME_RELAY_PIN, LOW);Serial.println("Dispensing lime.");
@@ -77,10 +77,8 @@
          digitalWrite(WHISKEY_RELAY_PIN, LOW);Serial.println("Dispensing whiskey.");
        }else
          digitalWrite(WHISKEY_RELAY_PIN, HIGH);   
-         
-
-   
-          if(_cranberry > i){
+        
+       if(_cranberry > i){
          digitalWrite(CRANBERRY_RELAY_PIN, LOW);Serial.println("Dispensing white rum.");
        }else
          digitalWrite(CRANBERRY_RELAY_PIN, HIGH);         
@@ -132,8 +130,8 @@
          maxCycle = _lime;
        if(_whiskey > maxCycle)
          maxCycle = _whiskey;
-       if(_whiteRum > maxCycle)
-         maxCycle = _whiteRum;  
+       if(_tripleSec > maxCycle)
+         maxCycle = _tripleSec;  
     
        return maxCycle;     
    }
@@ -157,7 +155,7 @@
      Serial.print("gin: ");
      Serial.println(_gin);
      Serial.print("white rum: ");
-     Serial.println(_whiteRum); 
+     Serial.println(_tripleSec); 
      Serial.print("grenadine: ");
      Serial.println(_grenadine);
      Serial.print("lime: ");
@@ -196,7 +194,7 @@
         valvesInUse++;
        if(_whiskey > 0)
          valvesInUse++;
-       if(_whiteRum > 0)
+       if(_tripleSec > 0)
          valvesInUse++;  
     
        return valvesInUse;     
@@ -204,7 +202,7 @@
    
    //returns the total number of components * their given portions.
    byte Drink::componentCount(){
-     return(_vodka + _rum + _orangeJuice + _cocaCola + _sprite + _gin + _rum + _whiteRum + _lime + _grenadine + _whiskey + _blueCuracao); 
+     return(_vodka + _rum + _orangeJuice + _cocaCola + _sprite + _gin + _rum + _tripleSec + _lime + _grenadine + _whiskey + _blueCuracao); 
    }
 
    
@@ -230,8 +228,8 @@
    void Drink::setGin(byte x){
    _gin = x;
    }
-   void Drink::setWhiteRum(byte x){
-   _whiteRum = x;
+   void Drink::setTripleSec(byte x){
+   _tripleSec = x;
    }
    void Drink::setGrenadine(byte x){
    _grenadine = x;

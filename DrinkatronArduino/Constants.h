@@ -16,7 +16,7 @@ const int  ORANGEJUICE_RELAY_PIN = 34;
 const int  COCACOLA_RELAY_PIN = 35;
 const int  SPRITE_RELAY_PIN = 36;
 const int  GIN_RELAY_PIN = 37;
-const int  WHITERUM_RELAY_PIN = 38;
+const int  TRIPLESEC_RELAY_PIN = 38;
 const int  BLUECURACAO_RELAY_PIN = 41;//should be 31, just testing the pin
 const int  CRANBERRY_RELAY_PIN = 40;
 const int  WHISKEY_RELAY_PIN = 44;//should be 41, just testing
@@ -25,7 +25,7 @@ const int  LIME_RELAY_PIN = 43;
 
 const int  MASTER_DISPENSE_PIN =  39;
 
-const int  LOWVIS_DELAY = 500;
+const int  LOWVIS_DELAY = 50; //THIS IS SOLELY EXPERIMENTAL AS WE ARE USING LARGER VALUES OF THING
 const int  MEDVIS_DELAY = 500;
 const int  HIGHVIS_DELAY = 500;
 

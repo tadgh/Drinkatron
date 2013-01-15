@@ -9,7 +9,7 @@ class Drink{
   byte _vodka;
   byte _rum;
   byte _gin;
-  byte _whiteRum;
+  byte _tripleSec;
   byte _sprite;
   byte _cocaCola;  
   byte _orangeJuice;
@@ -36,7 +36,7 @@ class Drink{
    void setSprite(byte x);
    void setLime(byte x);
    void setCranberry(byte x);
-   void setWhiteRum(byte x);
+   void setTripleSec(byte x);
    void setGrenadine(byte x);
    void setGin(byte x);
    void setBlueCuracao(byte x);
