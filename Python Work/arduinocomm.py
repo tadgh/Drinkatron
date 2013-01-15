@@ -32,15 +32,15 @@ class Connection:
             self.log.warning("Unable to start arduino, therefore not starting the listener thread!!")
 
 
-    def sendDrink(self,drink):
+    def sendDrink(self,drinkArray):
         self.log.info("Entering -> sendDrink")
         self.isDispensing = True
 
-        for ingredient in drink.ingredientListCleaned:
+        for ingredient in drinkArray:
            self.log.info("Sending ingredient: %s" %ingredient)
            self.ser.write(str(ingredient).encode())
-
-            #sleep(0.1)
+           self.ser.write("*".encode())
+           #sleep(0.1)
         self.log.info("Leaving -> sendDrink")
 
     def requestStatus(self):
@@ -58,21 +58,18 @@ class Connection:
 
     def readResponse(self):
         while self.listening == True:
-            print("waiting...")
             result = []
-
 
             try:
                 while self.ser.inWaiting() > 0:
-                    result.append(self.ser.readline())
-                    print(result)
+                    result.append(self.ser.readline().decode())
             except:
                 self.log.warning("Something wrong with reading Arduino Serial!!!")
-
             if result == []:
                 pass
             else:
-                self.log.info("Arduino callback response: %s" %result)
+                for line in result:
+                    self.log.info("Arduino callback response: %s" %line)
 
             sleep(3)
 

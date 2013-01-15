@@ -39,34 +39,33 @@ class UI:
         self.log.info("Entering -> GUI -> Constructor()")
 
 
-        #TOPLEVEL FRAMEWORK
+        #TOPLEVEL FRAMES
         self.root = Tk()
+        self.detailViewFrame = Frame(self.root, width = 600)
+        self.sliderFrame = Frame(self.root)
+        self.buttonFrame = Frame(self.root)
+
+
         self.root.title("Drinkatron v%s"%constants.VERSION)
         self.root.geometry("800x800")
 
-        self.frame = Frame(self.root, width=800, height=800)
+
         self.status = StatusBar(self.root)
         self.status.set("Initializing UI...")
 
         #LISTBOX WORK
         self.listboxDrinkList = Listbox(self.root, font = ("Helvetica", 24 ), height=13)
-        self.listboxDrinkList.grid(row=0,column = 0, sticky=N+W)
+
         self.listboxDrinkList.bind('<<ListboxSelect>>', self.refreshDetailView)#This is some wonky code that binds self.refreshDetailView as a callback when the ListBoxSelect TKAction is called.
         self.populateList()
+        self.listboxDrinkList.select_set(0)#testing
 
         #star image loading
         self.stars = []
         self.initStars()
 
-        #TODO this isn't really a toolbar i don't know why I named it that. Fix this once we find out what UI should look like.
-        #toolbar work
-        self.toolbar = Frame(self.frame)
-        #self.buttonAddDrink = Button(self.toolbar,text="Add Drink", width = 9, command = self.createNewDrink)
-        #self.buttonAddDrink.grid(column = 0, row = 1)
-        self.toolbar.grid(column = 0, row = 1)#, columnspan=10, rowspan=15, sticky=N+W)
 
         #detail view work
-        self.detailViewFrame = Frame(self.root, width = 600)
         self.drinkImage = PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "vodka.gif"))
         self.drinkImageLabel = Label(self.detailViewFrame, image=self.drinkImage, anchor=W)
         self.starImageLabel = Label(self.detailViewFrame, image=self.stars[0], anchor=W)
@@ -80,46 +79,39 @@ class UI:
         self.starImageLabel.grid(row=3, column = 0, columnspan=2, sticky = W, padx=50)
         self.dummyDescLabel.grid(row=2,column=0, sticky=W, padx=50)
         self.descLabel.grid(row=2, column =0, sticky = W, padx=53)
-        self.detailViewFrame.grid(row = 0, column = 1)
+
 
         #slider view work
-        self.sliderFrame = Frame(self.root)
         self.sliderList = []
         self.sliderLabelList = []
         self.sliderVariables = [DoubleVar, DoubleVar, DoubleVar, DoubleVar, DoubleVar]
-
-        fsl1 = Label(self.sliderFrame, text = " \n" + "Placeholder",justify=LEFT)
+        #Slider Labels
+        fsl1 = Label(self.sliderFrame, text = " \n " + "Placeholder",justify=LEFT,padx=50)
         fsl1.grid(row = 0, column = 0, sticky=N+W,padx=50)
-        fsl2 = Label(self.sliderFrame, text = " \n" + "Placeholder",justify=LEFT)
+        fsl2 = Label(self.sliderFrame, text = " \n " + "Placeholder",justify=LEFT,padx=50)
         fsl2.grid(row = 1, column = 0, sticky=N+W,padx=50)
-        fsl3 = Label(self.sliderFrame, text = " \n" + "Placeholder",justify=LEFT)
+        fsl3 = Label(self.sliderFrame, text = " \n " + "Placeholder",justify=LEFT,padx=50)
         fsl3.grid(row = 2, column = 0, sticky=N+W,padx=50)
-        fsl4 = Label(self.sliderFrame, text = " \n" + "Placeholder",justify=LEFT)
+        fsl4 = Label(self.sliderFrame, text = " \n " + "Placeholder",justify=LEFT,padx=50)
         fsl4.grid(row = 3, column = 0, sticky=N+W,padx=50)
-        fsl5 = Label(self.sliderFrame, text = " \n" + "Placeholder",justify=LEFT)
+        fsl5 = Label(self.sliderFrame, text = " \n " + "Placeholder",justify=LEFT,padx=50)
         fsl5.grid(row = 4, column = 0, sticky=N+W,padx=50)
+        #Actual sliders
 
-        s1 = Scale(self.sliderFrame, from_ = 0, to = 100, orient = HORIZONTAL)
+        s1 = Scale(self.sliderFrame,variable = self.sliderVariables[0], from_ = 0, to = 100, orient = HORIZONTAL)
         s1.grid(row = 0, column = 1, sticky=N+W)
-        s2 = Scale(self.sliderFrame, from_ = 0, to = 100, orient = HORIZONTAL)
+        s2 = Scale(self.sliderFrame,variable = self.sliderVariables[1], from_ = 0, to = 100, orient = HORIZONTAL)
         s2.grid(row = 1, column = 1, sticky=N+W)
-        s3 = Scale(self.sliderFrame, from_ = 0, to = 100, orient = HORIZONTAL)
+        s3 = Scale(self.sliderFrame,variable = self.sliderVariables[2], from_ = 0, to = 100, orient = HORIZONTAL)
         s3.grid(row = 2, column = 1, sticky=N+W)
-        s4 = Scale(self.sliderFrame, from_ = 0, to = 100, orient = HORIZONTAL)
+        s4 = Scale(self.sliderFrame,variable = self.sliderVariables[3], from_ = 0, to = 100, orient = HORIZONTAL)
         s4.grid(row = 3, column = 1, sticky=N+W)
-        s5 = Scale(self.sliderFrame, from_ = 0, to = 100, orient = HORIZONTAL)
+        s5 = Scale(self.sliderFrame,variable = self.sliderVariables[4], from_ = 0, to = 100, orient = HORIZONTAL)
         s5.grid(row = 4, column = 1, sticky=N+W)
 
         self.sliderLabelList = [fsl1, fsl2, fsl3, fsl4, fsl5]
         self.sliderList = [s1,s2,s3,s4,s5]
 
-
-
-        #todo remove this print once i get it working
-        print(self.sliderLabelList)
-        print(self.sliderList)
-
-        self.sliderFrame.grid(row = 1, column = 1, rowspan=5, sticky = N+W)
 
         #TODO reminder: These are not gridded because we swapped to a dropdown.
         #Sorting button work
@@ -133,27 +125,29 @@ class UI:
         #self.buttonPopularitySort.grid(column=1, row=0)
         #self.buttonDispenseCountSort.grid(column=2, row=0)
 
-        #Sorting dropdown Menu
+
+        #frame for all current buttons
+
+        #All buttons and dropdown initialization
         self.varSort = StringVar()
         self.varSort.set("A-Z")
-        self.sortMenu = OptionMenu(self.root, self.varSort, "A-Z", "Popularity", "Dispense Count")
-        self.sortMenu.grid(column=0, row=3,sticky=N+W )
+        self.sortMenu = OptionMenu(self.buttonFrame, self.varSort, "A-Z", "Popularity", "Dispense Count")
         #this trace follows the value of self.varSort and binds it to self.sortingChanged
         self.varSort.trace('w', self.sortingChanged)
-
         #random button
-        self.randomButton = Button(self.root, text='Random', command=self.chooseRandomDrink)
-        self.randomButton.grid(column=0, row=4, sticky=N+W)
-
+        self.randomButton = Button(self.buttonFrame, text='Random', command=self.chooseRandomDrink)
         #'Surprise me' button
-        self.surpriseButton = Button(self.root, text='Surprise me!', command=self.chooseSurpriseDrink)
-        self.surpriseButton.grid(column=0, row=5,sticky=N+W)
-
-
-
+        self.surpriseButton = Button(self.buttonFrame, text='Surprise me!', command=self.chooseSurpriseDrink)
         #dispenseButton
-        self.dispenseButton = Button(self.root, text='dispense', command=self.pourIt)
-        self.dispenseButton.grid(column=1, row=1, sticky=S+E)
+        self.dispenseButton = Button(self.buttonFrame, text='dispense', command=self.pourIt)
+
+        #BUTTONFRAME GRIDDING
+        self.sortMenu.grid()
+        self.randomButton.grid()
+        self.surpriseButton.grid()
+        self.dispenseButton.grid()
+
+
 
         #MENUWORK
         self.menu = Menu(self.root)
@@ -167,7 +161,13 @@ class UI:
         self.log.info("Entering -> GUI -> mainLoop()")
 
         #pack the frame first as both frame and status bar are children to root, this sets them up well.
-        self.frame.grid()
+        self.listboxDrinkList.grid(row=0,column = 0, sticky=N+W)
+        self.detailViewFrame.grid(row = 0, column = 1)
+        self.sliderFrame.grid(row = 1, column = 1, rowspan=5, sticky = N+W)
+        self.buttonFrame.grid(row = 1, column = 0)
+
+
+
         #self.frameSortButtons.grid(column=0,row=1, sticky= N+W) THIS IS COMMENTED AS IT IS BUTTON RELATED AND NOT DROPDOWN RELATED
         self.status.set("Ready...")
         self.root.mainloop()
@@ -181,15 +181,30 @@ class UI:
         self.arduino.disconnect()
         self.root.destroy()
 
+    def slidersAdjusted(self):
+        total=100
+        for slider in self.sliderVariables:
+            pass
+
+
     def pourIt(self):
         self.log.info("Entering -> GUI ->  PourIt()")
         if messagebox.askyesno("Drinkin' Time?", "Are you sure the cup is in place and this is the drink you want?"):
             pass
-        selection = self.listboxDrinkList.curselection()[0]
+        selection =  self.listboxDrinkList.curselection()[0]
         selection = int(selection)
         drinkToPour = self.drinkObjArray[selection]
+        sliderIndex = 0
+        dispenseArray = []
+        for i in drinkToPour.ingredientListCleaned:
+            if i != 0:
+                dispenseArray.append(self.sliderList[sliderIndex].get())
+                sliderIndex+=1
+            else:
+                dispenseArray.append(0)
+
         self.log.info("Information -> GUI -> Drink to Pour is: %s" %drinkToPour.drinkName)
-        self.arduino.sendDrink(drinkToPour)
+        self.arduino.sendDrink(dispenseArray)
         self.log.info("Leaving  -> GUI -> Pourit()")
         pass
 
@@ -199,8 +214,6 @@ class UI:
         self.log.info("SELECTED INDEX: %s "%selection)
         self.log.info("DRINK SELECTED: %s " %self.drinkList[selection][1])
         self.log.info("DRINK Description: %s " %self.drinkList[int(self.listboxDrinkList.curselection()[0])][15])
-        #var = self.arduino.readDrinkResponse() #this is temp in order to see if comms are working.
-        #self.log.info("Arduino sent back : %s" %var)
 
     def refreshDetailView(self, temp):
         selection = self.listboxDrinkList.curselection()[0]
@@ -209,19 +222,27 @@ class UI:
         self.descLabel.config(text=selectedDrink.description)
         self.nameLabel.config(text=selectedDrink.drinkName)
         self.drinkImageLabel.config(image=selectedDrink.image)
-        self.starImageLabel.config(image=self.stars[random.randrange(0,6)])
         self.starImageLabel.config(image=self.stars[selectedDrink.starRating])
 
         #adding stiffness sliders
+        #this hides all current sliders and sets them all to 0
+        for i in range(0,5):
+            try:
+                self.sliderList[i].set(0)
+                self.sliderLabelList[i].grid_forget()
+                self.sliderList[i].grid_forget()
+            except IndexError:
+                pass
+
         currentRow = 0
         drinkIndex = 0
 
+        #This for block relabels all the sliders and populates the necessary amount of sliders with appropriate proportions
         for ingredient in selectedDrink.ingredientListCleaned:
 
-
             if ingredient != 0:
-                self.sliderLabelList[currentRow].config(text = "\n" + constants.INGREDIENTLIST[drinkIndex])
-                self.sliderLabelList[currentRow].grid(column = 0, row = currentRow, sticky=W)
+                self.sliderLabelList[currentRow].config(text = "\n " + constants.INGREDIENTLIST[drinkIndex])
+                self.sliderLabelList[currentRow].grid(column = 0, row = currentRow, sticky=W, )
                 self.sliderList[currentRow].grid(column = 1, row=currentRow,sticky=W)
                 proportion = DoubleVar()
                 proportion = ingredient / float(selectedDrink.totalSize)
@@ -230,9 +251,8 @@ class UI:
             elif ingredient == 0:
                 pass
             drinkIndex += 1
-        for i in range(currentRow - 1 ,5):
-            self.sliderLabelList[currentRow].grid_forget()
-            self.sliderList[currentRow].grid_forget()
+
+
 
     def populateList(self):
         self.drinkList = self.db.listDrinksByName()
@@ -256,8 +276,6 @@ class UI:
         for drink in self.drinkObjArray:
             self.listboxDrinkList.insert(END,drink.drinkName)
 
-        #self.listboxDrinkList.select_set(0)
-
         self.log.info("Leaving  -> GUI -> reloadList()")
 
     def chooseRandomDrink(self): #function called when 'Random' button is selected
@@ -271,10 +289,6 @@ class UI:
     def chooseSurpriseDrink(self): #function called when 'Surprise me!' button is selected
         num_drinks = self.listboxDrinkList.size()
         which_drink = random.randint(0, num_drinks-1)
-        self.reloadList()
-        self.listboxDrinkList.select_set(which_drink)
-        self.listboxDrinkList.see(which_drink)
-        self.refreshDetailView("")
         self.pourIt()
 
     def sortingChanged(self,t1,t2,t3):#these are garbage variables due to the widget returning 4 positional args
