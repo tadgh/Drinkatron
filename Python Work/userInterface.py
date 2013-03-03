@@ -47,7 +47,7 @@ class UI:
 
 
         self.root.title("Drinkatron v%s"%constants.VERSION)
-        self.root.geometry("800x800")
+        self.root.geometry("1280x800")
 
 
         self.status = StatusBar(self.root)
