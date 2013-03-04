@@ -41,9 +41,9 @@ class UI:
 
         #TOPLEVEL FRAMES
         self.root = Tk()
-        self.detailViewFrame = Frame(self.root, width = 600)
-        self.sliderFrame = Frame(self.root)
-        self.buttonFrame = Frame(self.root)
+        self.detailViewFrame = Frame(self.root, bd=1,bg="yellow",width = 600,height=600,relief=SUNKEN)
+        self.sliderFrame = Frame(self.root,bd=1,bg="blue",width=409, height = 400 ,relief=RAISED)
+        self.buttonFrame = Frame(self.root,bd=1,bg="red",relief=SUNKEN)
 
 
         self.root.title("Drinkatron v%s"%constants.VERSION)
@@ -77,7 +77,7 @@ class UI:
         self.drinkImageLabel.grid(row = 1, column = 0,columnspan=10, padx=50)#to allow space for the dispense button
         self.nameLabel.grid(row = 0, column = 0,sticky = N)
         self.starImageLabel.grid(row=3, column = 0, columnspan=2, sticky = W, padx=50)
-        self.dummyDescLabel.grid(row=2,column=0, sticky=W, padx=50)
+        #self.dummyDescLabel.grid(row=2,column=0, sticky=W, padx=50)
         self.descLabel.grid(row=2, column =0, sticky = W, padx=53)
 
 
@@ -86,28 +86,28 @@ class UI:
         self.sliderLabelList = []
         self.sliderVariables = [DoubleVar, DoubleVar, DoubleVar, DoubleVar, DoubleVar]
         #Slider Labels
-        fsl1 = Label(self.sliderFrame, text = " \n " + "Placeholder",justify=LEFT,padx=50)
-        fsl1.grid(row = 0, column = 0, sticky=N+W,padx=50)
-        fsl2 = Label(self.sliderFrame, text = " \n " + "Placeholder",justify=LEFT,padx=50)
-        fsl2.grid(row = 1, column = 0, sticky=N+W,padx=50)
-        fsl3 = Label(self.sliderFrame, text = " \n " + "Placeholder",justify=LEFT,padx=50)
-        fsl3.grid(row = 2, column = 0, sticky=N+W,padx=50)
-        fsl4 = Label(self.sliderFrame, text = " \n " + "Placeholder",justify=LEFT,padx=50)
-        fsl4.grid(row = 3, column = 0, sticky=N+W,padx=50)
-        fsl5 = Label(self.sliderFrame, text = " \n " + "Placeholder",justify=LEFT,padx=50)
-        fsl5.grid(row = 4, column = 0, sticky=N+W,padx=50)
+        fsl1 = Label(self.sliderFrame,font=("Helvetica", 24), text = " \n " + "Placeholder",justify=LEFT,padx=10)
+        fsl1.grid(row = 0, column = 0, sticky=N+W)
+        fsl2 = Label(self.sliderFrame,font=("Helvetica", 24), text = " \n " + "Placeholder",justify=LEFT,padx=10)
+        fsl2.grid(row = 1, column = 0, sticky=N+W)
+        fsl3 = Label(self.sliderFrame,font=("Helvetica", 24), text = " \n " + "Placeholder",justify=LEFT,padx=10)
+        fsl3.grid(row = 2, column = 0, sticky=N+W)
+        fsl4 = Label(self.sliderFrame,font=("Helvetica", 24), text = " \n " + "Placeholder",justify=LEFT,padx=10)
+        fsl4.grid(row = 3, column = 0, sticky=N+W)
+        fsl5 = Label(self.sliderFrame,font=("Helvetica", 24), text = " \n " + "Placeholder",justify=LEFT,padx=10)
+        fsl5.grid(row = 4, column = 0, sticky=N+W)
         #Actual sliders
 
         s1 = Scale(self.sliderFrame,variable = self.sliderVariables[0], from_ = 0, to = 100, orient = HORIZONTAL)
-        s1.grid(row = 0, column = 1, sticky=N+W)
+        s1.grid(row = 0, column = 1, sticky=N+E)
         s2 = Scale(self.sliderFrame,variable = self.sliderVariables[1], from_ = 0, to = 100, orient = HORIZONTAL)
-        s2.grid(row = 1, column = 1, sticky=N+W)
+        s2.grid(row = 1, column = 1, sticky=N+E)
         s3 = Scale(self.sliderFrame,variable = self.sliderVariables[2], from_ = 0, to = 100, orient = HORIZONTAL)
-        s3.grid(row = 2, column = 1, sticky=N+W)
+        s3.grid(row = 2, column = 1, sticky=N+E)
         s4 = Scale(self.sliderFrame,variable = self.sliderVariables[3], from_ = 0, to = 100, orient = HORIZONTAL)
-        s4.grid(row = 3, column = 1, sticky=N+W)
+        s4.grid(row = 3, column = 1, sticky=N+E)
         s5 = Scale(self.sliderFrame,variable = self.sliderVariables[4], from_ = 0, to = 100, orient = HORIZONTAL)
-        s5.grid(row = 4, column = 1, sticky=N+W)
+        s5.grid(row = 4, column = 1, sticky=N+E)
 
         self.sliderLabelList = [fsl1, fsl2, fsl3, fsl4, fsl5]
         self.sliderList = [s1,s2,s3,s4,s5]
@@ -161,12 +161,11 @@ class UI:
         self.log.info("Entering -> GUI -> mainLoop()")
 
         #pack the frame first as both frame and status bar are children to root, this sets them up well.
-        self.listboxDrinkList.grid(row=0,column = 0, sticky=N+W)
-        self.detailViewFrame.grid(row = 0, column = 1)
-        self.sliderFrame.grid(row = 1, column = 1, rowspan=5, sticky = N+W)
-        self.buttonFrame.grid(row = 1, column = 0)
-
-
+        self.listboxDrinkList.grid(row=0,column = 0,rowspan=2, sticky=N+W)
+        self.detailViewFrame.grid(row = 0, column = 1, rowspan=2)
+        self.sliderFrame.grid(row = 0, column = 2, sticky = N+W)
+        self.sliderFrame.grid_propagate(False)
+        self.buttonFrame.grid(row = 1, column = 2,sticky=S+W)
 
         #self.frameSortButtons.grid(column=0,row=1, sticky= N+W) THIS IS COMMENTED AS IT IS BUTTON RELATED AND NOT DROPDOWN RELATED
         self.status.set("Ready...")
