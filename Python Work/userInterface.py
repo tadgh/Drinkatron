@@ -41,8 +41,8 @@ class UI:
 
         #TOPLEVEL FRAMES
         self.root = Tk()
-        self.detailViewFrame = Frame(self.root, bd=1,bg="yellow",width = 600,height=600,relief=SUNKEN)
-        self.sliderFrame = Frame(self.root,bd=1,bg="blue",width=409, height = 400 ,relief=RAISED)
+        self.detailViewFrame = Frame(self.root, bd=1,bg="yellow",width = 400,height=520,relief=SUNKEN)
+        self.sliderFrame = Frame(self.root,bd=1,bg="blue",width=400, height = 280 ,relief=RAISED)
         self.buttonFrame = Frame(self.root,bd=1,bg="red",relief=SUNKEN)
 
 
@@ -54,7 +54,7 @@ class UI:
         self.status.set("Initializing UI...")
 
         #LISTBOX WORK
-        self.listboxDrinkList = Listbox(self.root, font = ("Helvetica", 24 ), height=13)
+        self.listboxDrinkList = Listbox(self.root, font = ("Helvetica", 42 ), height=12, width=20)
 
         self.listboxDrinkList.bind('<<ListboxSelect>>', self.refreshDetailView)#This is some wonky code that binds self.refreshDetailView as a callback when the ListBoxSelect TKAction is called.
         self.populateList()
@@ -74,7 +74,7 @@ class UI:
         self.dummyDescLabel = Label(self.detailViewFrame,text="\n\n\n")
 
         #gridding
-        self.drinkImageLabel.grid(row = 1, column = 0,columnspan=10, padx=50)#to allow space for the dispense button
+        self.drinkImageLabel.grid(row = 1, column = 0,columnspan=10)#padx=50)#to allow space for the dispense button
         self.nameLabel.grid(row = 0, column = 0,sticky = N)
         self.starImageLabel.grid(row=3, column = 0, columnspan=2, sticky = W, padx=50)
         #self.dummyDescLabel.grid(row=2,column=0, sticky=W, padx=50)
@@ -86,27 +86,27 @@ class UI:
         self.sliderLabelList = []
         self.sliderVariables = [DoubleVar, DoubleVar, DoubleVar, DoubleVar, DoubleVar]
         #Slider Labels
-        fsl1 = Label(self.sliderFrame,font=("Helvetica", 24), text = " \n " + "Placeholder",justify=LEFT,padx=10)
+        fsl1 = Label(self.sliderFrame,font=("Helvetica", 24), text =  "Placeholder",justify=LEFT,padx=10)
         fsl1.grid(row = 0, column = 0, sticky=N+W)
-        fsl2 = Label(self.sliderFrame,font=("Helvetica", 24), text = " \n " + "Placeholder",justify=LEFT,padx=10)
+        fsl2 = Label(self.sliderFrame,font=("Helvetica", 24), text =  "Placeholder",justify=LEFT,padx=10)
         fsl2.grid(row = 1, column = 0, sticky=N+W)
-        fsl3 = Label(self.sliderFrame,font=("Helvetica", 24), text = " \n " + "Placeholder",justify=LEFT,padx=10)
+        fsl3 = Label(self.sliderFrame,font=("Helvetica", 24), text =  "Placeholder",justify=LEFT,padx=10)
         fsl3.grid(row = 2, column = 0, sticky=N+W)
-        fsl4 = Label(self.sliderFrame,font=("Helvetica", 24), text = " \n " + "Placeholder",justify=LEFT,padx=10)
+        fsl4 = Label(self.sliderFrame,font=("Helvetica", 24), text =  "Placeholder",justify=LEFT,padx=10)
         fsl4.grid(row = 3, column = 0, sticky=N+W)
-        fsl5 = Label(self.sliderFrame,font=("Helvetica", 24), text = " \n " + "Placeholder",justify=LEFT,padx=10)
+        fsl5 = Label(self.sliderFrame,font=("Helvetica", 24), text =  "Placeholder",justify=LEFT,padx=10)
         fsl5.grid(row = 4, column = 0, sticky=N+W)
         #Actual sliders
 
-        s1 = Scale(self.sliderFrame,variable = self.sliderVariables[0], from_ = 0, to = 100, orient = HORIZONTAL)
+        s1 = Scale(self.sliderFrame,variable = self.sliderVariables[0], from_ = 0, to = 100, orient = HORIZONTAL, showvalue=0, length = 400)
         s1.grid(row = 0, column = 1, sticky=N+E)
-        s2 = Scale(self.sliderFrame,variable = self.sliderVariables[1], from_ = 0, to = 100, orient = HORIZONTAL)
+        s2 = Scale(self.sliderFrame,variable = self.sliderVariables[1], from_ = 0, to = 100, orient = HORIZONTAL, showvalue=0, length = 400)
         s2.grid(row = 1, column = 1, sticky=N+E)
-        s3 = Scale(self.sliderFrame,variable = self.sliderVariables[2], from_ = 0, to = 100, orient = HORIZONTAL)
+        s3 = Scale(self.sliderFrame,variable = self.sliderVariables[2], from_ = 0, to = 100, orient = HORIZONTAL, showvalue=0, length = 400)
         s3.grid(row = 2, column = 1, sticky=N+E)
-        s4 = Scale(self.sliderFrame,variable = self.sliderVariables[3], from_ = 0, to = 100, orient = HORIZONTAL)
+        s4 = Scale(self.sliderFrame,variable = self.sliderVariables[3], from_ = 0, to = 100, orient = HORIZONTAL, showvalue=0, length = 400)
         s4.grid(row = 3, column = 1, sticky=N+E)
-        s5 = Scale(self.sliderFrame,variable = self.sliderVariables[4], from_ = 0, to = 100, orient = HORIZONTAL)
+        s5 = Scale(self.sliderFrame,variable = self.sliderVariables[4], from_ = 0, to = 100, orient = HORIZONTAL, showvalue=0, length = 400)
         s5.grid(row = 4, column = 1, sticky=N+E)
 
         self.sliderLabelList = [fsl1, fsl2, fsl3, fsl4, fsl5]
@@ -132,20 +132,24 @@ class UI:
         self.varSort = StringVar()
         self.varSort.set("A-Z")
         self.sortMenu = OptionMenu(self.buttonFrame, self.varSort, "A-Z", "Popularity", "Dispense Count")
+        self.sortMenu.config(font=("Helvetica", 20),width=len("Dispense Count"))
         #this trace follows the value of self.varSort and binds it to self.sortingChanged
         self.varSort.trace('w', self.sortingChanged)
         #random button
         self.randomButton = Button(self.buttonFrame, text='Random', command=self.chooseRandomDrink)
+        self.randomButton.config(font=("Helvetica", 20),width=len("Dispense Count"))
         #'Surprise me' button
         self.surpriseButton = Button(self.buttonFrame, text='Surprise me!', command=self.chooseSurpriseDrink)
+        self.surpriseButton.config(font=("Helvetica", 20),width=len("Dispense Count"))
         #dispenseButton
         self.dispenseButton = Button(self.buttonFrame, text='dispense', command=self.pourIt)
+        self.dispenseButton.config(font=("Helvetica", 20),width=len("Dispense Count"))
 
         #BUTTONFRAME GRIDDING
-        self.sortMenu.grid()
-        self.randomButton.grid()
-        self.surpriseButton.grid()
-        self.dispenseButton.grid()
+        self.sortMenu.grid(sticky=W)
+        self.randomButton.grid(sticky=W)
+        self.surpriseButton.grid(sticky=W)
+        self.dispenseButton.grid(sticky=W)
 
 
 
@@ -162,10 +166,11 @@ class UI:
 
         #pack the frame first as both frame and status bar are children to root, this sets them up well.
         self.listboxDrinkList.grid(row=0,column = 0,rowspan=2, sticky=N+W)
-        self.detailViewFrame.grid(row = 0, column = 1, rowspan=2)
-        self.sliderFrame.grid(row = 0, column = 2, sticky = N+W)
-        self.sliderFrame.grid_propagate(False)
-        self.buttonFrame.grid(row = 1, column = 2,sticky=S+W)
+        self.detailViewFrame.grid(row = 0, column = 1)
+        self.detailViewFrame.grid_propagate(False)
+        self.sliderFrame.grid(row = 1, column = 1, sticky = N+W)
+        self.sliderFrame.grid_propagate(False)#propagate(False) prevents the frame from resizing based on widget size.
+        self.buttonFrame.grid(row = 0, column = 2,sticky=N+W)
 
         #self.frameSortButtons.grid(column=0,row=1, sticky= N+W) THIS IS COMMENTED AS IT IS BUTTON RELATED AND NOT DROPDOWN RELATED
         self.status.set("Ready...")
@@ -240,9 +245,11 @@ class UI:
         for ingredient in selectedDrink.ingredientListCleaned:
 
             if ingredient != 0:
-                self.sliderLabelList[currentRow].config(text = "\n " + constants.INGREDIENTLIST[drinkIndex])
-                self.sliderLabelList[currentRow].grid(column = 0, row = currentRow, sticky=W, )
-                self.sliderList[currentRow].grid(column = 1, row=currentRow,sticky=W)
+                self.sliderLabelList[currentRow].config(text =  constants.INGREDIENTLIST[drinkIndex])
+                #self.sliderLabelList[currentRow].grid(column = 0, row = currentRow, sticky=W ) #TODO temp comment out to test Label Functionality of Scale widgets.
+                self.sliderList[currentRow].config(label=constants.INGREDIENTLIST[drinkIndex], font=("Arial", 24))
+                self.sliderList[currentRow].grid(column = 1, row=currentRow,sticky=E)
+
                 proportion = DoubleVar()
                 proportion = ingredient / float(selectedDrink.totalSize)
                 self.sliderList[currentRow].set(proportion * 100)
