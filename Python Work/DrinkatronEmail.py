@@ -20,9 +20,6 @@ class email:
         self.session.sendmail(username, recipient_list, content)
 
 
-    def notify_customers(self):
-
-
 
 
 

@@ -22,6 +22,7 @@ class drink:
             self.ing10 = 0
             self.ing11 = 0
             self.ing12 = 0
+  
 
             self.hasGarnish = False
             self.dispenseCount = 0
