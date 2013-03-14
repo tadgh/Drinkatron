@@ -57,7 +57,7 @@ class drink:
             self.cost = cost
             self.dispenseCount = dispenseCount#TODO cast this to int for linux shit
             self.imagePath = imagePath
-            self.image = PhotoImage(file = os.path.join(os.path.dirname(__file__),"..", "Resources", "Images", self.imagePath))
+            #self.image = PhotoImage(file = os.path.join(os.path.dirname(__file__),"..", "Resources", "Images", self.imagePath)) #todo commented this out for webclient testing
             self.negativeVoteCount = negativeVoteCount #todo verify functionality
             self.starRating = None
             self.determineStarRating()
