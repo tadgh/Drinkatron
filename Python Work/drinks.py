@@ -49,13 +49,13 @@ class drink:
             self.ing10 = ing10
             self.ing11 = ing11
             self.ing12 = ing12
-            self.totalSize = 0
-            self.totalIngredients = 0
-            self.garnish = garnish
+            #self.totalSize = 0
+            #self.totalIngredients = 0
+            #self.garnish = garnish
             self.description = description
             self.positiveVoteCount = positiveVoteCount
-            self.cost = cost
-            self.dispenseCount = dispenseCount#TODO cast this to int for linux shit
+            #self.cost = cost
+            self.dispenseCount = dispenseCount
             self.imagePath = imagePath
             #self.image = PhotoImage(file = os.path.join(os.path.dirname(__file__),"..", "Resources", "Images", self.imagePath)) #todo commented this out for webclient testing
             self.negativeVoteCount = negativeVoteCount #todo verify functionality
@@ -67,6 +67,29 @@ class drink:
             self.ingredientListCleaned = self.generateListForArduino()
             self.totalSize, self.totalIngredients = self.determineDrinkStats()
             self.printDrink()
+
+
+    def convertToDict(self):
+        infoDict = { 'drinkID' : self.id,
+                     'name': self.drinkName,
+                     'ing1': self.ing1,
+                     'ing2': self.ing2,
+                     'ing3': self.ing3,
+                     'ing4': self.ing4,
+                     'ing5': self.ing5,
+                     'ing6': self.ing6,
+                     'ing7': self.ing7,
+                     'ing8': self.ing8,
+                     'ing9': self.ing9,
+                     'ing10': self.ing10,
+                     'ing11': self.ing11,
+                     'ing12': self.ing12,
+                     'totalSize' : self.totalSize,
+                     'dispenseCount' : self.dispenseCount,
+                     'starRating' : self.starRating
+                     }
+        return infoDict
+
 
     def determineDrinkStats(self):
         totSize = 0

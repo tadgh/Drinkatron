@@ -2,9 +2,10 @@ import bottle
 import bottle_sqlite
 import dbinterface
 import drinks
+import logging
 
-
-
+log = logging.getLogger("WEB")
+log.info("Entering -> WebClient")
 
 db = dbinterface.DB()
 drinkList = db.listDrinksByName()
@@ -12,14 +13,18 @@ drinkList = db.listDrinksByName()
 ########################################
 #THIS IS CRUCIAL. this code initializes ALL drinks into an array, all at once. DO NOT FUCK WITH THIS CODE.
 drinkObjArray = []
+drinkDictList = []
 for currentDrink in range(len(drinkList)):
-    drinkObjArray.append(drinks.drink(*drinkList[currentDrink]))
+    tempDrink = drinks.drink(*drinkList[currentDrink])
+    drinkObjArray.append(tempDrink)
+    drinkDictList.append(tempDrink.convertToDict())
     db.log.info(drinkObjArray[currentDrink].drinkName)
     #######################################
 
 
 
-
+for item in drinkDictList:
+    print(item)
 
 @bottle.route('/')
 def index():
@@ -34,13 +39,14 @@ def index():
             <script type="text/javascript">
             $(document).ready(function() {
 
-                $("button").click(function()
+                $("#btnGetDrinks").click(function()
                     {
                          $.ajax({
                             url: "/getDrinks",
                             type: "get",
                             success: function(data){
-                                alert(data);
+                                //alert(data);
+                                $("#divDrinkList").html(data)
                             }
                         });
                     });
@@ -49,7 +55,8 @@ def index():
 
             </script>
             <body>
-            <button>button1</button>
+            <button id="btnGetDrinks">button1</button>
+            <div id="divDrinkList"></div>
             </body>
             </html>
     '''
@@ -59,10 +66,12 @@ def index():
 def getDrinks():
     drinkList = db.listDrinksByName()
     returnHTML = ""
-    print("WOOHOO")
-    for item in drinkList:
-        returnHTML += item[1] + "</br>"
+    for item in drinkDictList:
+        returnHTML += item['name'] + "</br>"
     return returnHTML
+@bottle.route('/getDrink/:name')
+def getDrink(name):
+    pass
 
 
 
