@@ -26,13 +26,30 @@ def index():
     return '''
             <!DOCTYPE html>
             <html>
-            <body>
+
 
             <p>Click the button to trigger a function.</p>
-            <a href="/getDrinks">get Drinks</a>
-            <button onclick="$.ajax({url='localhost:8082/getDrinks'})"> button 1</button>
+            <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+
+            <script type="text/javascript">
+            $(document).ready(function() {
+
+                $("button").click(function()
+                    {
+                         $.ajax({
+                            url: "/getDrinks",
+                            type: "get",
+                            success: function(data){
+                                alert(data);
+                            }
+                        });
+                    });
+            });
 
 
+            </script>
+            <body>
+            <button>button1</button>
             </body>
             </html>
     '''
