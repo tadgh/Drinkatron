@@ -58,7 +58,7 @@ class drink:
             self.dispenseCount = dispenseCount
             self.imagePath = imagePath
             #self.image = PhotoImage(file = os.path.join(os.path.dirname(__file__),"..", "Resources", "Images", self.imagePath)) #todo commented this out for webclient testing
-            self.negativeVoteCount = negativeVoteCount #todo verify functionality
+            self.negativeVoteCount = negativeVoteCount
             self.starRating = None
             self.determineStarRating()
             self.hasBeenModded = False

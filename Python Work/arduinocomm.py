@@ -39,7 +39,7 @@ class Connection:
         for ingredient in drinkArray:
            self.log.info("Sending ingredient: %s" %ingredient)
            self.ser.write(str(ingredient).encode())
-           self.ser.write("*".encode())
+           self.ser.write("*".encode()) # todo test this as im not sure what I was doing here.
            #sleep(0.1)
         self.log.info("Leaving -> sendDrink")
 

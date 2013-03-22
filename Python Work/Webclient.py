@@ -3,10 +3,11 @@ import bottle_sqlite
 import dbinterface
 import drinks
 import logging
+import time
 
 log = logging.getLogger("WEB")
 log.info("Entering -> WebClient")
-
+bottle.debug(True)
 db = dbinterface.DB()
 drinkList = db.listDrinksByName()
 drinkList = db.listDrinksByName()
@@ -55,7 +56,8 @@ def index():
 
             </script>
             <body>
-            <button id="btnGetDrinks">button1</button>
+            <button id="btnGetDrinks">get all drinks</button>
+            <button id="getDrinkDetails">get drink details</button>
             <div id="divDrinkList"></div>
             </body>
             </html>
@@ -69,11 +71,20 @@ def getDrinks():
     for item in drinkDictList:
         returnHTML += item['name'] + "</br>"
     return returnHTML
+
 @bottle.route('/getDrink/:name')
 def getDrink(name):
+    print(name)
+    for drink in drinkDictList:
+        if drink['name'] == name:
+            print(drink)
+            return drink
+
+@bottle.route('/dispense/:name')
+def dispense():
     pass
 
 
 
-bottle.run(host='localhost', port=8082)
+bottle.run(host='localhost', port=8082, reloader=True)
 

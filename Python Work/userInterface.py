@@ -340,6 +340,7 @@ class UI:
         self.drinkObjArray = sorted(self.drinkObjArray, key=lambda derf : derf.dispenseCount, reverse = True)#grabs Drink Name
         self.log.info(self.drinkObjArray)
 
+    def sortByIngredient(self, ingredient):
         self.reloadList()
         self.listboxDrinkList.select_set(0)
         self.refreshDetailView("")
@@ -347,6 +348,11 @@ class UI:
         for button in self.buttonList:
             button.config(relief=RAISED)
         self.buttonDispenseCountSort.config(relief = SUNKEN)
+
+    def sortByKey(self, key):
+        self.log.info("Entering -> sortByKey")
+        #todo actually write this shit and figure out how to pass a
+        self.log.info("Leaving -> sortByKey")
 
     def initStars(self):
         self.stars.append(PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "zeroStars.gif")))
