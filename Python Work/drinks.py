@@ -57,7 +57,7 @@ class drink:
             #self.cost = cost
             self.dispenseCount = dispenseCount
             self.imagePath = imagePath
-            self.image = PhotoImage(file = os.path.join(os.path.dirname(__file__),"..", "Resources", "Images", self.imagePath)) #todo commented this out for webclient testing
+            #self.image = PhotoImage(file = os.path.join(os.path.dirname(__file__),"..", "Resources", "Images", self.imagePath)) #todo commented this out for webclient testing
             self.negativeVoteCount = negativeVoteCount
             self.starRating = None
             self.determineStarRating()
@@ -88,8 +88,12 @@ class drink:
                      'dispenseCount' : self.dispenseCount,
                      'starRating' : self.starRating
                      }
-        return infoDict
 
+        for ingredient in ['ing1','ing2','ing3','ing4','ing5','ing6','ing7','ing8','ing9','ing10','ing11','ing12',]:
+            if isinstance(infoDict[ingredient], str):
+                infoDict[ingredient] = 0
+
+        return infoDict
 
     def determineDrinkStats(self):
         totSize = 0

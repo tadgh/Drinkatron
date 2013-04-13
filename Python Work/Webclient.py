@@ -66,10 +66,15 @@ def index():
 
 @bottle.route('/getDrinks')
 def getDrinks():
-    drinkList = db.listDrinksByName()
-    returnHTML = ""
-    for item in drinkDictList:
-        returnHTML += item['name'] + "</br>"
+    #drinkList = db.listDrinksByName()
+    #returnHTML = "<table>"
+    #for item in drinkDictList:
+    #    returnHTML +="<tr>"
+    #    returnHTML += "<td>" + item['name'] + "</td>" + "<td>" + str(item['drinkID']) + "</td>"
+    #    returnHTML +="</tr>"
+    #returnHTML += "</table>"
+    return bottle.template('getDrinks', drinkDictList = drinkDictList)
+
     return returnHTML
 
 @bottle.route('/getDrink/:name')
