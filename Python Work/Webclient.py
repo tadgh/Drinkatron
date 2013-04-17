@@ -4,6 +4,8 @@ import dbinterface
 import drinks
 import logging
 import time
+import json
+
 
 log = logging.getLogger("WEB")
 log.info("Entering -> WebClient")
@@ -29,53 +31,11 @@ for item in drinkDictList:
 
 @bottle.route('/')
 def index():
-    return '''
-            <!DOCTYPE html>
-            <html>
-
-
-            <p>Click the button to trigger a function.</p>
-            <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
-
-            <script type="text/javascript">
-            $(document).ready(function() {
-
-                $("#btnGetDrinks").click(function()
-                    {
-                         $.ajax({
-                            url: "/getDrinks",
-                            type: "get",
-                            success: function(data){
-                                //alert(data);
-                                $("#divDrinkList").html(data)
-                            }
-                        });
-                    });
-            });
-
-
-            </script>
-            <body>
-            <button id="btnGetDrinks">get all drinks</button>
-            <button id="getDrinkDetails">get drink details</button>
-            <div id="divDrinkList"></div>
-            </body>
-            </html>
-    '''
-
+    return bottle.template('index')
 
 @bottle.route('/getDrinks')
 def getDrinks():
-    #drinkList = db.listDrinksByName()
-    #returnHTML = "<table>"
-    #for item in drinkDictList:
-    #    returnHTML +="<tr>"
-    #    returnHTML += "<td>" + item['name'] + "</td>" + "<td>" + str(item['drinkID']) + "</td>"
-    #    returnHTML +="</tr>"
-    #returnHTML += "</table>"
     return bottle.template('getDrinks', drinkDictList = drinkDictList)
-
-    return returnHTML
 
 @bottle.route('/getDrink/:name')
 def getDrink(name):
@@ -85,11 +45,17 @@ def getDrink(name):
             print(drink)
             return drink
 
+
+#todo write code to do a lookup through getDrink/:name and then dispense based upon default ingredient proportions
 @bottle.route('/dispense/:name')
-def dispense():
+def dispense(name):
     pass
 
 
+#todo Write code to split up the string into sections indicating proportions.
+@bottle.route('/dispense/custom/:proportions')
+def dispense_custom(proportions)
+    pass
 
 bottle.run(host='localhost', port=8082, reloader=True)
 
