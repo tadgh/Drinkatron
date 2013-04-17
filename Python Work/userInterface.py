@@ -267,6 +267,8 @@ class UI:
         for currentDrink in range(len(self.drinkList)):
             self.drinkObjArray.append(drinks.drink(*self.drinkList[currentDrink]))
             self.log.info(self.drinkObjArray[currentDrink].drinkName)
+
+        self.initDrinkImages()    
         #######################################
 
 
@@ -353,6 +355,10 @@ class UI:
         self.log.info("Entering -> sortByKey")
         #todo actually write this shit and figure out how to pass a
         self.log.info("Leaving -> sortByKey")
+
+    def initDrinkImages(self):
+        for drink in self.drinkObjArray:
+            drink.image = PhotoImage(file = os.path.join(os.path.dirname(__file__),"..", "Resources", "Images", drink.imagePath))
 
     def initStars(self):
         self.stars.append(PhotoImage(file = os.path.join(os.path.dirname(__file__),"..","Resources","Images", "zeroStars.gif")))
