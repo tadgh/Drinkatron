@@ -5,6 +5,7 @@ import drinks
 import logging
 import time
 import json
+import constants
 
 
 log = logging.getLogger("WEB")
@@ -16,6 +17,12 @@ drinkList = db.listDrinksByName()
 ########################################
 #THIS IS CRUCIAL. this code initializes ALL drinks into an array, all at once. DO NOT FUCK WITH THIS CODE.
 drinkObjArray = []
+ingredientDict = {}
+for ingredient in constants.INGREDIENTLIST:
+    ingredientDict[ingredient] = 0
+
+print(ingredientDict)
+
 drinkDictList = []
 for currentDrink in range(len(drinkList)):
     tempDrink = drinks.drink(*drinkList[currentDrink])
@@ -49,13 +56,31 @@ def getDrink(name):
 #todo write code to do a lookup through getDrink/:name and then dispense based upon default ingredient proportions
 @bottle.route('/dispense/:name')
 def dispense(name):
-    pass
+    print(name)
+    cleanList = []
+    for drink in drinkDictList:
+        if drink['name'] == name:
+            cleanList.append(drink['ing1'])
+            cleanList.append(drink['ing2'])
+            cleanList.append(drink['ing3'])
+            cleanList.append(drink['ing4'])
+            cleanList.append(drink['ing5'])
+            cleanList.append(drink['ing6'])
+            cleanList.append(drink['ing7'])
+            cleanList.append(drink['ing8'])
+            cleanList.append(drink['ing9'])
+            cleanList.append(drink['ing10'])
+            cleanList.append(drink['ing11'])
+            cleanList.append(drink['ing12'])
+            print(cleanList)
+            return cleanList
+
 
 
 #todo Write code to split up the string into sections indicating proportions.
-@bottle.route('/dispense/custom/:proportions')
-def dispense_custom(proportions)
-    pass
+#@bottle.route('/dispense/custom/:proportions')
+#def dispense_custom(proportions):
+#    pass
 
-bottle.run(host='localhost', port=8082, reloader=True)
+bottle.run(host='localhost', port=8082)
 

@@ -1,11 +1,9 @@
-import os
-import drinks
-import constants
 import time
 import serial
 import logging
 from threading import *
 from time import sleep
+
 
 class Connection:
 
@@ -15,7 +13,8 @@ class Connection:
         self.log.info("Entering -> arduinoComm Consructor")
         self.listening = True
         try:
-            self.ser = serial.Serial('COM3',9600)#com6 is back most Keyboard USB port
+            self.ser = serial.Serial(
+                'COM3', 9600)  # com6 is back most Keyboard USB port
         except:
             self.log.error("COULD NOT FIND ARDUINO. THINGS WILL FAIL.")
             self.ser = None
@@ -29,54 +28,50 @@ class Connection:
             self.threadArduinoListener.start()
             self.log.info("Arduino Listener Started!!!!!")
         else:
-            self.log.warning("Unable to start arduino, therefore not starting the listener thread!!")
+            self.log.warning(
+                '''Unable to start arduino, therefore not
+                starting the listener thread!!''')
 
-
-    def sendDrink(self,drinkArray):
+    def sendDrink(self, drinkArray):
         self.log.info("Entering -> sendDrink")
         self.isDispensing = True
 
         for ingredient in drinkArray:
-           self.log.info("Sending ingredient: %s" %ingredient)
-           self.ser.write(str(ingredient).encode())
-           self.ser.write("*".encode()) # todo test this as im not sure what I was doing here.
-           #sleep(0.1)
+            self.log.info("Sending ingredient: %s" % ingredient)
+            self.ser.write(str(ingredient).encode())
+            self.ser.write(
+                "*".encode())  # todo test this
+            # sleep(0.1)
         self.log.info("Leaving -> sendDrink")
 
     def requestStatus(self):
         self.ser.write("#")
         time.sleep(5)
         ardResp = self.readDrinkResponse()
+        if ardResp is None:
+            pass
         return
-
-        pass
 
     def disconnect(self):
         self.log.info("Disconnecting -> Arduino on " + self.ser.port)
-        self.listening = False #This is a switch to dump out the reader Thread
+        # This is a switch to dump out the reader Thread
+        self.listening = False
         self.ser.close()
 
     def readResponse(self):
-        while self.listening == True:
+        while self.listening is True:
             result = []
 
             try:
                 while self.ser.inWaiting() > 0:
                     result.append(self.ser.readline().decode())
             except:
-                self.log.warning("Something wrong with reading Arduino Serial!!!")
+                self.log.warning(
+                    "Something wrong with reading Arduino Serial!!!")
             if result == []:
                 pass
             else:
                 for line in result:
-                    self.log.info("Arduino callback response: %s" %line)
+                    self.log.info("Arduino callback response: %s" % line)
 
             sleep(3)
-
-
-
-
-
-
-  
-

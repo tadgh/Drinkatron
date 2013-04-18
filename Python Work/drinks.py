@@ -1,15 +1,18 @@
 import re
 import logging
-from tkinter import PhotoImage
 import os
+import constants
 
 class drink:
-    def __init__(self,drinkID, drinkName, ing1, ing2, ing3, ing4, ing5, ing6, ing7, ing8, ing9, ing10, ing11, ing12, garnish, description, positiveVoteCount, cost, dispenseCount, imagePath, negativeVoteCount):
+    def __init__(self,drinkID, drinkName, ing1, ing2, ing3, ing4, ing5,
+                 ing6, ing7, ing8, ing9, ing10, ing11, ing12, garnish,
+                 description, positiveVoteCount, cost, dispenseCount,
+                 imagePath, negativeVoteCount):
         logging.basicConfig(file="runLog.txt", level=logging.INFO)
         self.log = logging.getLogger("DRINKS")
         self.log.info("Entering -> drinks.py Consructor")
 
-        if drinkID == None:
+        if drinkID is None:
             self.ing1 = 0
             self.ing2 = 0
             self.ing3 = 0
@@ -22,8 +25,6 @@ class drink:
             self.ing10 = 0
             self.ing11 = 0
             self.ing12 = 0
-  
-
             self.hasGarnish = False
             self.dispenseCount = 0
             self.popularity = 0
@@ -62,34 +63,49 @@ class drink:
             self.starRating = None
             self.determineStarRating()
             self.hasBeenModded = False
-
-
             self.ingredientListCleaned = self.generateListForArduino()
             self.totalSize, self.totalIngredients = self.determineDrinkStats()
             self.printDrink()
 
-
     def convertToDict(self):
-        infoDict = { 'drinkID' : self.id,
-                     'name': self.drinkName,
-                     'ing1': self.ing1,
-                     'ing2': self.ing2,
-                     'ing3': self.ing3,
-                     'ing4': self.ing4,
-                     'ing5': self.ing5,
-                     'ing6': self.ing6,
-                     'ing7': self.ing7,
-                     'ing8': self.ing8,
-                     'ing9': self.ing9,
-                     'ing10': self.ing10,
-                     'ing11': self.ing11,
-                     'ing12': self.ing12,
-                     'totalSize' : self.totalSize,
-                     'dispenseCount' : self.dispenseCount,
-                     'starRating' : self.starRating
-                     }
+        #infoDict = { 'drinkID' : self.id,
+        #             'name': self.drinkName,
+        #             'ing1': self.ing1,
+        #             'ing2': self.ing2,
+        #             'ing3': self.ing3,
+        #            'ing4': self.ing4,
+        #             'ing5': self.ing5,
+        #             'ing6': self.ing6,
+        #             'ing7': self.ing7,
+        #             'ing8': self.ing8,
+        #             'ing9': self.ing9,
+        #             'ing10': self.ing10,
+        #             'ing11': self.ing11,
+        #             'ing12': self.ing12,
+        #             'totalSize' : self.totalSize,
+        #             'dispenseCount' : self.dispenseCount,
+        #             'starRating' : self.starRating
+        #             }
+        infoDict = {'drinkID': self.id,
+                    'name': self.drinkName,
+                    constants.INGREDIENTLIST[0]: self.ing1,
+                    constants.INGREDIENTLIST[1]: self.ing2,
+                    constants.INGREDIENTLIST[2]: self.ing3,
+                    constants.INGREDIENTLIST[3]: self.ing4,
+                    constants.INGREDIENTLIST[4]: self.ing5,
+                    constants.INGREDIENTLIST[5]: self.ing6,
+                    constants.INGREDIENTLIST[6]: self.ing7,
+                    constants.INGREDIENTLIST[7]: self.ing8,
+                    constants.INGREDIENTLIST[8]: self.ing9,
+                    constants.INGREDIENTLIST[9]: self.ing10,
+                    constants.INGREDIENTLIST[10]: self.ing11,
+                    constants.INGREDIENTLIST[11]: self.ing12,
+                    'totalSize': self.totalSize,
+                    'dispenseCount': self.dispenseCount,
+                    'starRating': self.starRating
+                    }
 
-        for ingredient in ['ing1','ing2','ing3','ing4','ing5','ing6','ing7','ing8','ing9','ing10','ing11','ing12',]:
+        for ingredient in constants.INGREDIENTLIST:
             if isinstance(infoDict[ingredient], str):
                 infoDict[ingredient] = 0
 
@@ -120,7 +136,9 @@ class drink:
         elif positiveVoteRatio >= 0.81 and positiveVoteRatio < 1.1:
             self.starRating = 5
         else:
-            self.log.warning("ERROR: -> %s star rating cannot be computed. Determined Ratio: %s "%(self.drinkName, positiveVoteRatio))
+            self.log.warning('''ERROR: -> %s star rating cannot be computed. \
+                             Determined Ratio: %s
+                             ''' % (self.drinkName, positiveVoteRatio))
 
         assert self.starRating > 0
 
@@ -139,16 +157,34 @@ class drink:
         return max(self.ingredientListCleaned)
 
     def generateListForArduino(self):
-        theIngredientList = [self.ing1, self.ing2, self.ing3, self.ing4, self.ing5, self.ing6, self.ing7, self.ing8, self.ing9, self.ing10, self.ing11, self.ing12]
+        theIngredientList = [self.ing1,
+                             self.ing2,
+                             self.ing3,
+                             self.ing4,
+                             self.ing5,
+                             self.ing6,
+                             self.ing7,
+                             self.ing8,
+                             self.ing9,
+                             self.ing10,
+                             self.ing11,
+                             self.ing12]
         index = 0
 
-        #this is correction code for the shitty sqlite character-0 grabbing. Any time you grab a zero, it comes in as a string, this is conversion to Int.
+        # this is correction code for the shitty sqlite character-0
+        # grabbing. Any time you grab a zero, it comes in as a string,
+        # this is conversion to Int.
         for ingredient in theIngredientList:
             if isinstance(ingredient, str):
                 theIngredientList[index] = 0
-            index +=1
+            index += 1
         return theIngredientList
 
     def printDrink(self):
-        self.log.info("******\nName: %s\nIngList:%s\nTOTALSIZE: %s\n******************" %(self.drinkName, self.ingredientListCleaned, self.totalSize))
-
+        self.log.info('''******\n
+                      Name: %s\n
+                      IngList:%s\n
+                      TOTALSIZE: %s\n
+                      ******************''' % (self.drinkName,
+                                               self.ingredientListCleaned,
+                                               self.totalSize))
