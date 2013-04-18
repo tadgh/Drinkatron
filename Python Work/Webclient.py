@@ -14,8 +14,9 @@ bottle.debug(True)
 db = dbinterface.DB()
 drinkList = db.listDrinksByName()
 drinkList = db.listDrinksByName()
-########################################
-#THIS IS CRUCIAL. this code initializes ALL drinks into an array, all at once. DO NOT FUCK WITH THIS CODE.
+
+# THIS IS CRUCIAL. this code initializes ALL drinks into an array,
+# all at once. DO NOT FUCK WITH THIS CODE.
 drinkObjArray = []
 ingredientDict = {}
 for ingredient in constants.INGREDIENTLIST:
@@ -29,20 +30,22 @@ for currentDrink in range(len(drinkList)):
     drinkObjArray.append(tempDrink)
     drinkDictList.append(tempDrink.convertToDict())
     db.log.info(drinkObjArray[currentDrink].drinkName)
-    #######################################
-
+    #
 
 
 for item in drinkDictList:
     print(item)
 
+
 @bottle.route('/')
 def index():
     return bottle.template('index')
 
+
 @bottle.route('/getDrinks')
 def getDrinks():
-    return bottle.template('getDrinks', drinkDictList = drinkDictList)
+    return bottle.template('getDrinks', drinkDictList=drinkDictList)
+
 
 @bottle.route('/getDrink/:name')
 def getDrink(name):
@@ -53,34 +56,32 @@ def getDrink(name):
             return drink
 
 
-#todo write code to do a lookup through getDrink/:name and then dispense based upon default ingredient proportions
+# todo write code to do a lookup through getDrink/:name and then dispense
+# based upon default ingredient proportions
 @bottle.route('/dispense/:name')
 def dispense(name):
     print(name)
     cleanList = []
     for drink in drinkDictList:
         if drink['name'] == name:
-            cleanList.append(drink['ing1'])
-            cleanList.append(drink['ing2'])
-            cleanList.append(drink['ing3'])
-            cleanList.append(drink['ing4'])
-            cleanList.append(drink['ing5'])
-            cleanList.append(drink['ing6'])
-            cleanList.append(drink['ing7'])
-            cleanList.append(drink['ing8'])
-            cleanList.append(drink['ing9'])
-            cleanList.append(drink['ing10'])
-            cleanList.append(drink['ing11'])
-            cleanList.append(drink['ing12'])
+            cleanList.append(drink[constants.INGREDIENTLIST[0]])
+            cleanList.append(drink[constants.INGREDIENTLIST[1]])
+            cleanList.append(drink[constants.INGREDIENTLIST[2]])
+            cleanList.append(drink[constants.INGREDIENTLIST[3]])
+            cleanList.append(drink[constants.INGREDIENTLIST[4]])
+            cleanList.append(drink[constants.INGREDIENTLIST[5]])
+            cleanList.append(drink[constants.INGREDIENTLIST[6]])
+            cleanList.append(drink[constants.INGREDIENTLIST[7]])
+            cleanList.append(drink[constants.INGREDIENTLIST[8]])
+            cleanList.append(drink[constants.INGREDIENTLIST[9]])
+            cleanList.append(drink[constants.INGREDIENTLIST[10]])
+            cleanList.append(drink[constants.INGREDIENTLIST[11]])
             print(cleanList)
-            return cleanList
+            return json.dumps(drink, indent = 4)
 
 
-
-#todo Write code to split up the string into sections indicating proportions.
-#@bottle.route('/dispense/custom/:proportions')
-#def dispense_custom(proportions):
+# todo Write code to split up the string into sections indicating proportions.
+# @bottle.route('/dispense/custom/:proportions')
+# def dispense_custom(proportions):
 #    pass
-
-bottle.run(host='localhost', port=8082)
-
+bottle.run(host='localhost', port=8082, reloader = True)
