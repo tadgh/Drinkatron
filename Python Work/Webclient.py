@@ -3,7 +3,6 @@ import bottle_sqlite
 import dbinterface
 import drinks
 import logging
-import time
 import json
 import constants
 
@@ -77,11 +76,19 @@ def dispense(name):
             cleanList.append(drink[constants.INGREDIENTLIST[10]])
             cleanList.append(drink[constants.INGREDIENTLIST[11]])
             print(cleanList)
-            return json.dumps(drink, indent = 4)
+            db.dispenseOccured(drink['drinkID'])
+            return json.dumps(drink, indent=4)
+
+    return "Drink Could not be found!"
+
+@bottle.route('/Analytics')
+def Analytics():
+    drinkData =
+    return bottle.template('Analytics', data = drinkData)
 
 
 # todo Write code to split up the string into sections indicating proportions.
 # @bottle.route('/dispense/custom/:proportions')
 # def dispense_custom(proportions):
 #    pass
-bottle.run(host='localhost', port=8082, reloader = True)
+bottle.run(host='localhost', port=8082, reloader=True)
