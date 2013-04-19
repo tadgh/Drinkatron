@@ -1,6 +1,4 @@
-import re
 import logging
-import os
 import constants
 
 
