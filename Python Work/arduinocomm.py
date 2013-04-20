@@ -3,6 +3,8 @@ import serial
 import logging
 from threading import *
 from time import sleep
+import platform
+import glob
 
 
 class Connection:
@@ -12,14 +14,24 @@ class Connection:
         self.log = logging.getLogger("COMM")
         self.log.info("Entering -> arduinoComm Consructor")
         self.listening = True
-        try:
-            self.ser = serial.Serial(
-                'COM3', 9600)  # com6 is back most Keyboard USB port
-        except:
-            self.log.error("COULD NOT FIND ARDUINO. THINGS WILL FAIL.")
-            self.ser = None
-        finally:
-            pass
+        if platform.system() is 'Windows':
+            commPorts = ['COM3', 'COM4', 'COM5', 'COM6']
+            for port in commPorts:
+                try:
+                    self.ser = serial.Serial(
+                        'COM3', 9600)  # com6 is back most Keyboard USB port
+                except:
+                    self.ser = None
+                if self.ser:
+                    self.log.info("Arduino connected on : %s" % port)
+        else:
+            arduinoPort = glob.glob("/dev/ttyACM*")
+            try:
+                self.ser = serial.Serial(arduinoPort, 9600)
+            except:
+                self.log.error("COULD NOT FIND ARDUINO. THINGS WILL FAIL.")
+                self.ser = None
+
         self.isDispensing = False
         self.log.info("Leaving -> arduinoComm Consructor")
 
