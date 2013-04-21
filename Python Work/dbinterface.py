@@ -149,10 +149,6 @@ class DB:
             self.log.error("No rows returned, empty DB? Wrong Table?")
         else:
             self.log.info("Grabbed resultSet list...")
-            #for record in resultSet:
-            #    for column in record:
-            #        if column == "'0'":
-            #            column = 0
 
         self.log.info("Leaving -> executeSql")
 

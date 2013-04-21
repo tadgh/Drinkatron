@@ -180,10 +180,11 @@ class drink:
         return theIngredientList
 
     def printDrink(self):
-        self.log.info('''******\n
-                      Name: %s\n
-                      IngList:%s\n
-                      TOTALSIZE: %s\n
-                      ******************''' % (self.drinkName,
-                                               self.ingredientListCleaned,
-                                               self.totalSize))
+        pass
+        #self.log.info('''******\n
+        #              Name: %s\n
+        #              IngList:%s\n
+        #              TOTALSIZE: %s\n
+        #              ******************''' % (self.drinkName,
+        #                                       self.ingredientListCleaned,
+         #                                      self.totalSize))

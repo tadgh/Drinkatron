@@ -9,21 +9,20 @@ import glob
 
 class Connection:
 
+
     def __init__(self):
         logging.basicConfig(file="runLog.txt", level=logging.INFO)
         self.log = logging.getLogger("COMM")
         self.log.info("Entering -> arduinoComm Consructor")
         self.listening = True
         if platform.system() is 'Windows':
-            commPorts = ['COM3', 'COM4', 'COM5', 'COM6']
-            for port in commPorts:
-                try:
-                    self.ser = serial.Serial(
-                        'COM3', 9600)  # com6 is back most Keyboard USB port
-                except:
-                    self.ser = None
-                if self.ser:
-                    self.log.info("Arduino connected on : %s" % port)
+            try:
+                self.ser = serial.Serial(
+                    'COM15', 9600)  # com6 is back most Keyboard USB port
+            except:
+                self.ser = None
+            if self.ser:
+                self.log.info("Arduino connected on : %s" 'COM15')
         else:
             arduinoPort = glob.glob("/dev/ttyACM*")
             try:
