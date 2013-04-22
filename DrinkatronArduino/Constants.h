@@ -10,18 +10,18 @@ const int NUM_DRINKS = 5;
 
 
 //DRINK CONSTANTS
-const int  VODKA_RELAY_PIN = 32;
-const int  RUM_RELAY_PIN = 33;
-const int  ORANGEJUICE_RELAY_PIN = 34;
-const int  COCACOLA_RELAY_PIN = 35;
-const int  SPRITE_RELAY_PIN = 36;
-const int  GIN_RELAY_PIN = 37;
-const int  TRIPLESEC_RELAY_PIN = 38;
-const int  BLUECURACAO_RELAY_PIN = 41;//should be 31, just testing the pin
-const int  CRANBERRY_RELAY_PIN = 40;
-const int  WHISKEY_RELAY_PIN = 44;//should be 41, just testing
-const int  GRENADINE_RELAY_PIN = 42;
-const int  LIME_RELAY_PIN = 43;
+const int  ING1_RELAY_PIN = 32;
+const int  ING2_RELAY_PIN = 33;
+const int  ING3_RELAY_PIN = 34;
+const int  ING4_RELAY_PIN = 35;
+const int  ING5_RELAY_PIN = 36;
+const int  ING6_RELAY_PIN = 37;
+const int  ING7_RELAY_PIN = 38;
+const int  ING8_RELAY_PIN = 39;
+const int  ING9_RELAY_PIN = 40;
+const int  ING10_RELAY_PIN = 41;
+const int  ING11_RELAY_PIN = 42;
+const int  ING12_RELAY_PIN = 43;
 
 const int  MASTER_DISPENSE_PIN =  39;
 

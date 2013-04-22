@@ -1,12 +1,11 @@
 #include "drinks.h"
 #include "Arduino.h"
 #include "Constants.h"
-#include <Servo.h>
 
    Drink::Drink(){
    }
-   
-   
+
+
    void Drink::flushFunnel(){
      digitalWrite(FLUSH_PIN, HIGH);
      delay(5000);
@@ -14,75 +13,76 @@
   }
 
    void Drink::parallelDispense(){
-     
+
      if(this->getValvesInUse() > 3){
        digitalWrite(MASTER_DISPENSE_PIN, LOW);
      }
 
-     
+
      for(byte i = 0; i < this->longestCycle() + 1; i++){
-       
-       if(_blueCuracao > i){
-         digitalWrite(BLUECURACAO_RELAY_PIN, LOW);Serial.println("Dispensing blue curacao.");
-       }else
-         digitalWrite(BLUECURACAO_RELAY_PIN, HIGH);Serial.println("SHUTTING OFF BLUE CURACAO");
-       
-       
-       if(_vodka > i){
-         digitalWrite(VODKA_RELAY_PIN, LOW);Serial.println("Dispensing vodka.");
-       }else
-         digitalWrite(VODKA_RELAY_PIN, HIGH);
-       
-       if(_rum > i){
-         digitalWrite(RUM_RELAY_PIN, LOW);Serial.println("Dispensing rum.");
-     }else
-         digitalWrite(RUM_RELAY_PIN, HIGH);
-       
-       if(_orangeJuice > i){
-         digitalWrite(ORANGEJUICE_RELAY_PIN, LOW);Serial.println("Dispensing OJ.");
-   }else
-         digitalWrite(ORANGEJUICE_RELAY_PIN, HIGH);
-       
-       if(_cocaCola > i){
-         digitalWrite(COCACOLA_RELAY_PIN, LOW);Serial.println("Dispensing coca-cola.");
-       }else
-         digitalWrite(COCACOLA_RELAY_PIN, HIGH);
 
-       if(_sprite > i){
-         digitalWrite(SPRITE_RELAY_PIN, LOW);Serial.println("Dispensing sprite.");
+       if(_Ing1 > i){
+         digitalWrite(ING1_RELAY_PIN, LOW);Serial.println("Dispensing Ing1");
        }else
-         digitalWrite(SPRITE_RELAY_PIN, HIGH);
+         digitalWrite(ING1_RELAY_PIN, HIGH);
 
-       if(_gin > i){
-         digitalWrite(GIN_RELAY_PIN, LOW);Serial.println("Dispensing gin");
+       if(_Ing2 > i){
+         digitalWrite(ING2_RELAY_PIN, LOW);Serial.println("Dispensing Ing2.");
        }else
-         digitalWrite(GIN_RELAY_PIN, HIGH);       
+         digitalWrite(ING2_RELAY_PIN, HIGH);
 
-       if(_tripleSec > i){
-         digitalWrite(TRIPLESEC_RELAY_PIN, LOW);Serial.println("Dispensing white rum.");
+       if(_Ing3 > i){
+         digitalWrite(ING3_RELAY_PIN, LOW);Serial.println("Dispensing white Ing9.");
        }else
-         digitalWrite(TRIPLESEC_RELAY_PIN, HIGH);   
+         digitalWrite(ING3_RELAY_PIN, HIGH);
 
-       if(_lime > i){
-         digitalWrite(LIME_RELAY_PIN, LOW);Serial.println("Dispensing lime.");
+       if(_Ing4 > i){
+         digitalWrite(ING4_RELAY_PIN, LOW);Serial.println("Dispensing Ing4.");
        }else
-         digitalWrite(LIME_RELAY_PIN, HIGH);   
-         
-       if(_grenadine > i){
-         digitalWrite(GRENADINE_RELAY_PIN, LOW);Serial.println("Dispensing grenadine.");
+         digitalWrite(ING4_RELAY_PIN, HIGH);
+
+       if(_Ing5 > i){
+         digitalWrite(ING5_RELAY_PIN, LOW);Serial.println("Dispensing OJ.");
        }else
-         digitalWrite(GRENADINE_RELAY_PIN, HIGH);      
-   
-       if(_whiskey > i){
-         digitalWrite(WHISKEY_RELAY_PIN, LOW);Serial.println("Dispensing whiskey.");
+         digitalWrite(ING5_RELAY_PIN, HIGH);
+
+       if(_Ing6 > i){
+         digitalWrite(ING6_RELAY_PIN, LOW);Serial.println("Dispensing Ing6.");
        }else
-         digitalWrite(WHISKEY_RELAY_PIN, HIGH);   
-        
-       if(_cranberry > i){
-         digitalWrite(CRANBERRY_RELAY_PIN, LOW);Serial.println("Dispensing white rum.");
+         digitalWrite(ING6_RELAY_PIN, HIGH);
+
+       if(_Ing7 > i){
+         digitalWrite(ING7_RELAY_PIN, LOW);Serial.println("Dispensing Ing7.");
        }else
-         digitalWrite(CRANBERRY_RELAY_PIN, HIGH);         
-         
+         digitalWrite(ING7_RELAY_PIN, HIGH);
+
+       if(_Ing8 > i){
+         digitalWrite(ING8_RELAY_PIN, LOW);Serial.println("Dispensing Ing8");
+       }else
+         digitalWrite(ING8_RELAY_PIN, HIGH);
+
+       if(_Ing9 > i){
+         digitalWrite(ING9_RELAY_PIN, LOW);Serial.println("Dispensing Ing9.");
+       }else
+         digitalWrite(ING9_RELAY_PIN, HIGH);
+
+       if(_Ing10 > i){
+         digitalWrite(ING10_RELAY_PIN, LOW);Serial.println("Dispensing white Ing10.");
+       }else
+         digitalWrite(ING10_RELAY_PIN, HIGH);
+
+       if(_Ing11 > i){
+         digitalWrite(ING11_RELAY_PIN, LOW);Serial.println("Dispensing Ing11.");
+       }else
+         digitalWrite(ING11_RELAY_PIN, HIGH);
+
+       if(_Ing12 > i){
+         digitalWrite(ING12_RELAY_PIN, LOW);Serial.println("Dispensing Ing12.");
+       }else
+         digitalWrite(ING12_RELAY_PIN, HIGH);
+
+
+
       delay(LOWVIS_DELAY);
       Serial.println("*****Cycle Complete*****");
       if(i == longestCycle() / 2)
@@ -90,11 +90,11 @@
      }
      this->finalDump();
 
-     
+
    }
-   
-   
-   void Drink::finalDump(){    
+
+
+   void Drink::finalDump(){
      digitalWrite(MASTER_DISPENSE_PIN, LOW);
      Serial.println("Opened master dispense valve");
      delay(15000);
@@ -102,147 +102,147 @@
    digitalWrite(MASTER_DISPENSE_PIN, HIGH);
    Serial.println("Closed master dispense valve");
  }
- 
 
- //boolean isAvailable(){}  
-  
+
+ //boolean isAvailable(){}
+
  byte Drink::longestCycle(){
      byte maxCycle = 0;
-     if(_vodka > maxCycle)
-       maxCycle = _vodka;
-       if(_rum > maxCycle)
-         maxCycle = _rum;
-       if(_orangeJuice > maxCycle)
-         maxCycle = _orangeJuice;
-       if(_cocaCola > maxCycle)
-         maxCycle = _cocaCola;
-       if(_sprite > maxCycle)
-         maxCycle = _sprite;
-       if(_gin > maxCycle)
-         maxCycle = _gin;
-       if(_blueCuracao > maxCycle)
-         maxCycle = _blueCuracao;
-       if(_cranberry > maxCycle)
-         maxCycle = _cranberry;
-       if(_grenadine > maxCycle)
-         maxCycle = _grenadine;
-       if(_lime > maxCycle)
-         maxCycle = _lime;
-       if(_whiskey > maxCycle)
-         maxCycle = _whiskey;
-       if(_tripleSec > maxCycle)
-         maxCycle = _tripleSec;  
-    
-       return maxCycle;     
-   }
-   
+     if(_Ing11 > maxCycle)
+       maxCycle = _Ing11;
+       if(_Ing9 > maxCycle)
+         maxCycle = _Ing9;
+       if(_Ing5 > maxCycle)
+         maxCycle = _Ing5;
+       if(_Ing1 > maxCycle)
+         maxCycle = _Ing1;
+       if(_Ing2 > maxCycle)
+         maxCycle = _Ing2;
+       if(_Ing8 > maxCycle)
+         maxCycle = _Ing8;
+       if(_Ing7 > maxCycle)
+         maxCycle = _Ing7;
+       if(_Ing3 > maxCycle)
+         maxCycle = _Ing3;
+       if(_Ing6 > maxCycle)
+         maxCycle = _Ing6;
+       if(_Ing4 > maxCycle)
+         maxCycle = _Ing4;
+       if(_Ing12 > maxCycle)
+         maxCycle = _Ing12;
+       if(_Ing10 > maxCycle)
+         maxCycle = _Ing10;
 
-   
-   
+       return maxCycle;
+   }
+
+
+
+
    //prints out various drink stats
    void Drink::printDrink(){
      Serial.println("******INGREDIENTS*******");
-     Serial.print("Vodka: ");
-     Serial.println(_vodka);
-     Serial.print("Rum: ");
-     Serial.println(_rum);
-     Serial.print("Orange Juice:  ");
-     Serial.println(_orangeJuice);
-     Serial.print("Coca Cola: ");
-     Serial.println(_cocaCola);
-     Serial.print("Sprite: ");
-     Serial.println(_sprite);
-     Serial.print("gin: ");
-     Serial.println(_gin);
-     Serial.print("white rum: ");
-     Serial.println(_tripleSec); 
-     Serial.print("grenadine: ");
-     Serial.println(_grenadine);
-     Serial.print("lime: ");
-     Serial.println(_lime);
-     Serial.print("whiskey: ");
-     Serial.println(_whiskey);
-     Serial.print("cranberry: ");
-     Serial.println(_cranberry);
-     Serial.print("blue curacao: ");
-     Serial.println(_blueCuracao);
-     
+     Serial.print("Ing1: ");
+     Serial.println(_Ing1);
+     Serial.print("Ing2: ");
+     Serial.println(_Ing2);
+     Serial.print("Ing3: ");
+     Serial.println(_Ing3);
+     Serial.print("Ing4: ");
+     Serial.println(_Ing4);
+     Serial.print("Ing5: ");
+     Serial.println(_Ing5);
+     Serial.print("Ing6: ");
+     Serial.println(_Ing6);
+     Serial.print("Ing7: ");
+     Serial.println(_Ing7);
+     Serial.print("Ing8: ");
+     Serial.println(_Ing8);
+     Serial.print("Ing9: ");
+     Serial.println(_Ing9);
+     Serial.print("Ing10: ");
+     Serial.println(_Ing10);
+     Serial.print("Ing11: ");
+     Serial.println(_Ing11);
+     Serial.print("Ing12: ");
+     Serial.println(_Ing12);
+
+
+
    }
-   
-   
+
+
    byte Drink::getValvesInUse(){
      byte valvesInUse = 0;
-       if(_vodka > 0)
+       if(_Ing11 > 0)
        valvesInUse++;
-       if(_rum > 0)
+       if(_Ing9 > 0)
          valvesInUse++;
-       if(_orangeJuice > 0)
+       if(_Ing5 > 0)
          valvesInUse++;
-       if(_cocaCola > 0)
+       if(_Ing1 > 0)
          valvesInUse++;
-       if(_sprite > 0)
+       if(_Ing2 > 0)
          valvesInUse++;
-       if(_gin > 0)
+       if(_Ing8 > 0)
          valvesInUse++;
-       if(_blueCuracao > 0)
+       if(_Ing7 > 0)
          valvesInUse++;
-       if(_cranberry > 0)
+       if(_Ing3 > 0)
          valvesInUse++;
-       if(_grenadine > 0)
+       if(_Ing6 > 0)
          valvesInUse++;
-       if(_lime > 0)
+       if(_Ing4 > 0)
         valvesInUse++;
-       if(_whiskey > 0)
+       if(_Ing12 > 0)
          valvesInUse++;
-       if(_tripleSec > 0)
-         valvesInUse++;  
-    
-       return valvesInUse;     
+       if(_Ing10 > 0)
+         valvesInUse++;
+
+       return valvesInUse;
    }
-   
+
    //returns the total number of components * their given portions.
    byte Drink::componentCount(){
-     return(_vodka + _rum + _orangeJuice + _cocaCola + _sprite + _gin + _rum + _tripleSec + _lime + _grenadine + _whiskey + _blueCuracao); 
+     return(_Ing1 + _Ing2 + _Ing3 + _Ing4 + _Ing5 + _Ing6 + _Ing7 + _Ing8 + _Ing9 + _Ing10 + _Ing11 + _Ing12);
    }
 
-   
-   
+
+
    //All the setters
-   void Drink::setVodka(byte x){
-   _vodka = x;
+   void Drink::setIng1(byte x){
+   _Ing1 = x;
    }
-
-   void Drink::setRum(byte x){
-   _rum = x;
+   void Drink::setIng2(byte x){
+   _Ing2 = x;
    }
-   void Drink::setOrangeJuice(byte x){
-   _orangeJuice = x;
+   void Drink::setIng3(byte x){
+   _Ing3 = x;
    }
-   void Drink::setCocaCola(byte x){
-   _cocaCola = x;
+   void Drink::setIng4(byte x){
+   _Ing4 = x;
    }
-   void Drink::setSprite(byte x){
-   _sprite = x;
+   void Drink::setIng5(byte x){
+   _Ing5 = x;
    }
-
-   void Drink::setGin(byte x){
-   _gin = x;
+   void Drink::setIng6(byte x){
+   _Ing6 = x;
    }
-   void Drink::setTripleSec(byte x){
-   _tripleSec = x;
+   void Drink::setIng7(byte x){
+   _Ing7 = x;
    }
-   void Drink::setGrenadine(byte x){
-   _grenadine = x;
+   void Drink::setIng8(byte x){
+   _Ing8 = x;
    }
-   void Drink::setLime(byte x){
-   _lime = x;
+   void Drink::setIng9(byte x){
+   _Ing9 = x;
    }
-   void Drink::setWhiskey(byte x){
-   _whiskey = x;
+   void Drink::setIng10(byte x){
+   _Ing10 = x;
    }
-   void Drink::setCranberry(byte x){
-   _cranberry = x;
+   void Drink::setIng11(byte x){
+   _Ing11 = x;
    }
-   void Drink::setBlueCuracao(byte x){
-   _blueCuracao = x;
+   void Drink::setIng12(byte x){
+   _Ing12 = x;
    }
