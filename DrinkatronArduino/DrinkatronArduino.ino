@@ -34,9 +34,8 @@ char incomingByte;
 int index = 0;
 int integerValue=0;
 int drinkSize = 0;
+
 void loop() {
-
-
     while (Serial.available()) {   // something came across serial
       integerValue = 0;         // throw away previous integerValue
       while(1)
@@ -67,8 +66,6 @@ void loop() {
       for(int x = 0; x < 12; x++)
         ingredientList[x] = (float(ingredientList[x]) / float(drinkSize)) * 100;
     }
-
-
    //**********************************************************
    //super ugly initialization code, but it
    //we dont do it this way, we end up blowing the stack space.
@@ -85,9 +82,9 @@ void loop() {
    toBeDispensed.setIng10(ingredientList[9]);
    toBeDispensed.setIng11(ingredientList[10]);
    toBeDispensed.setIng12(ingredientList[11]);
-
    toBeDispensed.printDrink();
    Serial.println(drinkSize);
+   toBeDispensed.parallelDispense();
    drinkSize = 0;
    index=0;
   }

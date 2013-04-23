@@ -32,7 +32,7 @@
          digitalWrite(ING2_RELAY_PIN, HIGH);
 
        if(_Ing3 > i){
-         digitalWrite(ING3_RELAY_PIN, LOW);Serial.println("Dispensing white Ing9.");
+         digitalWrite(ING3_RELAY_PIN, LOW);Serial.println("Dispensing Ing3.");
        }else
          digitalWrite(ING3_RELAY_PIN, HIGH);
 
@@ -42,7 +42,7 @@
          digitalWrite(ING4_RELAY_PIN, HIGH);
 
        if(_Ing5 > i){
-         digitalWrite(ING5_RELAY_PIN, LOW);Serial.println("Dispensing OJ.");
+         digitalWrite(ING5_RELAY_PIN, LOW);Serial.println("Dispensing Ing5.");
        }else
          digitalWrite(ING5_RELAY_PIN, HIGH);
 
@@ -67,7 +67,7 @@
          digitalWrite(ING9_RELAY_PIN, HIGH);
 
        if(_Ing10 > i){
-         digitalWrite(ING10_RELAY_PIN, LOW);Serial.println("Dispensing white Ing10.");
+         digitalWrite(ING10_RELAY_PIN, LOW);Serial.println("Dispensing Ing10.");
        }else
          digitalWrite(ING10_RELAY_PIN, HIGH);
 
@@ -84,7 +84,9 @@
 
 
       delay(LOWVIS_DELAY);
-      Serial.println("*****Cycle Complete*****");
+      Serial.print("*****Cycle ");
+      Serial.print(i);
+      Serial.println(" Complete*****");
       if(i == longestCycle() / 2)
         digitalWrite(MASTER_DISPENSE_PIN, LOW);
      }
