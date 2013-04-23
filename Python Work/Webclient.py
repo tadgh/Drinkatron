@@ -48,7 +48,9 @@ def dispense(name):
             dirtyList.append(drink[constants.INGREDIENTLIST[11]])
             print(dirtyList)
             db.dispenseOccured(drink['drinkID'])
-    return "Drink Could not be found!"
+            pourDrink(dirtyList)
+            return "Drink successfully passed off to arduino."
+    return "Drink could not be found!"
 
 
 @bottle.route('/dispense/custom/:adhocList')
