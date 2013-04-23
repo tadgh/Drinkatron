@@ -15,7 +15,7 @@ class Connection:
         self.log.info("Entering -> arduinoComm Consructor")
         self.listening = True
         try:
-            self.ser = serial.Serial('COM3',9600)#com6 is back most Keyboard USB port
+            self.ser = serial.Serial('COM15', 9600) #com6 is back most Keyboard USB port
         except:
             self.log.error("COULD NOT FIND ARDUINO. THINGS WILL FAIL.")
             self.ser = None
@@ -31,16 +31,22 @@ class Connection:
         else:
             self.log.warning("Unable to start arduino, therefore not starting the listener thread!!")
 
-
-    def sendDrink(self,drinkArray):
+    def sendDrink(self, drinkArray):
         self.log.info("Entering -> sendDrink")
         self.isDispensing = True
 
-        for ingredient in drinkArray:
-           self.log.info("Sending ingredient: %s" %ingredient)
-           self.ser.write(str(ingredient).encode())
-           self.ser.write("*".encode()) # todo test this as im not sure what I was doing here.
-           #sleep(0.1)
+        drinkTotal = 0
+        for item in drinkArray:
+            drinkTotal += item
+
+        cleanList = []
+        for i in range(len(drinkArray)):
+            cleanList.append(round(drinkArray[i] / float(drinkTotal) * 100))
+
+        for ingredient in cleanList:
+            self.log.info("Sending ingredient: %s" %ingredient)
+            self.ser.write(str(ingredient).encode())
+            self.ser.write("*".encode()) # todo test this as im not sure what I was doing here.
         self.log.info("Leaving -> sendDrink")
 
     def requestStatus(self):
@@ -78,5 +84,5 @@ class Connection:
 
 
 
-  
+
 

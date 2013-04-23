@@ -185,17 +185,11 @@ class UI:
         self.arduino.disconnect()
         self.root.destroy()
 
-    def slidersAdjusted(self):
-        total=100
-        for slider in self.sliderVariables:
-            pass
-
-
     def pourIt(self):
         self.log.info("Entering -> GUI ->  PourIt()")
         if messagebox.askyesno("Drinkin' Time?", "Are you sure the cup is in place and this is the drink you want?"):
             pass
-        selection =  self.listboxDrinkList.curselection()[0]
+        selection = self.listboxDrinkList.curselection()[0]
         selection = int(selection)
         drinkToPour = self.drinkObjArray[selection]
         sliderIndex = 0
@@ -203,14 +197,13 @@ class UI:
         for i in drinkToPour.ingredientListCleaned:
             if i != 0:
                 dispenseArray.append(self.sliderList[sliderIndex].get())
-                sliderIndex+=1
+                sliderIndex += 1
             else:
                 dispenseArray.append(0)
-
+        self.log.info(dispenseArray)
         self.log.info("Information -> GUI -> Drink to Pour is: %s" %drinkToPour.drinkName)
         self.arduino.sendDrink(dispenseArray)
         self.log.info("Leaving  -> GUI -> Pourit()")
-        pass
 
     def createNewDrink(self):
         selection = self.listboxDrinkList.curselection()[0]
@@ -268,7 +261,7 @@ class UI:
             self.drinkObjArray.append(drinks.drink(*self.drinkList[currentDrink]))
             self.log.info(self.drinkObjArray[currentDrink].drinkName)
 
-        self.initDrinkImages()    
+        self.initDrinkImages()
         #######################################
 
 
