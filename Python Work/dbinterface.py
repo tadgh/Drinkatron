@@ -2,7 +2,6 @@ import sqlite3
 import logging
 import constants
 import datetime
-import time
 
 logging.basicConfig(file="runLog.txt", level=logging.INFO)
 log = logging.getLogger("Master")
@@ -24,9 +23,6 @@ class DB:
             self.log.info("Connection to DB established.")
             # test
 
-    #
-    # LIST FUNCTIONS####
-    #
     def listDrinksByName(self):
         self.log.info("Entering -> listDrinksByName()")
         sql = "SELECT * FROM drinks ORDER BY drink_name ASC"
@@ -83,13 +79,6 @@ class DB:
         elif startDate is None and endDate is not None:
             startDate = endDate - datetime.timedelta(days=30)
 
-        #if isinstance(endDate, time.struct_time):
-        #    endDate = endDate.strftime('%Y-%m-%d')
-        #    print("WOOP")
-        #if isinstance(startDate, time.struct_time):
-        #    startDate = startDate.strftime('%Y-%m-%d')
-        #    print("WOOP")
-
         self.log.info("Start Date is: %s" % str(startDate))
         self.log.info("End Date is: %s" % str(endDate))
         args = (startDate, endDate)
@@ -104,16 +93,13 @@ class DB:
         resultSet = self.executeSql(sql, args)
         return resultSet
 
-
-
-        def getAllTimeDrinkData():
-            sql = '''SELECT drink_name, dispense_count,
-                            positive_votes, negative_votes
-                     FROM drinks
-                  '''
-            results = self.executeSql(sql)
-
-
+    def getAllTimeDrinkData(self):
+        sql = '''SELECT drink_name, dispense_count,
+                        positive_votes, negative_votes
+                 FROM drinks
+              '''
+        results = self.executeSql(sql)
+        return results
 
     def dispenseOccured(self, drink_id):
         self.log.info("Entering -> dispenseOccured")
@@ -127,8 +113,6 @@ class DB:
               '''
         result2 = self.executeSql(sql, args)
         return result1, result2
-    #
-    # MASTER LIST FUNCTIONMASTERLOL###
 
     def executeSql(self, sql, args=None):
         self.log.info("Entering-> executeSql()")
@@ -154,9 +138,6 @@ class DB:
 
         return resultSet
 
-    #
-    # NON-LIST Functions#####
-    #
     def grab_cursor(self):
         try:
             cursor = self.conn.cursor()

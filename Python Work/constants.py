@@ -1,5 +1,7 @@
 import os
+import logging
 
+LOGLEVEL = logging.ERROR
 NUMBEROFINGREDIENTS = 12
 INGREDIENTLIST = [
     "Cola", "Sprite", "Cranberry Juice", "Lime Juice", " Orange Juice",

@@ -5,10 +5,11 @@ from threading import *
 from time import sleep
 import platform
 import glob
+import Canister
+import constants
 
 
 class Connection:
-
 
     def __init__(self):
         logging.basicConfig(file="runLog.txt", level=logging.INFO)
@@ -30,9 +31,14 @@ class Connection:
             except:
                 self.log.error("COULD NOT FIND ARDUINO. THINGS WILL FAIL.")
                 self.ser = None
-
-        self.isDispensing = False
         self.log.info("Leaving -> arduinoComm Consructor")
+
+        self.canisterList = []
+        for ingredient in constants.INGREDIENTLIST:
+            self.canisterList.append(Canister.Canister(ingredient))
+
+        for canister in self.canisterList:
+            canister.status()
 
         if self.ser:
             self.threadArduinoListener = Timer(3.0, self.readResponse)
@@ -45,14 +51,37 @@ class Connection:
 
     def sendDrink(self, drinkArray):
         self.log.info("Entering -> sendDrink")
-        self.isDispensing = True
+        drinkSize = 0
+        self.log.info("Dirty list:")
+        self.log.info(drinkArray)
+        cleanedList = []
+        for item in drinkArray:
+            drinkSize += item
+        if drinkSize != 100:
+            for i in range(len(drinkArray)):
+                cleanedList.append(round(drinkArray[i]/float(drinkSize)*355))
+        self.log.info("Cleaned List:")
+        self.log.info(cleanedList)
 
-        for ingredient in drinkArray:
-            self.log.info("Sending ingredient: %s" % ingredient)
-            self.ser.write(str(ingredient).encode())
-            self.ser.write(
-                "*".encode())  # todo test this
-            # sleep(0.1)
+        index = 0
+        for units in cleanedList:
+            try:
+                self.canisterList[index].dispense(units)
+                index += 1
+            except ValueError as e:
+                self.log.error("Couldnt finish dispensing: " + str(e))
+                return("Couldn't Dispense! " + str(e))
+
+        if self.ser:
+            for ingredient in cleanedList:
+                self.log.info("Sending ingredient: %s" % ingredient)
+                self.ser.write(str(ingredient).encode())
+                self.ser.write("*".encode())
+        else:
+            self.log.error("Arduino not connected, cannot send drink.")
+
+        for canister in self.canisterList:
+                canister.status()
         self.log.info("Leaving -> sendDrink")
 
     def requestStatus(self):

@@ -9,6 +9,7 @@ class drink:
                  imagePath, negativeVoteCount):
         logging.basicConfig(file="runLog.txt", level=logging.INFO)
         self.log = logging.getLogger("DRINKS")
+        self.log.setLevel(logging.ERROR)
         self.log.info("Entering -> drinks.py Consructor")
 
         if drinkID is None:
