@@ -19,7 +19,7 @@ class Connection:
         if platform.system() is 'Windows':
             try:
                 self.ser = serial.Serial(
-                    'COM15', 9600)  # com6 is back most Keyboard USB port
+                    'COM3', 9600)  # com6 is back most Keyboard USB port
             except:
                 self.ser = None
             if self.ser:

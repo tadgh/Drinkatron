@@ -57,15 +57,6 @@ void loop() {
 
   if(index==12){
     digitalWrite(13,HIGH);
-    if(drinkSize==100)
-    {
-      ;
-    }
-    else
-    {
-      for(int x = 0; x < 12; x++)
-        ingredientList[x] = (float(ingredientList[x]) / float(drinkSize)) * 100;
-    }
    //**********************************************************
    //super ugly initialization code, but it
    //we dont do it this way, we end up blowing the stack space.
