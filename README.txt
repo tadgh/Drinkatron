@@ -1,2 +1,0 @@
-The Drinkatron is a little side project that myself and a school friend are working on. 
-It's essentially an automated bartender. Not much more needs to be said. Still in production, not ready for any kind of branching….
