@@ -10,7 +10,7 @@ void setup(){
 
  for(int i = 37; i <= 51; i++){
     pinMode(i, OUTPUT);
-    digitalWrite(i, HIGH)
+    digitalWrite(i, LOW)
   }
 
 }

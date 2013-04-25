@@ -25,7 +25,7 @@ class Connection:
             if self.ser:
                 self.log.info("Arduino connected on : %s" 'COM15')
         else:
-            arduinoPort = glob.glob("/dev/ttyACM*")
+            arduinoPort = glob.glob("/dev/ttyACM*")[0]
             try:
                 self.ser = serial.Serial(arduinoPort, 9600)
             except:
@@ -59,7 +59,7 @@ class Connection:
             drinkSize += item
         if drinkSize != 100:
             for i in range(len(drinkArray)):
-                cleanedList.append(round(drinkArray[i]/float(drinkSize)*100))
+                cleanedList.append(round(drinkArray[i]/float(drinkSize)*75))
         self.log.info("Cleaned List:")
         self.log.info(cleanedList)
 

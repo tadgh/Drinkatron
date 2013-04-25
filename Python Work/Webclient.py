@@ -85,4 +85,4 @@ if __name__ == '__main__':
         tempDrink = drinks.drink(*drinkList[currentDrink])
         drinkDictList.append(tempDrink.convertToDict())
     conn.close()
-    bottle.run(app, host='192.168.0.18', port=8083, server='cherrypy')
+    bottle.run(app, host='192.168.0.20', port=8083, server='cherrypy')
