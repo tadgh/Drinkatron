@@ -4,7 +4,8 @@ pythonwork/__pycache__/
 /__pycache__
 /.idea/
 /.idea
-
+*.git*
+*.sublime*
 #python specific
 *.pyc
 
