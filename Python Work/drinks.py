@@ -102,7 +102,8 @@ class drink:
                     constants.INGREDIENTLIST[11]: self.ing12,
                     'totalSize': self.totalSize,
                     'dispenseCount': self.dispenseCount,
-                    'starRating': self.starRating
+                    'starRating': self.starRating,
+                    'imagePath': self.imagePath
                     }
 
         for ingredient in constants.INGREDIENTLIST:

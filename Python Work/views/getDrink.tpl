@@ -2,7 +2,22 @@
 <html>
 <head>
 	<title>{{selectedDrink['name']}}</title>
+	<script type="text/javascript" src='/static/jquery-2.0.0.min.js'></script>
 
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+    $("#btnDispense").click(function()
+        {
+             $.ajax({
+                url: "/dispense/known/{{selectedDrink['name']}}",
+                type: "get"
+            });
+        });
+});
+
+</script>
 </head>
 <body>
 <h2>{{selectedDrink['name']}}</h2> <br>
@@ -18,6 +33,7 @@
 {{constants.INGREDIENTLIST[9]}} : {{selectedDrink[constants.INGREDIENTLIST[9]]}} <br>
 {{constants.INGREDIENTLIST[10]}} :{{selectedDrink[constants.INGREDIENTLIST[10]]}} <br>
 {{constants.INGREDIENTLIST[11]}} :{{selectedDrink[constants.INGREDIENTLIST[11]]}} <br>
-
+<button id="btnDispense">Dispense</button>
+<img src="/static/resources/images/{{selectedDrink['imagePath']}}">
 </body>
 </html>
