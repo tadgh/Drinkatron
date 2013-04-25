@@ -26,6 +26,24 @@ $(document).ready(function() {
 <body>
 <button id="btnGetDrinks">get all drinks</button>
 <button id="getDrinkDetails">get drink details</button>
+<div id="list1">
+    <ul>
+        %for drink in drinkList:
+        <li><a href="/getDrink/{{drink['name']}}">{{drink['name']}}</a></li> <br>
+        %end
+    </ul>
+</div>
 <div id="divDrinkList"></div>
 </body>
 </html>
+<style>
+    body
+    {
+        background-color: #2a2a2a
+    }
+    #list1 { }
+    #list1 ul { list-style:none; text-align:left; border-top:1px solid #eee; border-bottom:1px solid #eee; padding:10px 0; }
+    #list1 ul li { display:inline; text-transform:uppercase; padding:0 10px; letter-spacing:10px; }
+    #list1 ul li a { text-decoration:none; color:#eee; }
+    #list1 ul li a:hover { text-decoration:underline; }
+</style>
