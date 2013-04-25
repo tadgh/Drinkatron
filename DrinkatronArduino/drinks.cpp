@@ -14,9 +14,7 @@
 
    void Drink::parallelDispense(){
 
-     if(this->getValvesInUse() > 3){
-       digitalWrite(MASTER_DISPENSE_PIN, HIGH);
-     }
+     this->setDelay();
 
 
      for(byte i = 0; i < this->longestCycle() + 1; i++){
@@ -83,28 +81,43 @@
 
 
 
-      delay(HIGHVIS_DELAY);
+      delay(_delay);
       Serial.print("*****Cycle ");
       Serial.print(i);
       Serial.println(" Complete*****");
-      if(i == longestCycle() / 2)
-        digitalWrite(MASTER_DISPENSE_PIN, HIGH);
      }
-     this->finalDump();
-
-
    }
 
+   byte getNumberOfIngredients()
+   {
+     byte numIng = 0;
+     if(_Ing11 > 0)
+       numIng ++
+       if(_Ing9 > 0)
+         numIng++
+       if(_Ing5 > 0)
+         numIng++
+       if(_Ing1 > 0)
+         numIng++;
+       if(_Ing2 > 0)
+         numIng++;
+       if(_Ing8 > 0)
+         numIng++;
+       if(_Ing7 > 0)
+         numIng++;
+       if(_Ing3 > 0)
+         numIng++;
+       if(_Ing6 > 0)
+         numIng++;
+       if(_Ing4 > 0)
+         numIng++;
+       if(_Ing12 > 0)
+         numIng++;
+       if(_Ing10 > 0)
+         numIng++;
 
-   void Drink::finalDump(){
-     digitalWrite(MASTER_DISPENSE_PIN, HIGH);
-     Serial.println("Opened master dispense valve");
-     delay(15000);
-     Serial.print("componentCount = ");
-   digitalWrite(MASTER_DISPENSE_PIN, HIGH);
-   Serial.println("Closed master dispense valve");
- }
-
+       return numIng;
+   }
 
  //boolean isAvailable(){}
 
@@ -141,36 +154,26 @@
 
 
 
+   void Drink::setDelay()
+   {
+    int ingCount = this->getValvesInUse();
+    _delay = VALVE_DELAYS[ingCount];
+   }
    //prints out various drink stats
    void Drink::printDrink(){
      Serial.println("******INGREDIENTS*******");
-     Serial.print("Ing1: ");
-     Serial.println(_Ing1);
-     Serial.print("Ing2: ");
-     Serial.println(_Ing2);
-     Serial.print("Ing3: ");
-     Serial.println(_Ing3);
-     Serial.print("Ing4: ");
-     Serial.println(_Ing4);
-     Serial.print("Ing5: ");
-     Serial.println(_Ing5);
-     Serial.print("Ing6: ");
-     Serial.println(_Ing6);
-     Serial.print("Ing7: ");
-     Serial.println(_Ing7);
-     Serial.print("Ing8: ");
-     Serial.println(_Ing8);
-     Serial.print("Ing9: ");
-     Serial.println(_Ing9);
-     Serial.print("Ing10: ");
-     Serial.println(_Ing10);
-     Serial.print("Ing11: ");
-     Serial.println(_Ing11);
-     Serial.print("Ing12: ");
-     Serial.println(_Ing12);
-
-
-
+     Serial.print(_Ing1);
+     Serial.print(_Ing2);
+     Serial.print(_Ing3);
+     Serial.print(_Ing4);
+     Serial.print(_Ing5);
+     Serial.print(_Ing6);
+     Serial.print(_Ing7);
+     Serial.print(_Ing8);
+     Serial.print(_Ing9);
+     Serial.print(_Ing10);
+     Serial.print(_Ing11);
+     Serial.print(_Ing12);
    }
 
 

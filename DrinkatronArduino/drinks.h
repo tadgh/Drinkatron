@@ -18,6 +18,7 @@ class Drink{
   byte _Ing11;
   byte _Ing12;
   boolean _garnished;
+  byte _delay;
 
  public:
    Drink();
@@ -40,6 +41,7 @@ class Drink{
    void setIng10(byte x);
    void setIng11(byte x);
    void setIng12(byte x);
+   void setDelay();
 
    //drink stats
    byte getValvesInUse();

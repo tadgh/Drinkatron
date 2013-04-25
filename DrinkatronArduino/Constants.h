@@ -26,22 +26,9 @@ const int  ING12_RELAY_PIN = 44;
 const int  MASTER_DISPENSE_PIN =  24; //this is a currently useless pin
 
 const int  LOWVIS_DELAY = 65; //THIS IS SOLELY EXPERIMENTAL AS WE ARE USING LARGER VALUES OF THING
+const int[]  VALVE_DELAYS = {90,85,75,65};
+
 const int  MEDVIS_DELAY = 500;
 const int  HIGHVIS_DELAY = 500;
-
-
-
-//MIXER CONSTANTS
-const int SPIN_TIME = 2000;
-const int FULL_SPEED = 0;
-const int FULL_REVERSE = 180;
-const int STOP_SPIN = 95;//to be experimentally determined.
-const int MIXER_SERVO_PIN = 13;
-
-//flush constants
-const int FLUSH_PIN = 2;
-
-//Master Delay
-const int MASTER_VALVE_DELAY = 12000;
 
 #endif
