@@ -1,24 +1,36 @@
-import bottle
-import dbinterface
 import drinks
 import logging
 import constants
 import arduinocomm
+import bottle
+import bottle_sqlite
+import sqlite3
 
 arduino = arduinocomm.Connection()
+app = bottle.Bottle()
+plugin = bottle_sqlite.Plugin(dbfile=constants.DBLOCATION, autocommit=True)
+app.install(plugin)
+
+log = logging.getLogger("WEB")
+log.setLevel(logging.INFO)
+log.info("Entering -> WebClient")
+bottle.debug(True)
+drinkList = []
+drinkObjArray = []
+drinkDictList = []
 
 
-@bottle.route('/')
+@app.route('/')
 def index():
     return bottle.template('index')
 
 
-@bottle.route('/getDrinks')
+@app.route('/getDrinks')
 def getDrinks():
     return bottle.template('getDrinks', drinkDictList=drinkDictList)
 
 
-@bottle.route('/getDrink/:name')
+@app.route('/getDrink/:name')
 def getDrink(name):
     print(name)
     for drink in drinkDictList:
@@ -27,16 +39,17 @@ def getDrink(name):
             return drink
 
 
-@bottle.route('/dispense/known/:name')
-def dispense(name):
+@app.route('/dispense/known/:name')
+def dispense(name, db):
     log.info("Entering -> Dispense(name) for %s" % name)
     dirtyList = []
     for drink in drinkDictList:
         if drink['name'] == name:
             for ingredient in range(len(constants.INGREDIENTLIST)):
                 dirtyList.append(drink[constants.INGREDIENTLIST[ingredient]])
-
-    db.dispenseOccured(drink['drinkID'])
+    ident = (drink['drinkID'],)
+    db.execute("UPDATE drinks SET dispense_count = dispense_count + 1 WHERE drink_id = ?", ident)
+    db.execute("INSERT INTO dispenses (drink_id) VALUES (?)", ident)
     arduino.sendDrink(dirtyList)
     log.info("Leaving -> Dispense(name) for %s. Found Drink." % name)
     return "Drink successfully passed off to arduino."
@@ -44,7 +57,7 @@ def dispense(name):
     return "Drink could not be found!"
 
 
-@bottle.route('/dispense/custom/:adHocList')
+@app.route('/dispense/custom/:adHocList')
 def dispense_custom(adHocList):
     adHocList = adHocList.split('_')
     dirtyList = []
@@ -53,29 +66,18 @@ def dispense_custom(adHocList):
     arduino.sendDrink(dirtyList)
 
 
-@bottle.route('/Analytics')
+@app.route('/Analytics')
 def Analytics():
     drinkData = []
     return bottle.template('Analytics', data=drinkData)
 
-if __name__ == '__main__':
-    log = logging.getLogger("WEB")
-    log.setLevel(logging.ERROR)
-    log.info("Entering -> WebClient")
-    bottle.debug(True)
-    db = dbinterface.DB()
-    drinkList = db.listDrinksByName()
 
-    drinkObjArray = []
-    ingredientDict = {}
-    for ingredient in constants.INGREDIENTLIST:
-        ingredientDict[ingredient] = 0
-    log.info(ingredientDict)
-    drinkDictList = []
+if __name__ == '__main__':
+    conn = sqlite3.connect(constants.DBLOCATION)
+    cursor = conn.cursor()
+    drinkList = cursor.execute("SELECT * FROM drinks ORDER BY drink_name ASC").fetchall()
     for currentDrink in range(len(drinkList)):
         tempDrink = drinks.drink(*drinkList[currentDrink])
-        drinkObjArray.append(tempDrink)
         drinkDictList.append(tempDrink.convertToDict())
-        db.log.info(drinkObjArray[currentDrink].drinkName)
-
-    bottle.run(host='192.168.0.10', port=8082)
+    conn.close()
+    bottle.run(app, host='192.168.0.10', port=8083, server='cherrypy')

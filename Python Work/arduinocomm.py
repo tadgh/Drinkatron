@@ -23,7 +23,7 @@ class Connection:
             except:
                 self.ser = None
             if self.ser:
-                self.log.info("Arduino connected on : %s" % self.ser)
+                self.log.info("Arduino connected on : %s" 'COM15')
         else:
             arduinoPort = glob.glob("/dev/ttyACM*")
             try:
