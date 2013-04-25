@@ -22,7 +22,11 @@ drinkDictList = []
 
 @app.route('/')
 def index():
-    return bottle.template('index')
+    return bottle.template('index', drinkList=drinkDictList)
+
+@app.route('/static/:path#.+#', name='static')
+def static(path):
+    return bottle.static_file(path, root='./static/')
 
 
 @app.route('/getDrinks')
@@ -36,7 +40,7 @@ def getDrink(name):
     for drink in drinkDictList:
         if drink['name'] == name:
             print(drink)
-            return drink
+            return bottle.template('getDrink', selectedDrink=drink)
 
 
 @app.route('/dispense/known/:name')
