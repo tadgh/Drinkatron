@@ -26,7 +26,7 @@ const int  ING12_RELAY_PIN = 44;
 const int  MASTER_DISPENSE_PIN =  24; //this is a currently useless pin
 
 const int  LOWVIS_DELAY = 65; //THIS IS SOLELY EXPERIMENTAL AS WE ARE USING LARGER VALUES OF THING
-const int[]  VALVE_DELAYS = {90,85,75,65};
+const int[]  VALVE_DELAYS = {0,90,85,75,65};
 
 const int  MEDVIS_DELAY = 500;
 const int  HIGHVIS_DELAY = 500;

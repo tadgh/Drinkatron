@@ -20,64 +20,64 @@
      for(byte i = 0; i < this->longestCycle() + 1; i++){
 
        if(_Ing1 > i){
-         digitalWrite(ING1_RELAY_PIN, HIGH);Serial.println("Dispensing Ing1");
+         digitalWrite(ING1_RELAY_PIN, LOW);Serial.println("Dispensing Ing1");
        }else
-         digitalWrite(ING1_RELAY_PIN, LOW);
+         digitalWrite(ING1_RELAY_PIN, HIGH);
 
        if(_Ing2 > i){
-         digitalWrite(ING2_RELAY_PIN, HIGH);Serial.println("Dispensing Ing2.");
+         digitalWrite(ING2_RELAY_PIN, LOW);Serial.println("Dispensing Ing2.");
        }else
-         digitalWrite(ING2_RELAY_PIN,LOW);
+         digitalWrite(ING2_RELAY_PIN,HIGH);
 
        if(_Ing3 > i){
-         digitalWrite(ING3_RELAY_PIN, HIGH);Serial.println("Dispensing Ing3.");
+         digitalWrite(ING3_RELAY_PIN, LOW);Serial.println("Dispensing Ing3.");
        }else
-         digitalWrite(ING3_RELAY_PIN, LOW);
+         digitalWrite(ING3_RELAY_PIN, HIGH);
 
        if(_Ing4 > i){
-         digitalWrite(ING4_RELAY_PIN, HIGH);Serial.println("Dispensing Ing4.");
+         digitalWrite(ING4_RELAY_PIN, LOW);Serial.println("Dispensing Ing4.");
        }else
-         digitalWrite(ING4_RELAY_PIN, LOW);
+         digitalWrite(ING4_RELAY_PIN, HIGH);
 
        if(_Ing5 > i){
-         digitalWrite(ING5_RELAY_PIN, HIGH);Serial.println("Dispensing Ing5.");
+         digitalWrite(ING5_RELAY_PIN, LOW);Serial.println("Dispensing Ing5.");
        }else
-         digitalWrite(ING5_RELAY_PIN, LOW);
+         digitalWrite(ING5_RELAY_PIN, HIGH);
 
        if(_Ing6 > i){
-         digitalWrite(ING6_RELAY_PIN, HIGH);Serial.println("Dispensing Ing6.");
+         digitalWrite(ING6_RELAY_PIN, LOW);Serial.println("Dispensing Ing6.");
        }else
-         digitalWrite(ING6_RELAY_PIN, LOW);
+         digitalWrite(ING6_RELAY_PIN, HIGH);
 
        if(_Ing7 > i){
-         digitalWrite(ING7_RELAY_PIN, HIGH);Serial.println("Dispensing Ing7.");
+         digitalWrite(ING7_RELAY_PIN, LOW);Serial.println("Dispensing Ing7.");
        }else
-         digitalWrite(ING7_RELAY_PIN, LOW);
+         digitalWrite(ING7_RELAY_PIN, HIGH);
 
        if(_Ing8 > i){
-         digitalWrite(ING8_RELAY_PIN, HIGH);Serial.println("Dispensing Ing8");
+         digitalWrite(ING8_RELAY_PIN, LOW);Serial.println("Dispensing Ing8");
        }else
-         digitalWrite(ING8_RELAY_PIN, LOW);
+         digitalWrite(ING8_RELAY_PIN, HIGH);
 
        if(_Ing9 > i){
-         digitalWrite(ING9_RELAY_PIN, HIGH);Serial.println("Dispensing Ing9.");
+         digitalWrite(ING9_RELAY_PIN, LOW);Serial.println("Dispensing Ing9.");
        }else
-         digitalWrite(ING9_RELAY_PIN, LOW);
+         digitalWrite(ING9_RELAY_PIN, HIGH);
 
        if(_Ing10 > i){
-         digitalWrite(ING10_RELAY_PIN, HIGH);Serial.println("Dispensing Ing10.");
+         digitalWrite(ING10_RELAY_PIN, LOW);Serial.println("Dispensing Ing10.");
        }else
-         digitalWrite(ING10_RELAY_PIN, LOW);
+         digitalWrite(ING10_RELAY_PIN, HIGH);
 
        if(_Ing11 > i){
-         digitalWrite(ING11_RELAY_PIN, HIGH);Serial.println("Dispensing Ing11.");
+         digitalWrite(ING11_RELAY_PIN, LOW);Serial.println("Dispensing Ing11.");
        }else
-         digitalWrite(ING11_RELAY_PIN, LOW);
+         digitalWrite(ING11_RELAY_PIN, HIGH);
 
        if(_Ing12 > i){
-         digitalWrite(ING12_RELAY_PIN, HIGH);Serial.println("Dispensing Ing12.");
+         digitalWrite(ING12_RELAY_PIN, LOW);Serial.println("Dispensing Ing12.");
        }else
-         digitalWrite(ING12_RELAY_PIN, LOW);
+         digitalWrite(ING12_RELAY_PIN, HIGH);
 
 
 
@@ -159,6 +159,7 @@
     int ingCount = this->getValvesInUse();
     _delay = VALVE_DELAYS[ingCount];
    }
+
    //prints out various drink stats
    void Drink::printDrink(){
      Serial.println("******INGREDIENTS*******");
