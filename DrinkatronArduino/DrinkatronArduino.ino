@@ -8,23 +8,11 @@ void setup(){
   Serial.begin(9600);
 
 
- for(int i = 31; i <= 43; i++){
+ for(int i = 37; i <= 51; i++){
     pinMode(i, OUTPUT);
+    digitalWrite(i, LOW)
   }
 
-  digitalWrite(38, HIGH);
-  digitalWrite(39, HIGH);
-  digitalWrite(32, HIGH);
-  digitalWrite(33, HIGH);
-  digitalWrite(34, HIGH);
-  digitalWrite(35, HIGH);
-  digitalWrite(36, HIGH);
-  digitalWrite(37, HIGH);
-  digitalWrite(40, HIGH);
-  digitalWrite(41, HIGH);
-  digitalWrite(42, HIGH);
-  digitalWrite(43, HIGH);
-  digitalWrite(31, HIGH);
 }
 
 int ingredientList[12];
@@ -56,7 +44,6 @@ void loop() {
   }
 
   if(index==12){
-    digitalWrite(13,HIGH);
    //**********************************************************
    //super ugly initialization code, but it
    //we dont do it this way, we end up blowing the stack space.
