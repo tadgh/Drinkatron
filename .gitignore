@@ -8,6 +8,7 @@ pythonwork/__pycache__/
 *.sublime*
 #python specific
 *.pyc
+pythonwork/*.sublime*
 
 ## generic files to ignore
 *~
