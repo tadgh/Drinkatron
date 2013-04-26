@@ -20,20 +20,42 @@ $(document).ready(function() {
 </script>
 </head>
 <body>
-<h2>{{selectedDrink['name']}}</h2> <br>
-{{constants.INGREDIENTLIST[0]}} : {{selectedDrink[constants.INGREDIENTLIST[0]]}} <br>
-{{constants.INGREDIENTLIST[1]}} : {{selectedDrink[constants.INGREDIENTLIST[1]]}} <br>
-{{constants.INGREDIENTLIST[2]}} : {{selectedDrink[constants.INGREDIENTLIST[2]]}} <br>
-{{constants.INGREDIENTLIST[3]}} : {{selectedDrink[constants.INGREDIENTLIST[3]]}} <br>
-{{constants.INGREDIENTLIST[4]}} : {{selectedDrink[constants.INGREDIENTLIST[4]]}} <br>
-{{constants.INGREDIENTLIST[5]}} : {{selectedDrink[constants.INGREDIENTLIST[5]]}} <br>
-{{constants.INGREDIENTLIST[6]}} : {{selectedDrink[constants.INGREDIENTLIST[6]]}} <br>
-{{constants.INGREDIENTLIST[7]}} : {{selectedDrink[constants.INGREDIENTLIST[7]]}} <br>
-{{constants.INGREDIENTLIST[8]}} : {{selectedDrink[constants.INGREDIENTLIST[8]]}} <br>
-{{constants.INGREDIENTLIST[9]}} : {{selectedDrink[constants.INGREDIENTLIST[9]]}} <br>
-{{constants.INGREDIENTLIST[10]}} :{{selectedDrink[constants.INGREDIENTLIST[10]]}} <br>
-{{constants.INGREDIENTLIST[11]}} :{{selectedDrink[constants.INGREDIENTLIST[11]]}} <br>
-<button id="btnDispense">Dispense</button>
+<h2>{{selectedDrink['name']}}</h2>
+<div id="ingList">
+	<ul><br>
+		%for ingredient in constants.INGREDIENTLIST:
+			%if selectedDrink[ingredient] != 0:
+				<li>{{ingredient}} : {{selectedDrink[ingredient]}}</li>
+			%end
+		%end
+	</ul>
+
+</div>
+<div>
+	<button id="btnDispense" ><img src="/static/resources/images/green_checkmark.gif"></img></button>
+</div>
 <img src="/static/resources/images/{{selectedDrink['imagePath']}}">
 </body>
+
+
+<style type="text/css">
+li
+{
+	color: white
+}
+h2
+{
+	color: white
+}
+div
+{
+	float: left
+}
+button
+{
+	width: 100; height: 100; float: right;
+}
+</style>
+
 </html>
+

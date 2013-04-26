@@ -22,7 +22,7 @@ $(document).ready(function() {
     $("a").click(function()
         {
              $.ajax({
-                url: $(this).attr("href"),
+                url: $(this).attr("id"),
                 type: "get",
                 success: function(data){
                     //alert(data);
@@ -38,7 +38,7 @@ $(document).ready(function() {
 <div id="list1">
     <ul>
         %for drink in drinkList:
-        <li><a href="/getDrink/{{drink['name']}}">{{drink['name']}}</a></li> <br>
+        <li><a href="#" id="/getDrink/{{drink['name']}}">{{drink['name']}}</a></li> <br>
         %end
     </ul>
 </div>
@@ -59,6 +59,6 @@ $(document).ready(function() {
     #list1 ul li { display:inline; text-transform:uppercase; padding:0 10px; letter-spacing:10px; }
     #list1 ul li a { text-decoration:none; color:#eee; }
     #list1 ul li a:hover { text-decoration:underline; }
-    #list1 { width: 500px; border: 1px solid red; float: left}
-    #detailView { width: 300px; border: 1px solid red; float: left}
+    #list1 { width: 500px; float: left}
+    #detailView { width: 500px;float: left}
 </style>
