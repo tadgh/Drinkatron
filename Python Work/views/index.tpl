@@ -19,19 +19,32 @@ $(document).ready(function() {
                 }
             });
         });
+    $("a").click(function()
+        {
+             $.ajax({
+                url: $(this).attr("href"),
+                type: "get",
+                success: function(data){
+                    //alert(data);
+                    $("#detailView").html(data)
+                }
+            });
+        });
 });
 
 
 </script>
 <body>
-<button id="btnGetDrinks">get all drinks</button>
-<button id="getDrinkDetails">get drink details</button>
 <div id="list1">
     <ul>
         %for drink in drinkList:
         <li><a href="/getDrink/{{drink['name']}}">{{drink['name']}}</a></li> <br>
         %end
     </ul>
+</div>
+<div id="detailView">
+
+
 </div>
 <div id="divDrinkList"></div>
 </body>
@@ -46,4 +59,6 @@ $(document).ready(function() {
     #list1 ul li { display:inline; text-transform:uppercase; padding:0 10px; letter-spacing:10px; }
     #list1 ul li a { text-decoration:none; color:#eee; }
     #list1 ul li a:hover { text-decoration:underline; }
+    #list1 { width: 500px; border: 1px solid red; float: left}
+    #detailView { width: 300px; border: 1px solid red; float: left}
 </style>
