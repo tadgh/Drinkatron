@@ -59,6 +59,6 @@ $(document).ready(function() {
     #list1 ul li { display:inline; text-transform:uppercase; padding:0 10px; letter-spacing:10px; }
     #list1 ul li a { text-decoration:none; color:#eee; }
     #list1 ul li a:hover { text-decoration:underline; }
-    #list1 { width: 500px; float: left}
-    #detailView { width: 500px;float: left}
+    #list1 { width: 50%; float: left}
+    #detailView { width: 50%; height: 600px; float: left}
 </style>

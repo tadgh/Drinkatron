@@ -21,20 +21,32 @@ $(document).ready(function() {
 </head>
 <body>
 <h2>{{selectedDrink['name']}}</h2>
-<div id="ingList">
-	<ul><br>
-		%for ingredient in constants.INGREDIENTLIST:
-			%if selectedDrink[ingredient] != 0:
-				<li>{{ingredient}} : {{selectedDrink[ingredient]}}</li>
-			%end
-		%end
-	</ul>
 
-</div>
-<div>
-	<button id="btnDispense" ><img src="/static/resources/images/green_checkmark.gif"></img></button>
-</div>
-<img src="/static/resources/images/{{selectedDrink['imagePath']}}">
+<table width="400px">
+	<tr>
+		<td width="70%" height='200px'>
+			<div id="ingList">
+				<ul><br>
+					%for ingredient in constants.INGREDIENTLIST:
+						%if selectedDrink[ingredient] != 0:
+							<li><font size='5'>{{ingredient}} : {{selectedDrink[ingredient]}}</font></li>
+						%end
+					%end
+				</ul>
+			</div>
+		</td>
+		<td width="30%" height='200px'>
+			<div>
+				<button id="btnDispense" ><img src="/static/resources/images/green_checkmark.gif"></img></button>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2" height='400px'>
+			<img src="/static/resources/images/{{selectedDrink['imagePath']}}">
+		</td>
+	</tr>
+</table>
 </body>
 
 
@@ -54,6 +66,10 @@ div
 button
 {
 	width: 100; height: 100; float: right;
+}
+li
+{
+	font-size: 15; fon
 }
 </style>
 
