@@ -1,0 +1,122 @@
+@charset "utf-8";
+
+/* Reset default styles */
+
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td { margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent; }
+body { line-height:1; }
+ol,ul { list-style:none; }
+blockquote,q { quotes:none; }
+blockquote:before,blockquote:after,q:before,q:after { content:'';content:none; }
+ins { text-decoration:none; }
+del { text-decoration:line-through; }
+table { border-collapse:collapse;border-spacing:0; }
+
+
+/* Reset default styles */
+
+/* Botender Web Interface v0.01 by Ryan Novak 2013 */
+
+
+html, body, #interface, .ui-left, .ui-right {
+	height:100%;
+	min-height:100%;
+}
+
+body {
+	
+	background: #fff;
+	color: #fff;
+	
+}
+
+img { max-height: 100%; }
+
+
+.container {
+
+	margin: 0 auto;
+
+}
+
+
+.ui-left {
+
+	background: #333;
+	float:left;
+	width: 68.9%;
+	
+	
+}
+
+.d-preview{	
+	background: url(../images/preview-bg.gif) no-repeat #1d1e1e;
+	width:100%;
+	float:left;
+	height:386px;
+}
+
+.d-preview img{
+	float:right;
+	overflow:visible;
+	z-index:2;
+	position:relative;
+	
+	
+}
+
+.d-head{
+	float:left;	
+	width:100%;
+	height:158px;
+	background: #111;
+	
+}
+
+.d-head p{
+	font-family: 'Lato', sans-serif;
+	letter-spacing:3px;
+	padding: 77px 0 0 30px;	
+	color: #d76e52;
+	
+}
+
+.d-control{
+	float:left;	
+	height: 256px;
+}
+
+.ui-right {
+
+	background: #292929;
+	float:left;
+	width: 31.1%;
+	max-height:800px;
+	overflow:hidden;
+	font-family: 'Lato', sans-serif;
+	letter-spacing:3px;
+	
+}
+
+.d-list li{
+	
+	height: 75px;
+	background: #191919;
+	margin:  0 0 2.5px 0;
+	
+}
+
+.d-list p{
+	padding:30px 0 0 38px;
+}
+
+.d-list-nav{
+	
+}
+
+.d-list-nav li{
+width: 25%;	
+height:	120px;
+float: left;
+}
+
+
