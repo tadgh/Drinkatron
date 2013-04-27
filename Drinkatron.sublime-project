@@ -2,13 +2,23 @@
 	"folders":
 	[
 		{
-			"path": "/C/Users/Gary/Documents/GitHub/Drinkatron/Python Work",
-			"folder_exclude_patterns": [".idea","__pycache__"],
-			"file_exclude_patterns": ["*.git*", "readme.txt"]
-
+			"file_exclude_patterns":
+			[
+				"*.git*",
+				"readme.txt"
+			],
+			"folder_exclude_patterns":
+			[
+				".idea",
+				"__pycache__"
+			],
+			"path": "Python Work"
 		},
 		{
-			"path": "/C/Users/Gary/Documents/GitHub/Drinkatron/DrinkatronArduino"
+			"path": "DrinkatronArduino"
+		},
+		{
+			"path": "BT - UI"
 		}
 	]
 }

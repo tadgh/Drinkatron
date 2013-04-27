@@ -5,6 +5,7 @@ import arduinocomm
 import bottle
 import bottle_sqlite
 import sqlite3
+import socket
 
 arduino = arduinocomm.Connection()
 app = bottle.Bottle()
@@ -22,7 +23,8 @@ drinkDictList = []
 
 @app.route('/')
 def index():
-    return bottle.template('index', drinkList=drinkDictList)
+    #return bottle.template('index', drinkList=drinkDictList)
+    return bottle.template('indexProto', drinkList=drinkDictList)
 
 
 @app.route('/static/:path#.+#', name='static')
@@ -41,7 +43,8 @@ def getDrink(name):
     for drink in drinkDictList:
         if drink['name'] == name:
             print(drink)
-            return bottle.template('getDrink', selectedDrink=drink)
+            #return bottle.template('getDrink', selectedDrink=drink)
+            return bottle.template('getDrinkProto', selectedDrink=drink)
 
 
 @app.route('/dispense/known/:name')
@@ -85,4 +88,5 @@ if __name__ == '__main__':
         tempDrink = drinks.drink(*drinkList[currentDrink])
         drinkDictList.append(tempDrink.convertToDict())
     conn.close()
-    bottle.run(app, host='192.168.1.140', port=8083, server='cherrypy')
+    localIP = socket.gethostbyname(socket.gethostname())
+    bottle.run(app, host=localIP, port=8083, server='cherrypy')
