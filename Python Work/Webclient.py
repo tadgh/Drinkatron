@@ -89,4 +89,4 @@ if __name__ == '__main__':
         drinkDictList.append(tempDrink.convertToDict())
     conn.close()
     localIP = socket.gethostbyname(socket.gethostname())
-    bottle.run(app, host=localIP, port=8083, server='cherrypy')
+    bottle.run(app, host='0.0.0.0', port=8083, server='cherrypy')
