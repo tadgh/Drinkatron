@@ -25,7 +25,7 @@ $(document).ready(function() {
 
     $("li").click(function()
         {
-            $("#nameDiv").html($(this).text())
+            $("#nameDiv").html("<p>" + $(this).text() + "</p>")
         });
     });
 </script>
