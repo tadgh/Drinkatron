@@ -24,7 +24,7 @@ drinkDictList = []
 @app.route('/')
 def index():
     #return bottle.template('index', drinkList=drinkDictList)
-    return bottle.template('temp', drinkList=drinkDictList)
+    return bottle.template('index', drinkList=drinkDictList)
 
 
 @app.route('/static/:path#.+#', name='static')

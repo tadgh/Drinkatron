@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"disp",
+				"dispString"
+			],
+			[
 				"fon",
 				"font-size"
 			],
@@ -147,7 +151,7 @@
 			"file": "Python Work/Webclient.py",
 			"settings":
 			{
-				"buffer_size": 2807,
+				"buffer_size": 2810,
 				"line_ending": "Windows"
 			}
 		},
@@ -163,15 +167,15 @@
 			"file": "Python Work/views/getDrinkProto.tpl",
 			"settings":
 			{
-				"buffer_size": 757,
+				"buffer_size": 821,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "Python Work/views/temp.tpl",
+			"file": "Python Work/views/index.tpl",
 			"settings":
 			{
-				"buffer_size": 2785,
+				"buffer_size": 3041,
 				"line_ending": "Windows"
 			}
 		},
@@ -376,6 +380,7 @@
 	},
 	"file_history":
 	[
+		"/C/Users/Gary/Documents/GitHub/Drinkatron/Python Work/views/temp.tpl",
 		"/C/Users/Gary/Documents/GitHub/Drinkatron/Python Work/views/indexProto.tpl",
 		"/C/Users/Gary/Documents/GitHub/Drinkatron/Python Work/views/indexProto.html",
 		"/C/Users/Gary/Documents/GitHub/Drinkatron/DrinkatronArduino/Constants.h",
@@ -763,15 +768,15 @@
 					"file": "Python Work/Webclient.py",
 					"settings":
 					{
-						"buffer_size": 2807,
+						"buffer_size": 2810,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								902,
-								902
+								1106,
+								1108
 							]
 						],
 						"settings":
@@ -984,7 +989,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 345.0,
+						"translation.y": 41.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -994,15 +999,15 @@
 					"file": "Python Work/views/getDrinkProto.tpl",
 					"settings":
 					{
-						"buffer_size": 757,
+						"buffer_size": 821,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								747,
-								747
+								790,
+								790
 							]
 						],
 						"settings":
@@ -1106,18 +1111,18 @@
 				},
 				{
 					"buffer": 5,
-					"file": "Python Work/views/temp.tpl",
+					"file": "Python Work/views/index.tpl",
 					"settings":
 					{
-						"buffer_size": 2785,
+						"buffer_size": 3041,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								905,
-								905
+								1129,
+								1129
 							]
 						],
 						"settings":
@@ -1215,7 +1220,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1349.0,
+						"translation.y": 456.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1232,8 +1237,8 @@
 						"selection":
 						[
 							[
-								695,
-								695
+								499,
+								499
 							]
 						],
 						"settings":
@@ -1409,6 +1414,10 @@
 		"selected_items":
 		[
 			[
+				"web",
+				"Python Work/Webclient.py"
+			],
+			[
 				"drinkatr",
 				"DrinkatronArduino/DrinkatronArduino.ino"
 			],
@@ -1423,10 +1432,6 @@
 			[
 				"ardui",
 				"DrinkatronArduino/DrinkatronArduino.ino"
-			],
-			[
-				"web",
-				"Python Work/Webclient.py"
 			],
 			[
 				"const",

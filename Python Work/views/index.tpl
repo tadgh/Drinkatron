@@ -11,11 +11,12 @@
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript">
+
 $(document).ready(function() {
     $("li").click(function()
         {
              $.ajax({
-                url: $(this).attr("id"),
+                url: "/getDrink/" + $(this).attr("id"),
                 type: "get",
                 success: function(data){
                     $("#ingDiv").html(data);
@@ -27,7 +28,28 @@ $(document).ready(function() {
         {
             $("#nameDiv").html("<p>" + $(this).text() + "</p>")
         });
-    });
+
+
+    $("#dispBut").click(function()
+            {
+
+                var dispString = "";
+                for (var i = 0; i < 12; i++) {
+                    if $(i).length() > 0
+                    {
+                        dispString += $(i).value();
+                    };
+                };
+                $.ajax({
+                    url: "/dispense/custom/" + $('#namePar').attr("id"),
+                    type: "get",
+                    success: function(data){
+                        alert("Dispensed!");
+                    }
+                });
+            });
+        });
+
 </script>
 
 </head>
@@ -39,24 +61,41 @@ $(document).ready(function() {
 
 	<div class="ui-left">
 
+        <img class="bt-logo" src="/static/images/bt-logo.png"/>
+
+
 		<div class="d-preview">
 
         <ul>
-
         	<li><img src="/static/images/drink1.png" alt="Blue Moon Martini"></li>
-
         </ul>
 
         </div><!-- /end .d-preview -->
 
         <div class="d-head" id='nameDiv'>
 
-        	<p> DRINK NAME GOES HERE </p>
+            <p> DRINK NAME GOES HERE </p>
 
         </div><!-- /end .d-head -->
 
         <div class="d-control" id="ingDiv">
-        </div><!-- /end .d-preview -->
+
+            <ul>
+                <li><p>ING. ONE</p></li>
+                <li><p>ING. TWO</p></li>
+                <li><p>ING. THREE</p></li>
+                <li><p>ING. FOUR</p></li>
+                <li><p>ING. FIVE</p></li>
+            </ul>
+
+
+        </div><!-- /end .d-control -->
+
+        <div class="d-selection">
+        	<button id="dispBut" onclick="Javascript: alert('Pouring meow')">POUR IT</button>
+            <button onclick="Javascript: alert ('I too like to live dangerously')">SURPRISE ME!</button>
+        </div>
+
      </div><!-- /end .ui-left -->
 
 
@@ -66,7 +105,7 @@ $(document).ready(function() {
 
             <ul>
                 %for drink in drinkList:
-                <li id="/getDrink/{{drink['name']}}"><p>{{drink['name']}}</p></li>
+                <li id="{{drink['name']}}"><p>{{drink['name'].upper()}}</p></li>
                 %end
             </ul>
 
