@@ -50,31 +50,5 @@ $(document).ready(function() {
 		</td>
 	</tr>
 </table>
-</body>
-
-
-<style type="text/css">
-li
-{
-	color: white
-}
-h2
-{
-	color: white
-}
-div
-{
-	float: left
-}
-button
-{
-	width: 100; height: 100; float: right;
-}
-li
-{
-	font-size: 15; fon
-}
-</style>
-
-</html>
+</body></html>
 

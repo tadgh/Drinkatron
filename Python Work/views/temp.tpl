@@ -15,7 +15,7 @@ $(document).ready(function() {
     $("li").click(function()
         {
              $.ajax({
-                url: $(this).attr("id"),
+                url: "/getDrink/" + $(this).attr("id"),
                 type: "get",
                 success: function(data){
                     $("#ingDiv").html(data);
@@ -27,7 +27,20 @@ $(document).ready(function() {
         {
             $("#nameDiv").html("<p>" + $(this).text() + "</p>")
         });
-    });
+
+
+    $("#dispBut").click(function()
+            {
+                $.ajax({
+                    url: "/dispense/known/" + $(this).attr("id"),
+                    type: "get",
+                    success: function(data){
+                        alert("Dispensed!");
+                    }
+                });
+            });
+        });
+
 </script>
 
 </head>
@@ -72,7 +85,7 @@ $(document).ready(function() {
         </div><!-- /end .d-control -->
 
         <div class="d-selection">
-        	<button onclick="Javascript: alert('Pouring meow')">POUR IT</button>
+        	<button id="dispBut" onclick="Javascript: alert('Pouring meow')">POUR IT</button>
             <button onclick="Javascript: alert ('I too like to live dangerously')">SURPRISE ME!</button>
         </div>
 
@@ -85,7 +98,7 @@ $(document).ready(function() {
 
             <ul>
                 %for drink in drinkList:
-                <li id="/getDrink/{{drink['name']}}"><p>{{drink['name']}}</p></li>
+                <li id="{{drink['name']}}"><p>{{drink['name']}}</p></li>
                 %end
             </ul>
 
