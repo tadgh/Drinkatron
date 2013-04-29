@@ -65,27 +65,8 @@ class drink:
             self.hasBeenModded = False
             self.ingredientListCleaned = self.generateListForArduino()
             self.totalSize, self.totalIngredients = self.determineDrinkStats()
-            self.printDrink()
 
     def convertToDict(self):
-        #infoDict = { 'drinkID' : self.id,
-        #             'name': self.drinkName,
-        #             'ing1': self.ing1,
-        #             'ing2': self.ing2,
-        #             'ing3': self.ing3,
-        #            'ing4': self.ing4,
-        #             'ing5': self.ing5,
-        #             'ing6': self.ing6,
-        #             'ing7': self.ing7,
-        #             'ing8': self.ing8,
-        #             'ing9': self.ing9,
-        #             'ing10': self.ing10,
-        #             'ing11': self.ing11,
-        #             'ing12': self.ing12,
-        #             'totalSize' : self.totalSize,
-        #             'dispenseCount' : self.dispenseCount,
-        #             'starRating' : self.starRating
-        #             }
         infoDict = {'drinkID': self.id,
                     'name': self.drinkName,
                     constants.INGREDIENTLIST[0]: self.ing1,
@@ -124,9 +105,13 @@ class drink:
 
     def determineStarRating(self):
         totalVotes = self.negativeVoteCount + self.positiveVoteCount
-        positiveVoteRatio = self.positiveVoteCount / totalVotes
+        try:
+            positiveVoteRatio = self.positiveVoteCount / totalVotes
+        except ZeroDivisionError:
+            if totalVotes == 0:
+                positiveVoteRatio = 0
 
-        if positiveVoteRatio > 0 and positiveVoteRatio < 0.21:
+        if positiveVoteRatio >= 0 and positiveVoteRatio < 0.21:
             self.starRating = 1
         elif positiveVoteRatio >= 0.21 and positiveVoteRatio < 0.41:
             self.starRating = 2
@@ -180,13 +165,3 @@ class drink:
                 theIngredientList[index] = 0
             index += 1
         return theIngredientList
-
-    def printDrink(self):
-        pass
-        #self.log.info('''******\n
-        #              Name: %s\n
-        #              IngList:%s\n
-        #              TOTALSIZE: %s\n
-        #              ******************''' % (self.drinkName,
-        #                                       self.ingredientListCleaned,
-         #                                      self.totalSize))
