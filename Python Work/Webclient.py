@@ -47,14 +47,16 @@ def getDrink(name):
             return bottle.template('getDrinkProto', selectedDrink=drink)
 
 
+
+
+
 @app.route('/dispense/known/:name')
 def dispense(name, db):
     log.info("Entering -> Dispense(name) for %s" % name)
     dirtyList = []
     for drink in drinkDictList:
         if drink['name'] == name:
-            for ingredient in range(len(constants.INGREDIENTLIST)):
-                dirtyList.append(drink[constants.INGREDIENTLIST[ingredient]])
+            dirtyList = convertDictToList(drink)
     ident = (drink['drinkID'],)
     db.execute("UPDATE drinks SET dispense_count = dispense_count + 1 WHERE drink_id = ?", ident)
     db.execute("INSERT INTO dispenses (drink_id) VALUES (?)", ident)
@@ -72,6 +74,29 @@ def dispense_custom(adHocList):
     for item in adHocList:
         dirtyList.append(int(item))
     arduino.sendDrink(dirtyList)
+
+
+@app.route('/dispenseProto/', method='POST')
+def dispenseProto():
+    ingDict = bottle.request.json['theDict']
+    print(ingDict)
+    drinkName = bottle.request.json['name']
+    print(drinkName)
+    dirtyList = convertDictToList(ingDict)
+    arduino.sendDrink(dirtyList)
+    return "Call successul!"
+
+
+def convertDictToList(ingredientDict):
+    dirtyList = []
+    for ingredient in range(len(constants.INGREDIENTLIST)):
+        try:
+            dirtyList.append(int(ingredientDict[constants.INGREDIENTLIST[ingredient]]))
+        except KeyError:
+            dirtyList.append(0)
+    print(dirtyList)
+    return dirtyList
+
 
 
 @app.route('/Analytics')

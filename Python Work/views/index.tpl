@@ -3,7 +3,7 @@
 <head>
 <title>Botender | Beta v.0.01</title>
 
-<link rel="stylesheet" type="text/css" href="/static/css/bt-style.css">
+<link rel="stylesheet" type="text/css" href="../static/css/bt-style.css">
 <link href='http://fonts.googleapis.com/css?family=Lato:700,900' rel='stylesheet' type='text/css'>
 
 <meta name="author" content="Ryan Novak" />
@@ -32,19 +32,26 @@ $(document).ready(function() {
 
     $("#dispBut").click(function()
             {
-
-                var dispString = "";
-                for (var i = 0; i < 12; i++) {
-                    if $(i).length() > 0
-                    {
-                        dispString += $(i).value();
-                    };
-                };
+                var temp = 0;
+                var myDict = {};
+                $('.slider').each(function(index, domEle){
+                    var x = $(this).attr("id");
+                    var y = $(this).val();
+                    myDict[x] = y;
+                });
+                console.log(myDict);
                 $.ajax({
-                    url: "/dispense/custom/" + $('#namePar').attr("id"),
-                    type: "get",
+                    type: "POST",
+                    url: "/dispenseProto/",
+                    data: JSON.stringify(
+                    {
+                        theDict: myDict,
+                        name: $('#nameDiv').html()
+                    }),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
                     success: function(data){
-                        alert("Dispensed!");
+                        alert(data);
                     }
                 });
             });
@@ -61,13 +68,13 @@ $(document).ready(function() {
 
 	<div class="ui-left">
 
-        <img class="bt-logo" src="/static/images/bt-logo.png"/>
+        <img class="bt-logo" src="../static/images/bt-logo.png"/>
 
 
 		<div class="d-preview">
 
         <ul>
-        	<li><img src="/static/images/drink1.png" alt="Blue Moon Martini"></li>
+        	<li><img src="../static/images/drink1.png" alt="Blue Moon Martini"></li>
         </ul>
 
         </div><!-- /end .d-preview -->

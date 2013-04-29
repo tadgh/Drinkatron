@@ -17,7 +17,7 @@
 		%if selectedDrink[ingredient] != 0:
 			<li>
 				<p>{{ingredient.upper()}} : {{selectedDrink[ingredient]}} </p>
-				<input id="{{constants.INGREDIENTLIST.index(ingredient)}}" type="range" min="0" max="100" step="1" value='{{( selectedDrink[ingredient] / totalSize) * 100}}' />
+				<input class="slider" id="{{ingredient}}" type="range" min="0" max="100" step="1" value='{{( selectedDrink[ingredient] / totalSize) * 100}}' />
 			</li>
 		%end
 	%end
