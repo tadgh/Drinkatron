@@ -61,7 +61,7 @@ img { max-height: 100%; }
 }
 
 .d-preview{	
-	background: url(../images/preview-bg.gif) no-repeat #1d1e1e;
+	background: url(../static/images/preview-bg.gif) no-repeat #1d1e1e;
 	width:100%;
 	float:left;
 	height:386px;
