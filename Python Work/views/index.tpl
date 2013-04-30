@@ -81,7 +81,7 @@ $(document).ready(function() {
 
         <div class="d-head" id='nameDiv'>
 
-            <p> DRINK NAME GOES HERE </p>
+            <p> DRINK NAME GOES HERE</p>
 
         </div><!-- /end .d-head -->
 

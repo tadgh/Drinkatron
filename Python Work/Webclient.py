@@ -27,7 +27,6 @@ def index():
     cursor = conn.cursor()
     drinkList = cursor.execute("SELECT * FROM drinks ORDER BY drink_name ASC").fetchall()
     for currentDrink in range(len(drinkList)):
-        print('found drink')
         tempDrink = drinks.drink(*drinkList[currentDrink])
         drinkDictList.append(tempDrink.convertToDict())
     conn.close()
@@ -100,6 +99,32 @@ def createDrinkGet(db):
     return res
 
 
+@bottle.route('/upVote/:name')
+def upvote(name, db):
+    for drink in drinkDictList:
+        if drink['name'] == name:
+            drinkID = drink['drinkID']
+    sql = '''UPDATE drinks
+            SET positive_vote_count = positive_vote_count + 1
+            WHERE drink_id = ?
+            '''
+    args = (drinkID)
+    db.execute(sql, args).fetchone()
+
+
+@bottle.route('/downvote/:name')
+def downvote(name, db):
+    for drink in drinkDictList:
+        if drink['name'] == name:
+            drinkID = drink['drinkID']
+    sql = '''UPDATE drinks
+        SET negative_vote_count = negative_vote_count + 1
+        WHERE drink_id = ?
+        '''
+    args = (drinkID)
+    db.execute(sql, args).fetchone()
+
+
 @app.route('/createDrink/', method='GET')
 def createDrinkPost(db):
     dataDict = bottle.request.json['theDict']
@@ -155,13 +180,15 @@ def convertDictToList(ingredientDict):
 def wip():
     return bottle.template('createNewDrink')
 
-
 @app.route('/Analytics')
 def Analytics():
     drinkData = []
     return bottle.template('Analytics', data=drinkData)
 
+@app.error(404)
+def mistake404(code):
+    return bottle.template('404')
 
 if __name__ == '__main__':
     localIP = socket.gethostbyname(socket.gethostname())
-    bottle.run(app, host='0.0.0.0', port=8083, server='cherrypy')
+    bottle.run(app, host='0.0.0.0', port=80, server='cherrypy')
