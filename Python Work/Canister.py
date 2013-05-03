@@ -10,11 +10,11 @@ class Canister:
         self.capacity = capacity
         self.remaining = remaining
 
-    def canDispense(self, units)
+    def canDispense(self, units):
         if abs(self.remaining - units) <= 10:
-            return True
-        else:
             return False
+        else:
+            return True
 
     def dispense(self, units):
         self.remaining -= units
@@ -29,3 +29,6 @@ class Canister:
     def status(self):
         self.log.info("Contents: " + self.contents +
                       " | Remaining Units: " + str(self.remaining))
+
+    def getContents(self):
+        return self.contents
