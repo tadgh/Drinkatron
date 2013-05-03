@@ -49,6 +49,13 @@ $(document).ready(function() {
         });
 
 
+    $("#surpriseBut").click(function()
+    {
+        $.ajax({
+            url: "/dispense/random",
+            type: "GET"
+        })
+    })
     $("#dispBut").click(function()
             {
                 var temp = 0;
@@ -58,7 +65,6 @@ $(document).ready(function() {
                     var y = $(this).val();
                     myDict[x] = y;
                 });
-                console.log(myDict);
                 $.ajax({
                     type: "POST",
                     url: "/dispenseProto/",
@@ -68,7 +74,6 @@ $(document).ready(function() {
                         name: $('#nameDiv').html()
                     }),
                     contentType: "application/json; charset=utf-8",
-                    dataType: "json",
                     success: function(data){
                         alert(data);
                     }
@@ -118,8 +123,8 @@ $(document).ready(function() {
         </div><!-- /end .d-control -->
 
         <div class="d-selection">
-        	<button id="dispBut" onclick="Javascript: alert('Pouring meow')">POUR IT</button>
-            <button onclick="Javascript: alert ('I too like to live dangerously')">SURPRISE ME!</button>
+        	<button id="dispBut">POUR IT</button>
+            <button id="surpriseBut">SURPRISE ME!</button>
         </div>
 
      </div><!-- /end .ui-left -->

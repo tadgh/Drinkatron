@@ -6,6 +6,7 @@ import bottle
 import bottle_sqlite
 import sqlite3
 import socket
+import random
 
 arduino = arduinocomm.Connection()
 app = bottle.Bottle()
@@ -60,12 +61,13 @@ def dispense(name, db):
     for drink in drinkDictList:
         if drink['name'] == name:
             dirtyList = convertDictToList(drink)
-    ident = (drink['drinkID'],)
-    db.execute("UPDATE drinks SET dispense_count = dispense_count + 1 WHERE drink_id = ?", ident)
-    db.execute("INSERT INTO dispenses (drink_id) VALUES (?)", ident)
-    arduino.sendDrink(dirtyList)
-    log.info("Leaving -> Dispense(name) for %s. Found Drink." % name)
-    return "Drink successfully passed off to arduino."
+            ident = (drink['drinkID'],)
+            db.execute("UPDATE drinks SET dispense_count = dispense_count + 1 WHERE drink_id = ?", ident)
+            db.execute("INSERT INTO dispenses (drink_id) VALUES (?)", ident)
+            response = arduino.sendDrink(dirtyList)
+            log.info("Leaving -> Dispense(name) for %s. Found Drink." % name)
+            return response
+
     log.error("Leaving -> Dispense(name) for %s. Drink could not be found" % name)
     return "Drink could not be found!"
 
@@ -99,6 +101,12 @@ def createDrinkGet(db):
     return res
 
 
+@app.route('/dispense/random')
+def random():
+    index = random.randint(0, len(drinkDictList))
+    inglist = convertDictToList(drinkDictList[index])
+    arduino.sendDrink(inglist)
+
 @app.route('/upvote/:name')
 def upvote(name, db):
     for drink in drinkDictList:
@@ -113,7 +121,7 @@ def upvote(name, db):
             return 'success'
         else:
             drinkID = None
-
+    return 'Could not find drink to upvote'
 
 @app.route('/downvote/:name')
 def downvote(name, db):
@@ -129,6 +137,7 @@ def downvote(name, db):
             return 'success'
         else:
             drinkID = None
+    return 'Could not find drink to downvote'
 
 @app.route('/createDrink/', method='GET')
 def createDrinkPost(db):
@@ -162,12 +171,11 @@ def dispense_custom(adHocList):
 @app.route('/dispenseProto/', method='POST')
 def dispenseProto():
     ingDict = bottle.request.json['theDict']
-    print(ingDict)
     drinkName = bottle.request.json['name']
-    print(drinkName)
     dirtyList = convertDictToList(ingDict)
-    arduino.sendDrink(dirtyList)
-    return "Call successul!"
+    response = arduino.sendDrink(dirtyList)
+    log.error(response)
+    return response
 
 
 def convertDictToList(ingredientDict):
@@ -179,6 +187,8 @@ def convertDictToList(ingredientDict):
             dirtyList.append(0)
     print(dirtyList)
     return dirtyList
+
+
 
 
 @app.route('/wip/')
@@ -196,4 +206,4 @@ def mistake404(code):
 
 if __name__ == '__main__':
     localIP = socket.gethostbyname(socket.gethostname())
-    bottle.run(app, host='0.0.0.0', port=80) 
+    bottle.run(app, host='0.0.0.0', port=80, server='cherrypy')

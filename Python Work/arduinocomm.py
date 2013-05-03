@@ -74,6 +74,7 @@ class Connection:
                 index += 1
             except ValueError as e:
                 self.log.error("Couldnt finish dispensing: " + str(e))
+                return "Couldnt finish dispensing: " + str(e)
         if self.ser:
             for ingredient in cleanedList:
                 self.log.info("Sending ingredient: %s" % ingredient)
@@ -81,9 +82,12 @@ class Connection:
                 self.ser.write("*".encode())
         else:
             self.log.error("Arduino not connected, cannot send drink.")
+            return "Arduino not connected, cannot send drink."
 
         for canister in self.canisterList:
                 canister.status()
+
+        return "Drink dispensing!"
         self.log.info("Leaving -> sendDrink")
 
     def requestStatus(self):
