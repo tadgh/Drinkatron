@@ -147,10 +147,6 @@ class DB:
         self.log.info("Grabbed a cursor...")
         return cursor
 
-    def createNewDrink(self, ingredient1, amount1, ingredient2, amount2,
-                       ingredient3, amount3, ingredient4, amount4):
-        pass
-
     def updateDrink(self, drink):
         self.log.info("Entering -> updateDrink()")
         sql = '''UPDATE drinks

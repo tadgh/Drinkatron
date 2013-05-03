@@ -18,6 +18,8 @@ $(document).ready(function() {
 });
 
 </script>
+
+
 </head>
 <body>
 <h2>{{selectedDrink['name']}}</h2>
@@ -30,6 +32,7 @@ $(document).ready(function() {
 					%for ingredient in constants.INGREDIENTLIST:
 						%if selectedDrink[ingredient] != 0:
 							<li><font size='5'>{{ingredient}} : {{selectedDrink[ingredient]}}</font></li>
+
 						%end
 					%end
 				</ul>
@@ -47,31 +50,5 @@ $(document).ready(function() {
 		</td>
 	</tr>
 </table>
-</body>
-
-
-<style type="text/css">
-li
-{
-	color: white
-}
-h2
-{
-	color: white
-}
-div
-{
-	float: left
-}
-button
-{
-	width: 100; height: 100; float: right;
-}
-li
-{
-	font-size: 15; fon
-}
-</style>
-
-</html>
+</body></html>
 

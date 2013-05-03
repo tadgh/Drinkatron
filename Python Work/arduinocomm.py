@@ -57,11 +57,15 @@ class Connection:
         cleanedList = []
         for item in drinkArray:
             drinkSize += item
-        if drinkSize != 100:
-            for i in range(len(drinkArray)):
-                cleanedList.append(round(drinkArray[i]/float(drinkSize)*75))
+        for i in range(len(drinkArray)):
+            #this is disgusting and we need to find proper dispense time.
+            cleanedList.append(round(drinkArray[i]/float(drinkSize)*75))
         self.log.info("Cleaned List:")
         self.log.info(cleanedList)
+
+        def sendDrinkProto(self, drink):
+            for key in drink.keys():
+                print(key)
 
         index = 0
         for units in cleanedList:
