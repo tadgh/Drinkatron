@@ -13,8 +13,27 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
+
+    window.currentDrink = "";
+
+    $("#upVote").click(function()
+    {
+        $.ajax({
+            url: "/upvote/" + window.currentDrink,
+            type: "get"
+        });
+    });
+    $("#downVote").click(function()
+    {
+        $.ajax({
+            url: "/downvote/" + window.currentDrink,
+            type: "get"
+        });
+    });
     $("li").click(function()
         {
+            window.currentDrink = $(this).attr("id");
+            console.log(window.currentDrink);
              $.ajax({
                 url: "/getDrink/" + $(this).attr("id"),
                 type: "get",
