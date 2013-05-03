@@ -99,31 +99,36 @@ def createDrinkGet(db):
     return res
 
 
-@bottle.route('/upVote/:name')
+@app.route('/upvote/:name')
 def upvote(name, db):
     for drink in drinkDictList:
         if drink['name'] == name:
             drinkID = drink['drinkID']
-    sql = '''UPDATE drinks
-            SET positive_vote_count = positive_vote_count + 1
-            WHERE drink_id = ?
-            '''
-    args = (drinkID)
-    db.execute(sql, args).fetchone()
+            sql = '''UPDATE drinks
+                SET positive_vote_count = positive_vote_count + 1
+                WHERE drink_id = ?
+                '''
+            args = (drinkID,)
+            db.execute(sql, args).fetchone()
+            return 'success'
+        else:
+            drinkID = None
 
 
-@bottle.route('/downvote/:name')
+@app.route('/downvote/:name')
 def downvote(name, db):
     for drink in drinkDictList:
         if drink['name'] == name:
             drinkID = drink['drinkID']
-    sql = '''UPDATE drinks
-        SET negative_vote_count = negative_vote_count + 1
-        WHERE drink_id = ?
-        '''
-    args = (drinkID)
-    db.execute(sql, args).fetchone()
-
+            sql = '''UPDATE drinks
+                SET negative_vote_count = negative_vote_count + 1
+                WHERE drink_id = ?
+                '''
+            args = (drinkID,)
+            db.execute(sql, args).fetchone()
+            return 'success'
+        else:
+            drinkID = None
 
 @app.route('/createDrink/', method='GET')
 def createDrinkPost(db):
@@ -191,4 +196,4 @@ def mistake404(code):
 
 if __name__ == '__main__':
     localIP = socket.gethostbyname(socket.gethostname())
-    bottle.run(app, host='0.0.0.0', port=80, server='cherrypy')
+    bottle.run(app, host='0.0.0.0', port=80) 
