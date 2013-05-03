@@ -25,7 +25,7 @@ class Connection:
             if self.ser:
                 self.log.info("Arduino connected on : %s" 'COM15')
         else:
-            arduinoPort = glob.glob("/dev/ttyACM*")[0]
+            #arduinoPort = glob.glob("/dev/ttyACM*")[0]
             try:
                 self.ser = serial.Serial(arduinoPort, 9600)
             except:

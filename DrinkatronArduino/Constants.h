@@ -23,6 +23,8 @@ const int  ING10_RELAY_PIN = 48;
 const int  ING11_RELAY_PIN = 46;
 const int  ING12_RELAY_PIN = 44;
 
+const int SPINNING_PLATE_PIN = 666;
+
 const int  MASTER_DISPENSE_PIN =  24; //this is a currently useless pin
 
 const int  LOWVIS_DELAY = 65; //THIS IS SOLELY EXPERIMENTAL AS WE ARE USING LARGER VALUES OF THING
