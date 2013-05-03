@@ -74,8 +74,6 @@ class Connection:
                 index += 1
             except ValueError as e:
                 self.log.error("Couldnt finish dispensing: " + str(e))
-                return("Couldn't Dispense! " + str(e))
-
         if self.ser:
             for ingredient in cleanedList:
                 self.log.info("Sending ingredient: %s" % ingredient)

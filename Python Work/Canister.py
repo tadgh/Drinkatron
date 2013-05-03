@@ -15,14 +15,11 @@ class Canister:
 
         if self.remaining < 0 and (units - self.remaining+units) > 10:
             self.remaining += units
-            raise ValueError(self.contents + "is too empty to be \
-                                                dispensed.")
+            raise ValueError(self.contents + " is too empty to be dispensed.")
 
     def refill(self):
-        pass
+        self.remaining = self.capacity
 
     def status(self):
         self.log.info("Contents: " + self.contents +
-                      "\nRemaining Units: " + str(self.remaining))
-
-
+                      " | Remaining Units: " + str(self.remaining))
