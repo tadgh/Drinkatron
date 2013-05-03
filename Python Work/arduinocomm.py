@@ -63,11 +63,14 @@ class Connection:
         self.log.info("Cleaned List:")
         self.log.info(cleanedList)
 
-        def sendDrinkProto(self, drink):
-            for key in drink.keys():
-                print(key)
-
         index = 0
+
+        for units in cleanedList:
+            if not self.canisterList[index].canDispense(units):
+                self.log.error("Not enough units, couldnt finish dispensing: " + self.canisterList[index].contents)
+                return "Couldnt finish dispensing: " 
+            index += 1
+
         for units in cleanedList:
             try:
                 self.canisterList[index].dispense(units)
