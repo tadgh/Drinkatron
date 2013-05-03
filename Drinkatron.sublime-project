@@ -20,5 +20,13 @@
 		{
 			"path": "BT - UI"
 		}
+	],
+	"build_systems":
+	[
+		{
+			"name": "Drinkatron VENV Build",
+            // activate the specific virtualenv for the project
+            "cmd": ["C:\\Users\\Gary\\Documents\\GitHub\\Drinkatron\\venv\\Scripts\\Python", "$file"]
+		}
 	]
 }

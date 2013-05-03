@@ -9,7 +9,8 @@ pythonwork/__pycache__/
 #python specific
 *.pyc
 pythonwork/*.sublime*
-
+venv
+procfile*
 ## generic files to ignore
 *~
 *.lock
