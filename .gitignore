@@ -19,4 +19,5 @@ Procfile*
 *.DS_Store
 *.swp
 *.out
+*.txt
 
