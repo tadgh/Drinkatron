@@ -6,9 +6,18 @@ import bottle
 import bottle_sqlite
 import sqlite3
 import socket
+import Canister
 import random
 
 arduino = arduinocomm.Connection()
+
+canisterList = []
+for ingredient in constants.INGREDIENTLIST:
+    canisterList.append(Canister.Canister(ingredient))
+
+for canister in canisterList:
+            canister.status()
+
 app = bottle.Bottle()
 plugin = bottle_sqlite.Plugin(dbfile=constants.DBLOCATION, autocommit=True)
 app.install(plugin)
@@ -53,23 +62,6 @@ def getDrink(name):
             # return bottle.template('getDrink', selectedDrink=drink)
             return bottle.template('getDrinkProto', selectedDrink=drink)
 
-
-@app.route('/dispense/known/:name')
-def dispense(name, db):
-    log.info("Entering -> Dispense(name) for %s" % name)
-    dirtyList = []
-    for drink in drinkDictList:
-        if drink['name'] == name:
-            dirtyList = convertDictToList(drink)
-            ident = (drink['drinkID'],)
-            db.execute("UPDATE drinks SET dispense_count = dispense_count + 1 WHERE drink_id = ?", ident)
-            db.execute("INSERT INTO dispenses (drink_id) VALUES (?)", ident)
-            response = arduino.sendDrink(dirtyList)
-            log.info("Leaving -> Dispense(name) for %s. Found Drink." % name)
-            return response
-
-    log.error("Leaving -> Dispense(name) for %s. Drink could not be found" % name)
-    return "Drink could not be found!"
 
 
 @app.route('/createDrink/', method='POST')
@@ -159,13 +151,32 @@ def createDrinkPost(db):
     return "Call successul!"
 
 
+
+@app.route('/dispense/known/:name')
+def dispense(name, db):
+    log.info("Entering -> Dispense(name) for %s" % name)
+    dirtyList = []
+    for drink in drinkDictList:
+        if drink['name'] == name:
+            dirtyList = convertDictToList(drink)
+            ident = (drink['drinkID'],)
+            db.execute("UPDATE drinks SET dispense_count = dispense_count + 1 WHERE drink_id = ?", ident)
+            db.execute("INSERT INTO dispenses (drink_id) VALUES (?)", ident)
+            response = pourDrink(dirtyList)
+            return response
+            log.info("Leaving -> Dispense(name) for %s. Found Drink." % name)
+    log.error("Leaving -> Dispense(name) for %s. Drink could not be found" % name)
+    return "Drink could not be found!"
+
+
 @app.route('/dispense/custom/:adHocList')
 def dispense_custom(adHocList):
     adHocList = adHocList.split('_')
     dirtyList = []
     for item in adHocList:
         dirtyList.append(int(item))
-    arduino.sendDrink(dirtyList)
+    response = pourDrink(dirtyList)
+    return response
 
 
 @app.route('/dispenseProto/', method='POST')
@@ -173,8 +184,7 @@ def dispenseProto():
     ingDict = bottle.request.json['theDict']
     drinkName = bottle.request.json['name']
     dirtyList = convertDictToList(ingDict)
-    response = arduino.sendDrink(dirtyList)
-    log.error(response)
+    response = pourDrink(dirtyList)
     return response
 
 
@@ -188,6 +198,38 @@ def convertDictToList(ingredientDict):
     print(dirtyList)
     return dirtyList
 
+
+def pourDrink(drinkArray):
+    cleanedList = []
+    drinkSize = 0
+    for item in drinkArray:
+        drinkSize += item
+    for i in range(len(drinkArray)):
+        #this is disgusting and we need to find proper dispense time.
+        #can use list comprehension instead here.
+        cleanedList.append(round(drinkArray[i]/float(drinkSize)*75))
+
+    index = 0
+    for units in cleanedList:
+        if not canisterList[index].canDispense(units):
+            log.error("Not enough units, couldnt finish dispensing: " + canisterList[index].getContents())
+            return "Couldnt finish dispensing: " + canisterList[index].getContents()
+        index += 1
+
+    index = 0
+    for units in cleanedList:
+        try:
+            canisterList[index].dispense(units)
+            index += 1
+        except ValueError as e:
+            log.error("Couldnt finish dispensing: " + str(e))
+            return "Couldnt finish dispensing: " + str(e)
+
+    for canister in canisterList:
+        canister.status()
+
+    resp = arduino.sendDrink(cleanedList)
+    return resp
 
 
 

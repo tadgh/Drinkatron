@@ -33,13 +33,6 @@ class Connection:
                 self.ser = None
         self.log.info("Leaving -> arduinoComm Consructor")
 
-        self.canisterList = []
-        for ingredient in constants.INGREDIENTLIST:
-            self.canisterList.append(Canister.Canister(ingredient))
-
-        for canister in self.canisterList:
-            canister.status()
-
         if self.ser:
             self.threadArduinoListener = Timer(3.0, self.readResponse)
             self.threadArduinoListener.start()
@@ -51,35 +44,8 @@ class Connection:
 
     def sendDrink(self, drinkArray):
         self.log.info("Entering -> sendDrink")
-        drinkSize = 0
-        self.log.info("Dirty list:")
-        self.log.info(drinkArray)
-        cleanedList = []
-        for item in drinkArray:
-            drinkSize += item
-        for i in range(len(drinkArray)):
-            #this is disgusting and we need to find proper dispense time.
-            cleanedList.append(round(drinkArray[i]/float(drinkSize)*75))
-        self.log.info("Cleaned List:")
-        self.log.info(cleanedList)
-
-        index = 0
-        for units in cleanedList:
-            if not self.canisterList[index].canDispense(units):
-                self.log.error("Not enough units, couldnt finish dispensing: " + self.canisterList[index].getContents())
-                return "Couldnt finish dispensing: " + self.canisterList[index].getContents()
-            index += 1
-
-        index = 0
-        for units in cleanedList:
-            try:
-                self.canisterList[index].dispense(units)
-                index += 1
-            except ValueError as e:
-                self.log.error("Couldnt finish dispensing: " + str(e))
-                return "Couldnt finish dispensing: " + str(e)
         if self.ser:
-            for ingredient in cleanedList:
+            for ingredient in drinkArray:
                 self.log.info("Sending ingredient: %s" % ingredient)
                 self.ser.write(str(ingredient).encode())
                 self.ser.write("*".encode())
@@ -87,8 +53,7 @@ class Connection:
             self.log.error("Arduino not connected, cannot send drink.")
             return "Arduino not connected, cannot send drink."
 
-        for canister in self.canisterList:
-                canister.status()
+
 
         return "Drink dispensing!"
         self.log.info("Leaving -> sendDrink")
