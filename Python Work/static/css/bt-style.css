@@ -10,7 +10,9 @@ blockquote:before,blockquote:after,q:before,q:after { content:'';content:none; }
 ins { text-decoration:none; }
 del { text-decoration:line-through; }
 table { border-collapse:collapse;border-spacing:0; }
-button {background :none;border:none;font-family: 'Lato', sans-serif;letter-spacing:3px;font-size:100%;margin:0px;}
+button {background :none;border:none;border-style:none;font-family: 'Lato', sans-serif;letter-spacing:3px;font-size:100%;margin:0px;border-width:0px;}
+
+
 
 
 /* Reset default styles */
@@ -22,6 +24,13 @@ html, body, #interface, .ui-left, .ui-right {
 	height:100%;
 	min-height:100%;
 	font-size: 17px;
+	
+	-webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
 }
 
 body {
@@ -150,6 +159,11 @@ img { max-height: 100%; }
 	
 }
 
+.d-list-container {
+	height:697.5px; 
+	overflow: hidden;	
+}
+
 .d-list li{
 	
 	height: 75px;
@@ -186,6 +200,7 @@ img { max-height: 100%; }
 	float: left;
 	background: #333;
 	border-right: 3px #292929;
+	border-style: solid;
 	
 	
 	box-sizing: border-box;

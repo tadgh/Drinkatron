@@ -6,6 +6,20 @@
 <link rel="stylesheet" type="text/css" href="../static/css/bt-style.css">
 <link href='http://fonts.googleapis.com/css?family=Lato:700,900' rel='stylesheet' type='text/css'>
 
+<script type="text/javascript" src="../static/jquery-2.0.0.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+
+<script>
+	var dlimit = $(".d-list").height()- 697.5;
+	
+	console.log(dlimit);
+
+    $(function () {
+        $(".d-list").draggable({ axis: "y", scroll: true, containment:[0,dlimit,0,0]});
+	 });	
+</script>
+
+
 <meta name="author" content="Ryan Novak" />
 <meta charset="UTF-8" />
 
@@ -60,9 +74,18 @@
     
     
     <div class="ui-right">
-        <div class="d-list">
+        <div class="d-list-container">
         
-            <ul>
+            <ul class="d-list">
+                <li><p>69 SPECIAL</p></li>
+                <li><p>BLUE KISOK (SHOT)</p></li>
+                <li><p>BLUE MOON MARTINI</p></li>
+                <li><p>BLUE MOTORCYCLE #2</p></li>
+                <li><p>BLUE THRILL</p></li>
+                <li><p>CAPTAIN'S CREAM SODA</p></li>
+                <li><p>CAROLINA KAMIKAZE</p></li>
+                <li><p>EENYTINI</p></li>
+                <li><p>EMBOLISM</p></li>
                 <li><p>69 SPECIAL</p></li>
                 <li><p>BLUE KISOK (SHOT)</p></li>
                 <li><p>BLUE MOON MARTINI</p></li>
@@ -72,6 +95,7 @@
                 <li><p>CAROLINA KAMIKAZE</p></li>
                 <li><p>EENYTINI</p></li>
                 <li><p>EMBOLISM</p></li>   
+   
             </ul>
             
            
