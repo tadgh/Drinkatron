@@ -8,6 +8,7 @@ import sqlite3
 import socket
 import Canister
 import random
+import pickle
 
 arduino = arduinocomm.Connection()
 
@@ -17,6 +18,8 @@ for ingredient in constants.INGREDIENTLIST:
 
 for canister in canisterList:
             canister.status()
+
+
 
 app = bottle.Bottle()
 plugin = bottle_sqlite.Plugin(dbfile=constants.DBLOCATION, autocommit=True)
@@ -63,7 +66,7 @@ def getDrink(name):
             return bottle.template('getDrinkProto', selectedDrink=drink)
 
 
-
+@app.route('/createDrink', method='POST')
 @app.route('/createDrink/', method='POST')
 def createDrinkGet(db):
     drinkName = bottle.request.forms.get('drinkName')
@@ -83,14 +86,18 @@ def createDrinkGet(db):
     print(drinkName + ", " + str(ing1) + ", " + str(ing2) + ", " + str(ing3) + ", " + str(ing4) + ", " + str(ing5) + ", " + str(ing6) + ", " + str(ing7)
           + ", " + str(ing8) + ", " + str(ing9) + ", " + str(ing10) + ", " + str(ing11) + ", " + str(ing12))
     args = (drinkName, ing1, ing2, ing3, ing4, ing5, ing6, ing7, ing8, ing9, ing10, ing11, ing12, description)
-    res = db.execute("INSERT INTO drinks(drink_name, ingredient1, ingredient2, \
-                                    ingredient3, ingredient4, ingredient5, \
-                                    ingredient6, ingredient7, ingredient8, \
-                                    ingredient9, ingredient10, ingredient11, \
-                                    ingredient12, description) \
-                            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", args)
-    print(res)
-    return res
+    try:
+        res = db.execute("INSERT INTO drinks(drink_name, ingredient1, ingredient2, \
+                                        ingredient3, ingredient4, ingredient5, \
+                                        ingredient6, ingredient7, ingredient8, \
+                                        ingredient9, ingredient10, ingredient11, \
+                                        ingredient12, description) \
+                                VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", args)
+    except:
+        print("Unexpected error in DB insert")
+
+    return "Drink Created"
+
 
 @app.route('/upvote/:name')
 def upvote(name, db):
@@ -108,6 +115,7 @@ def upvote(name, db):
             drinkID = None
     return 'Could not find drink to upvote'
 
+
 @app.route('/downvote/:name')
 def downvote(name, db):
     for drink in drinkDictList:
@@ -124,8 +132,11 @@ def downvote(name, db):
             drinkID = None
     return 'Could not find drink to downvote'
 
+
 @app.route('/createDrink/', method='GET')
+@app.route('/createDrink', method='GET')
 def createDrinkPost(db):
+    return bottle.template('createNewDrink')
     dataDict = bottle.request.json['theDict']
     print(dataDict)
     dirtyList = convertDictToList(dataDict)
@@ -231,11 +242,9 @@ def pourDrink(drinkArray):
     resp = arduino.sendDrink(cleanedList)
     return resp
 
-
-
-@app.route('/wip/')
-def wip():
-    return bottle.template('createNewDrink')
+@app.route('/Settings')
+def settings():
+    pass
 
 @app.route('/Analytics')
 def Analytics():
