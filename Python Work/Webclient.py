@@ -92,13 +92,6 @@ def createDrinkGet(db):
     print(res)
     return res
 
-
-@app.route('/dispense/random')
-def random():
-    index = random.randint(0, len(drinkDictList))
-    inglist = convertDictToList(drinkDictList[index])
-    arduino.sendDrink(inglist)
-
 @app.route('/upvote/:name')
 def upvote(name, db):
     for drink in drinkDictList:
@@ -150,6 +143,13 @@ def createDrinkPost(db):
     print(res)
     return "Call successul!"
 
+
+@app.route('/dispense/random')
+def randomDrink(db):
+    randomDrink = drinkDictList[random.randint(0, len(drinkDictList))]
+    #DB method is included here because the subsequent dispense call needs it.
+    dispense(randomDrink['name'], db)
+    return "You received: " + randomDrink['name']
 
 
 @app.route('/dispense/known/:name')

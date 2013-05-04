@@ -53,9 +53,12 @@ $(document).ready(function() {
     {
         $.ajax({
             url: "/dispense/random",
-            type: "GET"
-        })
-    })
+            type: "GET",
+            success: function(data){
+                alert(data);
+            }
+        });
+    });
     $("#dispBut").click(function()
             {
                 var temp = 0;
