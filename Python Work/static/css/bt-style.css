@@ -10,7 +10,7 @@ blockquote:before,blockquote:after,q:before,q:after { content:'';content:none; }
 ins { text-decoration:none; }
 del { text-decoration:line-through; }
 table { border-collapse:collapse;border-spacing:0; }
-button {background :none;border:none;font-family: 'Lato', sans-serif;letter-spacing:3px;font-size:100%;}
+button {background :none;border:none;font-family: 'Lato', sans-serif;letter-spacing:3px;font-size:100%;margin:0px;}
 
 
 /* Reset default styles */
@@ -167,21 +167,51 @@ img { max-height: 100%; }
 }
 
 .d-list li:hover{
-background: #ff8361 ;	
+	background: #ff8361 ;	
 }
 
 .d-list p{
 	padding:30px 0 0 38px;
 }
 
-.d-list-nav{
+.d-list-nav {
 	
 }
 
-.d-list-nav li{
+
+.d-list-nav button{
+	
 	width: 25%;	
 	height:	120px;
 	float: left;
+	background: #333;
+	border-right: 3px #292929;
+	
+	
+	box-sizing: border-box;
+	
+	-moz-box-sizing: border-box; 
+	-webkit-box-sizing: border-box; 
+	-ms-box-sizing: border-box; 
+	
+	-o-transition: background .25s ease-in;
+  	-ms-transition: background .25s ease-in;
+  	-moz-transition: background .25s ease-in;
+  	-webkit-transition: background .25s ease-in;
+ 	 transition: background .25s ease-in;
+
+	
 }
+
+.d-list-nav button:hover{
+	background: #ff8361 ;
+}
+
+.d-list-nav button img{
+
+	margin-top:-10px;
+	
+}
+
 
 
