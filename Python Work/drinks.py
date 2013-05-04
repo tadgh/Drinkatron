@@ -110,6 +110,9 @@ class drink:
         except ZeroDivisionError:
             if totalVotes == 0:
                 positiveVoteRatio = 0
+        except TypeError:
+            if isinstance(self.positiveVoteCount, str):
+                positiveVoteRatio = 0
 
         if positiveVoteRatio >= 0 and positiveVoteRatio < 0.21:
             self.starRating = 1

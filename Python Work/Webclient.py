@@ -19,8 +19,6 @@ for ingredient in constants.INGREDIENTLIST:
 for canister in canisterList:
             canister.status()
 
-
-
 app = bottle.Bottle()
 plugin = bottle_sqlite.Plugin(dbfile=constants.DBLOCATION, autocommit=True)
 app.install(plugin)
@@ -87,7 +85,7 @@ def createDrinkGet(db):
           + ", " + str(ing8) + ", " + str(ing9) + ", " + str(ing10) + ", " + str(ing11) + ", " + str(ing12))
     args = (drinkName, ing1, ing2, ing3, ing4, ing5, ing6, ing7, ing8, ing9, ing10, ing11, ing12, description)
     try:
-        res = db.execute("INSERT INTO drinks(drink_name, ingredient1, ingredient2, \
+        db.execute("INSERT INTO drinks(drink_name, ingredient1, ingredient2, \
                                         ingredient3, ingredient4, ingredient5, \
                                         ingredient6, ingredient7, ingredient8, \
                                         ingredient9, ingredient10, ingredient11, \
@@ -158,7 +156,7 @@ def createDrinkPost(db):
 @app.route('/dispense/random')
 def randomDrink(db):
     randomDrink = drinkDictList[random.randint(0, len(drinkDictList))]
-    #DB method is included here because the subsequent dispense call needs it.
+    # DB method is included here because the subsequent dispense call needs it.
     dispense(randomDrink['name'], db)
     return "You received: " + randomDrink['name']
 
@@ -216,8 +214,8 @@ def pourDrink(drinkArray):
     for item in drinkArray:
         drinkSize += item
     for i in range(len(drinkArray)):
-        #this is disgusting and we need to find proper dispense time.
-        #can use list comprehension instead here.
+        # this is disgusting and we need to find proper dispense time.
+        # can use list comprehension instead here.
         cleanedList.append(round(drinkArray[i]/float(drinkSize)*75))
 
     index = 0
@@ -242,14 +240,18 @@ def pourDrink(drinkArray):
     resp = arduino.sendDrink(cleanedList)
     return resp
 
-@app.route('/Settings')
-def settings():
-    pass
+@app.route('/Settings', method='GET')
+@app.route('/Settings/', method='GET')
+def userSettings():
+    return bottle.template('settings', userSettings=constants.USERSETTINGS,
+                           cupInfo=constants.CUPINFO)
+
 
 @app.route('/Analytics')
 def Analytics():
     drinkData = []
     return bottle.template('Analytics', data=drinkData)
+
 
 @app.error(404)
 def mistake404(code):
