@@ -5,11 +5,10 @@
 
 <link rel="stylesheet" type="text/css" href="../static/css/bt-style.css">
 <link href='http://fonts.googleapis.com/css?family=Lato:700,900' rel='stylesheet' type='text/css'>
-
-<meta name="author" content="Ryan Novak" />
-<meta charset="UTF-8" />
-
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+
 <script type="text/javascript">
 
 $(document).ready(function() {
@@ -83,8 +82,8 @@ $(document).ready(function() {
                 });
             });
         });
-
 </script>
+
 
 </head>
 
@@ -135,27 +134,42 @@ $(document).ready(function() {
 
 
     <div class="ui-right">
-        <div class="d-list">
+        <div class="d-list-container">
 
-            <ul>
-                %for drink in drinkList:
-                <li id="{{drink['name']}}"><p>{{drink['name'].upper()}}</p></li>
-                %end
-            </ul>
+            <div class="d-list">
+                <ul>
+                    %for drink in drinkList:
+                    <li id="{{drink['name']}}"><p>{{drink['name'].upper()}}</p></li>
+                    %end
+                </ul>
+            </div>
 
 
 
         </div><!-- /end .d-list -->
 
         <ul class="d-list-nav">
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>4</li>
+            <button class="btn-up"><img src="../static/images/btn_up.png"/></button>
+            <button class="btn-down"><img src="../static/images/btn_down.png"/></button>
+            <button class="btn-shuffle"><img src="../static/images/btn_shuffle.png"/></button>
+            <button class="btn-alpha"><img src="../static/images/btn_alpha.png"/></button>
         </ul>
 	</div><!-- /end .ui-right -->
 
+<script>
+    var dlimit = $(".d-list").height() - 697.5;
+
+    console.log(dlimit);
+    var listheight = $(".d-list").height();
+    console.log(listheight);
+    $(function () {
+        $(".d-list").draggable({ axis: "y", scroll: true, containment:[0,-dlimit,0,0]});
+     });
+</script>
+
 </div><!-- /end .container -->
+
+
 </div><!-- /end #interface -->
 
 </body>
