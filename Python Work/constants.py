@@ -1,15 +1,28 @@
 import os
 import logging
 import configparser
+import sqlite3
 
-INGREDIENTLIST = [
-    "Cola", "Sprite", "Cranberry Juice", "Lime Juice", " Orange Juice",
-    "Grenadine", "Blue Curacao", "Gin", "Rum", "Triple Sec", "Vodka", "Whiskey"]
-NUMBEROFINGREDIENTS = len(INGREDIENTLIST)
-VERSION = 0.01
+
 DBLOCATION = os.path.join(os.path.dirname(
     __file__), "..", "DB", "Drinkatron.s3db")
 LOGLEVEL = logging.ERROR
+
+
+db = sqlite3.connect(DBLOCATION)
+cursor = db.cursor()
+ingList = cursor.execute('''SELECT T_CANISTER.canister_id, T_INGREDIENT.ingredient_name
+                FROM T_CANISTER LEFT JOIN T_INGREDIENT
+                ON T_CANISTER.ingredient_id = T_INGREDIENT.ingredient_id
+                ORDER BY T_CANISTER.canister_id
+                ''').fetchall()
+INGREDIENTLIST = []
+for ingredient in ingList:
+    INGREDIENTLIST.append(ingredient[1])
+print(INGREDIENTLIST)
+NUMBEROFINGREDIENTS = len(INGREDIENTLIST)
+VERSION = 0.01
+
 
 
 Config = configparser.ConfigParser()
