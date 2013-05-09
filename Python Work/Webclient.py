@@ -36,10 +36,53 @@ def index():
     del drinkDictList[:]
     conn = sqlite3.connect(constants.DBLOCATION)
     cursor = conn.cursor()
-    drinkList = cursor.execute("SELECT * FROM drinks ORDER BY drink_name ASC").fetchall()
-    for currentDrink in range(len(drinkList)):
-        tempDrink = drinks.drink(*drinkList[currentDrink])
-        drinkDictList.append(tempDrink.convertToDict())
+    tempDict = {}
+    #drinkList = cursor.execute("SELECT * FROM drinks ORDER BY drink_name ASC").fetchall()
+    drinkList = cursor.execute('''SELECT T_DRINK.drink_id, T_DRINK.drink_name, T_DRINK.description, T_DRINK.dispense_count
+                                FROM T_INGREDIENT_INSTANCE
+                                INNER JOIN T_DRINK
+                                ON T_INGREDIENT_INSTANCE.drink_id = T_DRINK.drink_id
+                                LEFT JOIN T_CANISTER
+                                ON T_INGREDIENT_INSTANCE.ingredient_id = T_CANISTER.ingredient_id
+                                GROUP BY T_DRINK.drink_name
+                                HAVING sum(case when T_CANISTER.ingredient_id is null then 1 else 0 end) = 0;
+                                ''').fetchall()
+
+    print(drinkList)
+    for drink in drinkList:
+        tempDict = {}
+        tempDict['drinkID'] = drink[0]
+        tempDict['name'] = drink[1]
+        tempDict['description'] = drink[2]
+        tempDict['dispenseCount'] = drink[3]
+        #initially set all ingredients to 0
+        for ingredient in constants.INGREDIENTLIST:
+            tempDict[ingredient] = 0
+
+        print(tempDict)
+        strID = (str(drink[0]),)
+        drinkIng = cursor.execute('''SELECT T_INGREDIENT.ingredient_name, T_INGREDIENT_INSTANCE.amount
+                                    FROM  T_Ingredient_instance
+                                    INNER JOIN T_INGREDIENT
+                                    ON T_INGREDIENT_INSTANCE.ingredient_id = T_INGREDIENT.ingredient_id
+                                    LEFT JOIN T_CANISTER
+                                    ON T_INGREDIENT_INSTANCE.ingredient_id = T_CANISTER.ingredient_id
+                                    WHERE T_INGREDIENT_INSTANCE.drink_id = ? ''', strID).fetchall()
+        totalSize = 0
+        #setting relevant ingredients to non-zero.
+        for ingPair in drinkIng:
+            tempDict[ingPair[0]] = ingPair[1]
+            totalSize += ingPair[1]
+
+        tempDict['totalSize'] = totalSize
+        drinkDictList.append(tempDict)
+
+
+
+
+    #for currentDrink in range(len(drinkList)):
+    #    tempDrink = drinks.drink(*drinkList[currentDrink])
+    #    drinkDictList.append(tempDrink.convertToDict())
     conn.close()
     return bottle.template('index', drinkList=drinkDictList)
 
