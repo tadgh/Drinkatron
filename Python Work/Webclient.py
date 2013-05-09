@@ -37,8 +37,10 @@ def index():
     conn = sqlite3.connect(constants.DBLOCATION)
     cursor = conn.cursor()
     tempDict = {}
-    #drinkList = cursor.execute("SELECT * FROM drinks ORDER BY drink_name ASC").fetchall()
-    drinkList = cursor.execute('''SELECT T_DRINK.drink_id, T_DRINK.drink_name, T_DRINK.description, T_DRINK.dispense_count
+    drinkList = cursor.execute('''SELECT T_DRINK.drink_id, T_DRINK.drink_name,
+                                T_DRINK.description, T_DRINK.dispense_count,
+                                T_DRINK.upvotes, T_DRINK.downvotes,
+                                T_DRINK.image_path
                                 FROM T_INGREDIENT_INSTANCE
                                 INNER JOIN T_DRINK
                                 ON T_INGREDIENT_INSTANCE.drink_id = T_DRINK.drink_id
@@ -55,10 +57,12 @@ def index():
         tempDict['name'] = drink[1]
         tempDict['description'] = drink[2]
         tempDict['dispenseCount'] = drink[3]
+        tempDict['upvotes'] = drink[4]
+        tempDict['downvotes'] = drink[5]
+        tempDict['imagePath'] = drink[6]
         #initially set all ingredients to 0
         for ingredient in constants.INGREDIENTLIST:
             tempDict[ingredient] = 0
-
         print(tempDict)
         strID = (str(drink[0]),)
         drinkIng = cursor.execute('''SELECT T_INGREDIENT.ingredient_name, T_INGREDIENT_INSTANCE.amount
@@ -73,16 +77,9 @@ def index():
         for ingPair in drinkIng:
             tempDict[ingPair[0]] = ingPair[1]
             totalSize += ingPair[1]
-
         tempDict['totalSize'] = totalSize
         drinkDictList.append(tempDict)
 
-
-
-
-    #for currentDrink in range(len(drinkList)):
-    #    tempDrink = drinks.drink(*drinkList[currentDrink])
-    #    drinkDictList.append(tempDrink.convertToDict())
     conn.close()
     return bottle.template('index', drinkList=drinkDictList)
 
@@ -135,7 +132,7 @@ def createDrinkGet(db):
                                         ingredient12, description) \
                                 VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", args)
     except:
-        print("Unexpected error in DB insert")
+        return("Unexpected error in DB insert")
 
     return "Drink Created"
 
@@ -145,8 +142,8 @@ def upvote(name, db):
     for drink in drinkDictList:
         if drink['name'] == name:
             drinkID = drink['drinkID']
-            sql = '''UPDATE drinks
-                SET positive_vote_count = positive_vote_count + 1
+            sql = '''UPDATE T_DRINK
+                SET upvotes = upvotes + 1
                 WHERE drink_id = ?
                 '''
             args = (drinkID,)
@@ -163,7 +160,7 @@ def downvote(name, db):
         if drink['name'] == name:
             drinkID = drink['drinkID']
             sql = '''UPDATE drinks
-                SET negative_vote_count = negative_vote_count + 1
+                SET downvotes = downvotes + 1
                 WHERE drink_id = ?
                 '''
             args = (drinkID,)
@@ -181,7 +178,7 @@ def createDrinkPost(db):
     dataDict = bottle.request.json['theDict']
     print(dataDict)
     dirtyList = convertDictToList(dataDict)
-    res = db.execute("INSERT INTO drinks(drink_name, ingredient1, ingredient2, \
+    res = db.execute("INSERT INTO T_DRINK(drink_name, ingredient1, ingredient2, \
                                     ingredient3, ingredient4, ingdredient5, \
                                     ingredient6, ingredient7, ingredient8, \
                                     ingredient9, ingredient10, ingredient11, \
@@ -212,8 +209,8 @@ def dispense(name, db):
         if drink['name'] == name:
             dirtyList = convertDictToList(drink)
             ident = (drink['drinkID'],)
-            db.execute("UPDATE drinks SET dispense_count = dispense_count + 1 WHERE drink_id = ?", ident)
-            db.execute("INSERT INTO dispenses (drink_id) VALUES (?)", ident)
+            db.execute("UPDATE T_DRINK SET dispense_count = dispense_count + 1 WHERE drink_id = ?", ident)
+            db.execute("INSERT INTO T_DISPENSE (drink_id) VALUES (?)", ident)
             response = pourDrink(dirtyList)
             return response
             log.info("Leaving -> Dispense(name) for %s. Found Drink." % name)
