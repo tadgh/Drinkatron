@@ -33,6 +33,7 @@ log.info("Entering -> WebClient")
 bottle.debug(True)
 #initializaing a master list for all drinks that is accessible all
 #around webclient.
+shownDrinkList = []
 drinkDictList = []
 
 #this is the main page.
@@ -170,6 +171,41 @@ def createDrinkGet(db):
 
     return "Drink Created"
 
+
+@bottle.route('/sortByIngredient', method="POST")
+def sortByIngredient(db):
+
+    ingredientDict = bottle.request.json['ingredientDict']
+    snaggedIngredientList = ingredientDict['list']
+    sqlString = ""
+    argString = []
+    for ingredient in snaggedIngredientList:
+        if sqlString == "":
+            sqlString += '''SELECT T_DRINK.drink_name
+                            FROM T_DRINK inner join T_INGREDIENT_INSTANCE
+                            ON T_DRINK.drink_id = T_INGREDIENT_INSTANCE.drink_id
+                            WHERE T_INGREDIENT_INSTANCE.ingredient_id = ? '''
+        else:
+            sqlString += '''INTERSECT
+                            SELECT T_DRINK.drink_name
+                            FROM T_DRINK inner join T_INGREDIENT_INSTANCE
+                            ON T_DRINK.drink_id = T_INGREDIENT_INSTANCE.drink_id
+                            WHERE T_INGREDIENT_INSTANCE.ingredient_id = ?'''
+        argString.append(ingredient)
+
+    dbResponse = db.execute(sqlString, argString).fetchall()
+
+    for drink in drinkDictList:
+        if drink['name'] not in [item[0] for item in dbResponse]:
+            try:
+                drinkDictList.remove(drink)
+            except:
+                print('shiii')
+
+
+    for item in dbResponse:
+
+
 #simple route which allows a user to increase upvote count on a drink
 @app.route('/upvote/:name')
 def upvote(name, db):
@@ -204,8 +240,8 @@ def downvote(name, db):
             drinkID = None
     return 'Could not find drink to downvote'
 
-#this is the GET version of createdrink, which just does the same thing
-#in a different way. Will probably delete this or the other once i fix the DB thing.
+
+#This is now the primary createDrink method.
 @app.route('/createDrink/', method='GET')
 @app.route('/createDrink', method='GET')
 def createDrinkPost(db):
@@ -214,17 +250,30 @@ def createDrinkPost(db):
     dataDict = bottle.request.json['theDict']
     print(dataDict)
     dirtyList = convertDictToList(dataDict)
-    res = db.execute("INSERT INTO T_DRINK(drink_name, ingredient1, ingredient2, \
-                                    ingredient3, ingredient4, ingdredient5, \
-                                    ingredient6, ingredient7, ingredient8, \
-                                    ingredient9, ingredient10, ingredient11, \
-                                    ingredient12, description) \
-                            VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-                     % (dataDict['name'], dirtyList[0], dirtyList[1],
-                        dirtyList[2], dirtyList[3], dirtyList[4],
-                        dirtyList[5], dirtyList[6], dirtyList[7],
-                        dirtyList[8], dirtyList[9], dirtyList[10],
-                        dirtyList[11], dataDict['description']))
+
+    try:
+        #inserting drink information(non-ingredient)
+        db.execute("INSERT INTO T_DRINK(drink_name, description \
+                    VALUES(?,?)")
+
+        #grabbing ID of drink we just created
+        newDrinkId = db.execute("SELECT T_DRINK.drink_id FROM T_DRINK \
+                    WHERE T_DRINK.drink_name = ?").fetchone()[0]
+
+        #using that just-grabbed ID to insert ingredient instances.
+        for ingredient in newDrinkIngredients:
+            #grabbing ingredient ID based on the name.
+            ingID = db.execute("SELECT T_INGREDIENT.ingredient_id \
+                                FROM T_INGREDIENT \
+                                WHERE T_INGREDIENT.ingredient_name = ?").fetchone()[0]
+            #using that ingredient ID and Drink ID to generate the actual
+            #instance.
+            db.execute("INSERT INTO T_INGREDIENT_INSTANCE(drink_id,ingredient_id,amount) \
+                        VALUES (?, ?, ?)", (newDrinkId,ingID,amount))
+
+    except:
+        return("Unexpected error in DB insert")
+
     print(res)
     return "Call successul!"
 
