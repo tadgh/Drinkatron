@@ -1,5 +1,6 @@
+%import constants
 <!DOCTYPE html>
-<html>
+<html id="theHtml">
 <head>
 <title>Botender | Beta v.0.01</title>
 
@@ -29,7 +30,8 @@ $(document).ready(function() {
             type: "get"
         });
     });
-    $("li").click(function()
+    //$("li").click(function()
+    $("#drinkList").on('click','li', function()
         {
             window.currentDrink = $(this).attr("id");
             console.log(window.currentDrink);
@@ -81,7 +83,28 @@ $(document).ready(function() {
                     }
                 });
             });
+        $("#upBut").click(function()
+        {
+            var tempDict = {};
+            tempDict['ingredient1'] = 'Vodka';
+            $.ajax({
+                type: "POST",
+                url:  "/sortByIngredient/",
+                data: JSON.stringify(
+                {
+                    selectedIngredients: tempDict
+                }),
+                contentType: "application/json; charset=utf-8",
+                success: function(data){
+                    var curList = $("#drinkList").contents();
+                    console.log(curList);
+                    $("#drinkList").empty()
+                    $("#drinkList").append(data)
+
+                }
+            });
         });
+    });
 </script>
 
 
@@ -136,7 +159,7 @@ $(document).ready(function() {
     <div class="ui-right">
         <div class="d-list-container">
 
-            <div class="d-list">
+            <div id = "drinkList" class="d-list">
                 <ul>
                     %for drink in drinkList:
                     <li id="{{drink['name']}}"><p>{{drink['name'].upper()}}</p></li>
@@ -149,13 +172,17 @@ $(document).ready(function() {
         </div><!-- /end .d-list -->
 
         <ul class="d-list-nav">
-            <button class="btn-up"><img src="../static/images/btn_up.png"/></button>
+            <button id="upBut" class="btn-up"><img src="../static/images/btn_up.png"/></button>
             <button class="btn-down"><img src="../static/images/btn_down.png"/></button>
             <button class="btn-shuffle"><img src="../static/images/btn_shuffle.png"/></button>
             <button class="btn-alpha"><img src="../static/images/btn_alpha.png"/></button>
         </ul>
-	</div><!-- /end .ui-right -->
 
+
+	</div><!-- /end .ui-right -->
+        %for ingredient in constants.INGREDIENTLIST:
+            <input type="checkbox" value={{ingredient}}>{{ingredient}}  .
+        %end
 <script>
     var dlimit = $(".d-list").height() - 697.5;
 

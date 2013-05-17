@@ -97,8 +97,9 @@ def index():
         tempDict['totalSize'] = totalSize
         drinkDictList.append(tempDict)
 
+    shownDrinkList = list(drinkDictList)
     conn.close()
-    return bottle.template('index', drinkList=drinkDictList)
+    return bottle.template('index', drinkList=shownDrinkList)
 
 
 #this is the static file server. TODO: add some validations based on
@@ -172,14 +173,27 @@ def createDrinkGet(db):
     return "Drink Created"
 
 
-@bottle.route('/sortByIngredient', method="POST")
+@app.route('/sortByIngredient/', method="POST")
 def sortByIngredient(db):
+    ingredientDict = bottle.request.json['selectedIngredients']
+    print(ingredientDict)
 
-    ingredientDict = bottle.request.json['ingredientDict']
-    snaggedIngredientList = ingredientDict['list']
+    ingList = []
+    sqlString = '''SELECT T_INGREDIENT.ingredient_id
+                FROM T_INGREDIENT
+                WHERE T_INGREDIENT.ingredient_name = ?'''
+
+    for ingredient in ingredientDict.values():
+        print(ingredient)
+        ingID = db.execute(sqlString, (ingredient,)).fetchone()[0]
+        ingList.append(ingID)
+        print(ingList)
+
+
+
     sqlString = ""
     argString = []
-    for ingredient in snaggedIngredientList:
+    for ingredient in ingList:
         if sqlString == "":
             sqlString += '''SELECT T_DRINK.drink_name
                             FROM T_DRINK inner join T_INGREDIENT_INSTANCE
@@ -191,10 +205,11 @@ def sortByIngredient(db):
                             FROM T_DRINK inner join T_INGREDIENT_INSTANCE
                             ON T_DRINK.drink_id = T_INGREDIENT_INSTANCE.drink_id
                             WHERE T_INGREDIENT_INSTANCE.ingredient_id = ?'''
-        argString.append(ingredient)
+        argString.append(int(ingredient))
 
     dbResponse = db.execute(sqlString, argString).fetchall()
-
+    l1 = [item[0] for item in dbResponse]
+    print(l1)
     for drink in drinkDictList:
         if drink['name'] not in [item[0] for item in dbResponse]:
             try:
@@ -202,8 +217,8 @@ def sortByIngredient(db):
             except:
                 print('shiii')
 
+    return bottle.template('drinkList', drinkList=drinkDictList)
 
-    for item in dbResponse:
 
 
 #simple route which allows a user to increase upvote count on a drink
