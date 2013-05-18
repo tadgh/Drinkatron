@@ -34,6 +34,7 @@ $(document).ready(function() {
     $("#drinkList").on('click','li', function()
         {
             window.currentDrink = $(this).attr("id");
+            $("#nameDiv").html("<p>" + $(this).text() + "</p>");
             console.log(window.currentDrink);
              $.ajax({
                 url: "/getDrink/" + $(this).attr("id"),
@@ -44,10 +45,36 @@ $(document).ready(function() {
             });
         });
 
-    $("li").click(function()
-        {
-            $("#nameDiv").html("<p>" + $(this).text() + "</p>")
+    $(".ingBox").click(function()
+    {
+        console.log("IN THE CHECKBOX CLICKER");
+        var selIngDict = {};
+        $('input:checked').each(function(index, domEle){
+                        var x = $(this).val();
+                        var y = $(this).val();
+                        console.log("shi")
+                        console.log(y)
+                        console.log(x)
+                        console.log('shit')
+                        selIngDict[x] = y;
         });
+
+        $.ajax({
+            type: "POST",
+            url:  "/sortByIngredient/",
+            data: JSON.stringify(
+            {
+                selectedIngredients: selIngDict
+            }),
+            contentType: "application/json; charset=utf-8",
+            success: function(data){
+                var curList = $("#drinkList").contents();
+                console.log(curList);
+                $("#drinkList").empty()
+                $("#drinkList").append(data)
+            }
+        });
+    });
 
 
     $("#surpriseBut").click(function()
@@ -180,9 +207,11 @@ $(document).ready(function() {
 
 
 	</div><!-- /end .ui-right -->
+    <form>
         %for ingredient in constants.INGREDIENTLIST:
-            <input type="checkbox" value={{ingredient}}>{{ingredient}}  .
+            <input type="checkbox" class="ingBox" value="{{ingredient}}">{{ingredient}}<br>
         %end
+    </form>
 <script>
     var dlimit = $(".d-list").height() - 697.5;
 

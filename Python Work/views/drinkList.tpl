@@ -1,5 +1,5 @@
 <ul>
     %for drink in drinkList:
-    	<li id="{{drink['name']}}"><p>{{drink['name'].upper()}}</p></li>
+    	<li id="{{drink}}"><p>{{drink.upper()}}</p></li>
     %end
 </ul>

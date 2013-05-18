@@ -176,6 +176,7 @@ def createDrinkGet(db):
 @app.route('/sortByIngredient/', method="POST")
 def sortByIngredient(db):
     ingredientDict = bottle.request.json['selectedIngredients']
+    print("INGREDIENT DICT PASSED WAS: ")
     print(ingredientDict)
 
     ingList = []
@@ -186,6 +187,7 @@ def sortByIngredient(db):
     for ingredient in ingredientDict.values():
         print(ingredient)
         ingID = db.execute(sqlString, (ingredient,)).fetchone()[0]
+        print("RETURNED ING ID IS : ")
         ingList.append(ingID)
         print(ingList)
 
@@ -210,14 +212,14 @@ def sortByIngredient(db):
     dbResponse = db.execute(sqlString, argString).fetchall()
     l1 = [item[0] for item in dbResponse]
     print(l1)
-    for drink in drinkDictList:
-        if drink['name'] not in [item[0] for item in dbResponse]:
-            try:
-                drinkDictList.remove(drink)
-            except:
-                print('shiii')
+    #for drink in drinkDictList:
+        # if drink['name'] not in l1:
+        #     try:
+        #         drinkDictList.remove(drink)
+        #     except:
+        #         print('shiii')
 
-    return bottle.template('drinkList', drinkList=drinkDictList)
+    return bottle.template('drinkList', drinkList=l1)
 
 
 
