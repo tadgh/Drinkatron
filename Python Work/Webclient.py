@@ -10,28 +10,28 @@ import random
 
 arduino = arduinocomm.Connection()
 
-#initializing all the canisters with the ingredients pulled from the DB
+# initializing all the canisters with the ingredients pulled from the DB
 canisterList = []
 for ingredient in constants.INGREDIENTLIST:
     canisterList.append(Canister.Canister(ingredient))
 
-#quick check to display canister fullness.
+# quick check to display canister fullness.
 for canister in canisterList:
             canister.status()
 
-#setting up the SQLITE plugin
+# setting up the SQLITE plugin
 app = bottle.Bottle()
 plugin = bottle_sqlite.Plugin(dbfile=constants.DBLOCATION, autocommit=True)
 app.install(plugin)
 
 
-#setting up the logger, and setting bottle to debug mode.
+# setting up the logger, and setting bottle to debug mode.
 log = logging.getLogger("WEB")
 log.setLevel(logging.INFO)
 log.info("Entering -> WebClient")
 bottle.debug(True)
-#initializaing a master list for all drinks that is accessible all
-#around webclient.
+# initializaing a master list for all drinks that is accessible all
+# around webclient.
 shownDrinkList = []
 drinkDictList = []
 
@@ -41,9 +41,9 @@ def initDrinkList():
     global drinkDictList
     drinkList = []
     del drinkDictList[:]
-    #one-time SQL connection to snag all drinks in the DB, based on which
-    #ingredients are currently in canisters. If an ingredient is not in a
-    #canister, it is skipped.
+    # one-time SQL connection to snag all drinks in the DB, based on which
+    # ingredients are currently in canisters. If an ingredient is not in a
+    # canister, it is skipped.
     conn = sqlite3.connect(constants.DBLOCATION)
     cursor = conn.cursor()
     tempDict = {}
@@ -60,11 +60,10 @@ def initDrinkList():
                                 HAVING sum(case when T_CANISTER.ingredient_id is null then 1 else 0 end) = 0;
                                 ''').fetchall()
 
-    print(drinkList)
-    #This whole section is to take the unorganized dict list from the DB
-    #and set it to a known list where the keys are all known and obvious.
-    #This makes it easier to work with and we can also add validity checks
-    #to the data.
+    # This whole section is to take the unorganized dict list from the DB
+    # and set it to a known list where the keys are all known and obvious.
+    # This makes it easier to work with and we can also add validity checks
+    # to the data.
     for drink in drinkList:
         tempDict = {}
         tempDict['drinkID'] = drink[0]
@@ -74,12 +73,11 @@ def initDrinkList():
         tempDict['upvotes'] = drink[4]
         tempDict['downvotes'] = drink[5]
         tempDict['imagePath'] = drink[6]
-        #initially set all ingredients to 0 for KeyError avoidance
-        for ingredient in constants.INGREDIENTLIST:
-            tempDict[ingredient] = 0
-        print(tempDict)
-        #The following SQLITE call hits the ingredient_instance table
-        #in order to grab all associated ingredients based on drink_id.
+        # initially set all ingredients to 0 for KeyError avoidance
+        # for ingredient in constants.INGREDIENTLIST:
+        #    tempDict[ingredient] = 0
+        # The following SQLITE call hits the ingredient_instance table
+        # in order to grab all associated ingredients based on drink_id.
         strID = (str(drink[0]),)
         drinkIng = cursor.execute('''SELECT T_INGREDIENT.ingredient_name, T_INGREDIENT_INSTANCE.amount
                                     FROM  T_Ingredient_instance
@@ -89,8 +87,8 @@ def initDrinkList():
                                     ON T_INGREDIENT_INSTANCE.ingredient_id = T_CANISTER.ingredient_id
                                     WHERE T_INGREDIENT_INSTANCE.drink_id = ? ''', strID).fetchall()
         totalSize = 0
-        #setting relevant ingredients to non-zero, and also getting
-        #total size of the drink for future calculations.
+        # setting relevant ingredients to non-zero, and also getting
+        # total size of the drink for future calculations.
         for ingPair in drinkIng:
             tempDict[ingPair[0]] = ingPair[1]
             totalSize += ingPair[1]
@@ -101,15 +99,14 @@ def initDrinkList():
     conn.close()
 
 
-#this is the main page.
+# this is the main page.
 @app.route('/')
 def index():
-    print(shownDrinkList)
     return bottle.template('index', drinkList=shownDrinkList)
 
 
-#this is the static file server. TODO: add some validations based on
-#extensions.
+# this is the static file server. TODO: add some validations based on
+# extensions.
 @app.route('/static/:path#.+#', name='static')
 def static(path):
     return bottle.static_file(path, root='./static/')
@@ -119,8 +116,10 @@ def static(path):
 def getDrinks():
     return bottle.template('getDrinks', drinkDictList=drinkDictList)
 
-#this sends off the correct drink, from the list, to the template
-#that strips out all relevant ingredient data and returns it to the client.
+# this sends off the correct drink, from the list, to the template
+# that strips out all relevant ingredient data and returns it to the client.
+
+
 @app.route('/getDrink/:name')
 def getDrink(name):
     print(name)
@@ -131,59 +130,52 @@ def getDrink(name):
             return bottle.template('getDrinkProto', selectedDrink=drink)
 
 
-#this route allows for the creation of new drinks, and is currently non-
-#functional while I work on it to accomodate the DB changes.
+# this route allows for the creation of new drinks, and is currently non-
+# functional while I work on it to accomodate the DB changes.
 @app.route('/createDrink', method='POST')
 @app.route('/createDrink/', method='POST')
 def createDrinkGet(db):
-    drinkName = bottle.request.forms.get('drinkName')
-    ing1 = int(bottle.request.forms.get('ing1'))
-    ing2 = int(bottle.request.forms.get('ing2'))
-    ing3 = int(bottle.request.forms.get('ing3'))
-    ing4 = int(bottle.request.forms.get('ing4'))
-    ing5 = int(bottle.request.forms.get('ing5'))
-    ing6 = int(bottle.request.forms.get('ing6'))
-    ing7 = int(bottle.request.forms.get('ing7'))
-    ing8 = int(bottle.request.forms.get('ing8'))
-    ing9 = int(bottle.request.forms.get('ing9'))
-    ing10 = int(bottle.request.forms.get('ing10'))
-    ing11 = int(bottle.request.forms.get('ing11'))
-    ing12 = int(bottle.request.forms.get('ing12'))
-    description = bottle.request.forms.get('description')
-
+    newDrink = bottle.request.json['newDrink']
+    print(newDrink)
+    argList = (newDrink['name'], newDrink['description'])
     try:
-        #inserting drink information(non-ingredient)
-        db.execute("INSERT INTO T_DRINK(drink_name, description \
-                    VALUES(?,?)")
+        # inserting drink information(non-ingredient)
+        db.execute("INSERT INTO T_DRINK(drink_name, description) \
+                    VALUES(?,?)", argList)
 
-        #grabbing ID of drink we just created
+        # grabbing ID of drink we just created
         newDrinkId = db.execute("SELECT T_DRINK.drink_id FROM T_DRINK \
-                    WHERE T_DRINK.drink_name = ?").fetchone()
+                    WHERE T_DRINK.drink_name = ?", (newDrink['name'],)).fetchone()[0]
+        print("newDrink ID is: " + str(newDrinkId))
+        # using that just-grabbed ID to insert ingredient instances.
+        for key in newDrink.keys():
+            if key in constants.INGREDIENTLIST:
+                # grabbing ingredient ID based on the name.
+                ingID = db.execute("SELECT T_INGREDIENT.ingredient_id \
+                                    FROM T_INGREDIENT \
+                                    WHERE T_INGREDIENT.ingredient_name = ?", (key,)).fetchone()[0]
+                print("ING ID FOR " + str(key) + " is " + str(ingID))
+                # using that ingredient ID and Drink ID to generate the actual
+                # instance.
+                db.execute("INSERT INTO T_INGREDIENT_INSTANCE(drink_id,ingredient_id,amount) \
+                            VALUES (?, ?, ?)", (newDrinkId, ingID, newDrink[key]))
 
-        #using that just-grabbed ID to insert ingredient instances.
-        for ingredient in newDrinkIngredients:
-
-            #grabbing ingredient ID based on the name.
-            ingID = db.execute("SELECT T_INGREDIENT.ingredient_id \
-                                FROM T_INGREDIENT \
-                                WHERE T_INGREDIENT.drink_name = ?")
-
-            #using that ingredient ID and Drink ID to generate the actual
-            #instance.
-            db.execute("INSERT INTO T_INGREDIENT_INSTANCE(drink_id,ingredient_id,amount) \
-                        VALUES (?, ?, ?)")
-
-    except:
-        return("Unexpected error in DB insert")
+    except Exception as e:
+        print("Unexpected error in DB insert: " + str(e))
 
     return "Drink Created"
 
 
 @app.route('/sortByIngredient/', method="POST")
 def sortByIngredient(db):
+    log.info("Sorting by ingredient!")
     ingredientDict = bottle.request.json['selectedIngredients']
-    print("INGREDIENT DICT PASSED WAS: ")
-    print(ingredientDict)
+    if not ingredientDict:
+        log.info("no boxes checkd, returning full list")
+        originalList = list()
+        log.info(originalList)
+        return bottle.template('drinkList',
+                               drinkList=[drink['name'] for drink in drinkDictList])
 
     ingList = []
     sqlString = '''SELECT T_INGREDIENT.ingredient_id
@@ -191,13 +183,10 @@ def sortByIngredient(db):
                 WHERE T_INGREDIENT.ingredient_name = ?'''
 
     for ingredient in ingredientDict.values():
-        print(ingredient)
         ingID = db.execute(sqlString, (ingredient,)).fetchone()[0]
         print("RETURNED ING ID IS : ")
         ingList.append(ingID)
         print(ingList)
-
-
 
     sqlString = ""
     argString = []
@@ -218,18 +207,10 @@ def sortByIngredient(db):
     dbResponse = db.execute(sqlString, argString).fetchall()
     l1 = [item[0] for item in dbResponse]
     print(l1)
-    #for drink in drinkDictList:
-        # if drink['name'] not in l1:
-        #     try:
-        #         drinkDictList.remove(drink)
-        #     except:
-        #         print('shiii')
-
     return bottle.template('drinkList', drinkList=l1)
 
 
-
-#simple route which allows a user to increase upvote count on a drink
+# simple route which allows a user to increase upvote count on a drink
 @app.route('/upvote/:name')
 def upvote(name, db):
     for drink in drinkDictList:
@@ -246,7 +227,9 @@ def upvote(name, db):
             drinkID = None
     return 'Could not find drink to upvote'
 
-#simple route which allows a user to increase downvote count on a drink
+# simple route which allows a user to increase downvote count on a drink
+
+
 @app.route('/downvote/:name')
 def downvote(name, db):
     for drink in drinkDictList:
@@ -264,35 +247,35 @@ def downvote(name, db):
     return 'Could not find drink to downvote'
 
 
-#This is now the primary createDrink method.
+# This is now the primary createDrink method.
 @app.route('/createDrink/', method='GET')
 @app.route('/createDrink', method='GET')
 def createDrinkPost(db):
     return bottle.template('createNewDrink')
-    #pulling the JSON out of the AJAX call from the client.
+    # pulling the JSON out of the AJAX call from the client.
     dataDict = bottle.request.json['theDict']
     print(dataDict)
     dirtyList = convertDictToList(dataDict)
 
     try:
-        #inserting drink information(non-ingredient)
+        # inserting drink information(non-ingredient)
         db.execute("INSERT INTO T_DRINK(drink_name, description \
                     VALUES(?,?)")
 
-        #grabbing ID of drink we just created
+        # grabbing ID of drink we just created
         newDrinkId = db.execute("SELECT T_DRINK.drink_id FROM T_DRINK \
                     WHERE T_DRINK.drink_name = ?").fetchone()[0]
 
-        #using that just-grabbed ID to insert ingredient instances.
+        # using that just-grabbed ID to insert ingredient instances.
         for ingredient in newDrinkIngredients:
-            #grabbing ingredient ID based on the name.
+            # grabbing ingredient ID based on the name.
             ingID = db.execute("SELECT T_INGREDIENT.ingredient_id \
                                 FROM T_INGREDIENT \
                                 WHERE T_INGREDIENT.ingredient_name = ?").fetchone()[0]
-            #using that ingredient ID and Drink ID to generate the actual
-            #instance.
+            # using that ingredient ID and Drink ID to generate the actual
+            # instance.
             db.execute("INSERT INTO T_INGREDIENT_INSTANCE(drink_id,ingredient_id,amount) \
-                        VALUES (?, ?, ?)", (newDrinkId,ingID,amount))
+                        VALUES (?, ?, ?)", (newDrinkId, ingID, amount))
 
     except:
         return("Unexpected error in DB insert")
@@ -301,7 +284,7 @@ def createDrinkPost(db):
     return "Call successul!"
 
 
-#route which grabs a random drink out of the list, and dispenses it.
+# route which grabs a random drink out of the list, and dispenses it.
 @app.route('/dispense/random')
 def randomDrink(db):
     randomDrink = drinkDictList[random.randint(0, len(drinkDictList))]
@@ -310,7 +293,9 @@ def randomDrink(db):
     dispense(randomDrink['name'], db)
     return "You received: " + randomDrink['name']
 
-#Old primary dispense tool. Dispenses by name lookup in the dictionary list.
+# Old primary dispense tool. Dispenses by name lookup in the dictionary list.
+
+
 @app.route('/dispense/known/:name')
 def dispense(name, db):
     log.info("Entering -> Dispense(name) for %s" % name)
@@ -319,16 +304,19 @@ def dispense(name, db):
         if drink['name'] == name:
             dirtyList = convertDictToList(drink)
             ident = (drink['drinkID'],)
-            db.execute("UPDATE T_DRINK SET dispense_count = dispense_count + 1 WHERE drink_id = ?", ident)
+            db.execute(
+                "UPDATE T_DRINK SET dispense_count = dispense_count + 1 WHERE drink_id = ?", ident)
             db.execute("INSERT INTO T_DISPENSE (drink_id) VALUES (?)", ident)
             response = pourDrink(dirtyList)
             return response
             log.info("Leaving -> Dispense(name) for %s. Found Drink." % name)
-    log.error("Leaving -> Dispense(name) for %s. Drink could not be found" % name)
+    log.error("Leaving -> Dispense(name) for %s. Drink could not be found" %
+              name)
     return "Drink could not be found!"
 
 
-#Old primary custom dispenser based on an ingredientlist delimited by underscores.
+# Old primary custom dispenser based on an ingredientlist delimited by
+# underscores.
 @app.route('/dispense/custom/:adHocList')
 def dispense_custom(adHocList):
     adHocList = adHocList.split('_')
@@ -338,9 +326,11 @@ def dispense_custom(adHocList):
     response = pourDrink(dirtyList)
     return response
 
-#This is the new dispense route, currently a prototype, which simply accepts
-#JSON dicts and has them dispensed based on the ConvertDictToList function.
-#TODO: add dispense logging based on drinkName.
+# This is the new dispense route, currently a prototype, which simply accepts
+# JSON dicts and has them dispensed based on the ConvertDictToList function.
+# TODO: add dispense logging based on drinkName.
+
+
 @app.route('/dispenseProto/', method='POST')
 def dispenseProto():
     ingDict = bottle.request.json['theDict']
@@ -349,22 +339,27 @@ def dispenseProto():
     response = pourDrink(dirtyList)
     return response
 
-#This is the hackiest shit ever, but the arduino only accepts precisely 12
-#numbers. Therefore, before a drink is dispensed, we have to stuff the list
-#in the right order.
+# This is the hackiest shit ever, but the arduino only accepts precisely 12
+# numbers. Therefore, before a drink is dispensed, we have to stuff the list
+# in the right order.
+
+
 def convertDictToList(ingredientDict):
     dirtyList = []
     for ingredient in range(len(constants.INGREDIENTLIST)):
         try:
-            dirtyList.append(int(ingredientDict[constants.INGREDIENTLIST[ingredient]]))
+            dirtyList.append(int(ingredientDict[
+                             constants.INGREDIENTLIST[ingredient]]))
         except KeyError:
             dirtyList.append(0)
     print(dirtyList)
     return dirtyList
 
-#This is the grand-daddy of all dispensing, All dispense methods eventually
-#route here. Here we calculated proportions to ensure that all drinks
-#are crunched into 75 units(our approximate solo cup size)
+# This is the grand-daddy of all dispensing, All dispense methods eventually
+# route here. Here we calculated proportions to ensure that all drinks
+# are crunched into 75 units(our approximate solo cup size)
+
+
 def pourDrink(drinkArray):
     cleanedList = []
     drinkSize = 0
@@ -373,19 +368,20 @@ def pourDrink(drinkArray):
     for i in range(len(drinkArray)):
         # this is disgusting and we need to find proper dispense time.
         # can use list comprehension instead here.
-        cleanedList.append(round(drinkArray[i]/float(drinkSize)*75))
+        cleanedList.append(round(drinkArray[i] / float(drinkSize) * 75))
 
     index = 0
-    #Preliminary check that we can dispense all necessary ingredients without
-    #hitting under a certain threshold(<10%)
+    # Preliminary check that we can dispense all necessary ingredients without
+    # hitting under a certain threshold(<10%)
     for units in cleanedList:
         if not canisterList[index].canDispense(units):
-            log.error("Not enough units, couldnt finish dispensing: " + canisterList[index].getContents())
+            log.error("Not enough units, couldnt finish dispensing: " + canisterList[
+                      index].getContents())
             return "Couldnt finish dispensing: " + canisterList[index].getContents()
         index += 1
 
     index = 0
-    #actual units are removed from the canisters here.
+    # actual units are removed from the canisters here.
     for units in cleanedList:
         try:
             canisterList[index].dispense(units)
@@ -396,11 +392,12 @@ def pourDrink(drinkArray):
 
     for canister in canisterList:
         canister.status()
-    #the magic. Sends each ingredient off to the arduino, returns the response
-    #from arduinocomm as to the failure or success value.
+    # the magic. Sends each ingredient off to the arduino, returns the response
+    # from arduinocomm as to the failure or success value.
     resp = arduino.sendDrink(cleanedList)
-    #this response is then returned to the webpage.
+    # this response is then returned to the webpage.
     return resp
+
 
 @app.route('/Settings', method='GET')
 @app.route('/Settings/', method='GET')
