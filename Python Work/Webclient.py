@@ -1,4 +1,3 @@
-import drinks
 import logging
 import constants
 import arduinocomm
@@ -36,9 +35,10 @@ bottle.debug(True)
 shownDrinkList = []
 drinkDictList = []
 
-#this is the main page.
-@app.route('/')
-def index():
+
+def initDrinkList():
+    global shownDrinkList
+    global drinkDictList
     drinkList = []
     del drinkDictList[:]
     #one-time SQL connection to snag all drinks in the DB, based on which
@@ -99,6 +99,12 @@ def index():
 
     shownDrinkList = list(drinkDictList)
     conn.close()
+
+
+#this is the main page.
+@app.route('/')
+def index():
+    print(shownDrinkList)
     return bottle.template('index', drinkList=shownDrinkList)
 
 
@@ -415,4 +421,5 @@ def mistake404(code):
 
 if __name__ == '__main__':
     localIP = socket.gethostbyname(socket.gethostname())
+    initDrinkList()
     bottle.run(app, host='0.0.0.0', port=80, server='cherrypy')
