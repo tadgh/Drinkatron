@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"new",
+				"newDrink"
+			],
+			[
+				"dete",
+				"determineStarRating"
+			],
+			[
+				"dest",
+				"destPath"
+			],
+			[
+				"ingredi",
+				"ingredient_id"
+			],
+			[
 				"star",
 				"starRating"
 			],
@@ -148,66 +164,18 @@
 	"buffers":
 	[
 		{
+			"file": "/C/Users/gary.graham/Documents/backupScript.py",
+			"settings":
+			{
+				"buffer_size": 2430,
+				"line_ending": "Windows"
+			}
+		},
+		{
 			"file": "Python Work/Webclient.py",
 			"settings":
 			{
-				"buffer_size": 15395,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Python Work/drinks.py",
-			"settings":
-			{
-				"buffer_size": 6193,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Python Work/dbinterface.py",
-			"settings":
-			{
-				"buffer_size": 6490,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Python Work/views/createNewDrink.tpl",
-			"settings":
-			{
-				"buffer_size": 1204,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Python Work/views/getDrinkProto.tpl",
-			"settings":
-			{
-				"buffer_size": 369,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "DrinkatronArduino/drinks.cpp",
-			"settings":
-			{
-				"buffer_size": 5787,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Python Work/arduinocomm.py",
-			"settings":
-			{
-				"buffer_size": 2891,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Python Work/Canister.py",
-			"settings":
-			{
-				"buffer_size": 1002,
+				"buffer_size": 15863,
 				"line_ending": "Windows"
 			}
 		},
@@ -215,23 +183,38 @@
 			"file": "Python Work/views/index.tpl",
 			"settings":
 			{
-				"buffer_size": 4615,
+				"buffer_size": 6543,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "Python Work/static/images/spilled-soda.jpg",
+			"file": "Python Work/views/drinkList.tpl",
 			"settings":
 			{
-				"buffer_size": 197233,
-				"line_ending": "Unix"
+				"buffer_size": 103,
+				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "Python Work/views/404.tpl",
+			"file": "Python Work/views/createNewDrink.tpl",
 			"settings":
 			{
-				"buffer_size": 152,
+				"buffer_size": 2901,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Python Work/views/getDrinkProto.tpl",
+			"settings":
+			{
+				"buffer_size": 374,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"settings":
+			{
+				"buffer_size": 0,
 				"line_ending": "Windows"
 			}
 		}
@@ -239,9 +222,29 @@
 	"build_system": "Packages/Python/Python.sublime-build",
 	"command_palette":
 	{
-		"height": 260.0,
+		"height": 310.0,
 		"selected_items":
 		[
+			[
+				"gist",
+				"Gist: Create Public Gist"
+			],
+			[
+				"pep",
+				"User: Python PEP8 Autoformat"
+			],
+			[
+				"lint",
+				"SublimeLinter: Disable Linting"
+			],
+			[
+				"gist upd",
+				"Gist: Update File"
+			],
+			[
+				"sspy",
+				"Set Syntax: Python"
+			],
 			[
 				"html",
 				"Snippet: html"
@@ -251,20 +254,12 @@
 				"Package Control: Remove Package"
 			],
 			[
-				"pep",
-				"User: Python PEP8 Autoformat"
-			],
-			[
 				"pack remo",
 				"Package Control: Remove Package"
 			],
 			[
 				"pack ",
 				"Package Control: List Packages"
-			],
-			[
-				"gist",
-				"Gist: Create Public Gist"
 			],
 			[
 				"pack ins",
@@ -281,10 +276,6 @@
 			[
 				"githu",
 				"Github: Open File"
-			],
-			[
-				"sspy",
-				"Set Syntax: Python"
 			],
 			[
 				"ssjava",
@@ -341,10 +332,6 @@
 			[
 				"snipp",
 				"Snippet: html"
-			],
-			[
-				"lint",
-				"SublimeLinter: Background Linting"
 			],
 			[
 				"lin",
@@ -423,7 +410,7 @@
 				"Set Syntax: HTML"
 			]
 		],
-		"width": 498.0
+		"width": 386.0
 	},
 	"console":
 	{
@@ -440,6 +427,24 @@
 	},
 	"file_history":
 	[
+		"/C/Users/gary.graham/AppData/Roaming/Sublime Text 2/Packages/User/html/ajaxJson.sublime-snippet",
+		"/C/Users/gary.graham/AppData/Roaming/Sublime Text 2/Packages/User/Gist.sublime-settings",
+		"/C/Users/gary.graham/Documents/GitHub/Drinkatron/Python Work/dbinterface.py",
+		"/C/Users/gary.graham/Documents/GitHub/Drinkatron/Python Work/drinks.py",
+		"/C/Users/gary.graham/AppData/Roaming/Sublime Text 2/Packages/User/Python/scriptPath.sublime-snippet",
+		"/C/Users/gary.graham/Desktop/temp.py",
+		"/C/Users/gary.graham/Documents/GitHub/Drinkatron/Python Work/DrinkList.tpl",
+		"/C/Users/gary.graham/Documents/GitHub/Drinkatron/Python Work/views/drinkList.tpl",
+		"/C/Users/gary.graham/Documents/GitHub/Drinkatron/Python Work/views/404.tpl",
+		"/C/Users/gary.graham/Documents/GitHub/Drinkatron/Python Work/static/images/spilled-soda.jpg",
+		"/C/Users/gary.graham/Documents/GitHub/Drinkatron/Python Work/views/index.tpl",
+		"/C/Users/gary.graham/Documents/GitHub/Drinkatron/Python Work/Canister.py",
+		"/C/Users/gary.graham/Documents/GitHub/Drinkatron/Python Work/arduinocomm.py",
+		"/C/Users/gary.graham/Documents/GitHub/Drinkatron/DrinkatronArduino/drinks.cpp",
+		"/C/Users/gary.graham/Documents/GitHub/Drinkatron/Python Work/views/getDrinkProto.tpl",
+		"/C/Users/gary.graham/Documents/GitHub/Drinkatron/Python Work/views/createNewDrink.tpl",
+		"/C/Users/gary.graham/Documents/GitHub/Drinkatron/Python Work/Webclient.py",
+		"/C/Users/gary.graham/Documents/GitHub/Drinkatron/Python Work/views/getDrinks.tpl",
 		"/D/Program Files (x86)/Sublime Text 2.0.1 x64/Data/Packages/Python/Python.sublime-build",
 		"/C/Users/Gary/Documents/GitHub/Drinkatron/Python Work/static/images/spilled-soda.jpg",
 		"/C/Users/Gary/Documents/GitHub/Drinkatron/Python Work/views/404.tpl",
@@ -477,14 +482,10 @@
 		"/D/Program Files (x86)/Sublime Text 2.0.1 x64/Data/Packages/Default/Default (Windows).sublime-keymap",
 		"/C/Users/Gary/Desktop/Sublime Text 2.0.1 x64/Data/Packages/User/Preferences.sublime-settings",
 		"/C/Users/gary.graham/Documents/GitHub/Drinkatron/DrinkatronArduino/DrinkatronArduino.ino",
-		"/C/Users/gary.graham/Documents/GitHub/Drinkatron/Python Work/arduinocomm.py",
 		"/C/Users/gary.graham/Documents/GitHub/Drinkatron/Python Work/dbtests.py",
-		"/C/Users/gary.graham/Documents/GitHub/Drinkatron/Python Work/Webclient.py",
-		"/C/Users/gary.graham/Documents/GitHub/Drinkatron/Python Work/dbinterface.py",
 		"/C/Users/gary.graham/AppData/Roaming/Sublime Text 2/Packages/User/Preferences.sublime-settings",
 		"/C/Users/gary.graham/AppData/Roaming/Sublime Text 2/Packages/User/Drinkatron.sublime-project",
 		"/C/Users/gary.graham/Documents/GitHub/Drinkatron/Python Work/DrinkatronEmail.py",
-		"/C/Users/gary.graham/Documents/GitHub/Drinkatron/Python Work/drinks.py",
 		"/C/Users/gary.graham/AppData/Roaming/Sublime Text 2/Packages/Default/Default (Windows).sublime-keymap",
 		"/C/Users/gary.graham/AppData/Roaming/Sublime Text 2/Packages/User/Default (Windows).sublime-keymap",
 		"/C/Users/gary.graham/Documents/GitHub/Drinkatron/Python Work/Views/Analytics.tpl",
@@ -497,7 +498,6 @@
 		"/C/Users/gary.graham/Documents/GitHub/Drinkatron/Python Work/Views/getDrinks.tpl",
 		"/C/Users/gary.graham/Documents/GitHub/Drinkatron/Python Work/Views/getDrink.tpl",
 		"/C/Users/gary.graham/AppData/Roaming/Sublime Text 2/Packages/DocBlockr/README.md",
-		"/C/Users/gary.graham/AppData/Roaming/Sublime Text 2/Packages/User/Gist.sublime-settings",
 		"/C/Users/gary.graham/AppData/Roaming/Sublime Text 2/Packages/SideBarEnhancements/messages/11.13.2012.1305.0.txt",
 		"/C/Users/gary.graham/AppData/Roaming/Sublime Text 2/Packages/User/Fetch.sublime-settings",
 		"/C/Users/gary.graham/Documents/GitHub/Drinkatron/Python Work/constants.py",
@@ -523,6 +523,28 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"create",
+			"/}\",",
+			"sortByIngredient",
+			"log.",
+			"sortby",
+			"print",
+			"tempDict",
+			"print",
+			"p",
+			"wip",
+			"starRating",
+			"drinkList",
+			"each",
+			".each",
+			"sortby",
+			"index",
+			"template",
+			"drinkList",
+			"select",
+			"cursor",
+			"sortby",
+			"getdrinks",
 			"currentDrink",
 			"objarra",
 			"text",
@@ -604,23 +626,23 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "Python Work/Webclient.py",
+					"file": "/C/Users/gary.graham/Documents/backupScript.py",
 					"settings":
 					{
-						"buffer_size": 15395,
+						"buffer_size": 2430,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								489,
-								489
+								102,
+								102
 							]
 						],
 						"settings":
@@ -665,6 +687,10 @@
 								"vendor-prefix": true,
 								"zero-units": "warning"
 							},
+							"gist_description": "Backup Script move half of files",
+							"gist_filename": "backupScript.py",
+							"gist_html_url": "https://gist.github.com/5604397",
+							"gist_url": "https://api.github.com/gists/5604397",
 							"gjslint_ignore":
 							[
 								110
@@ -726,18 +752,18 @@
 				},
 				{
 					"buffer": 1,
-					"file": "Python Work/drinks.py",
+					"file": "Python Work/Webclient.py",
 					"settings":
 					{
-						"buffer_size": 6193,
+						"buffer_size": 15863,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								5594,
+								5594
 							]
 						],
 						"settings":
@@ -809,7 +835,7 @@
 							[
 							],
 							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
+							"sublimelinter": false,
 							"sublimelinter_delay": 2,
 							"sublimelinter_disable":
 							[
@@ -836,25 +862,25 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1141.0,
+						"translation.y": 2541.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "Python Work/dbinterface.py",
+					"file": "Python Work/views/index.tpl",
 					"settings":
 					{
-						"buffer_size": 6490,
+						"buffer_size": 6543,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1124,
-								1126
+								2436,
+								2436
 							]
 						],
 						"settings":
@@ -948,845 +974,30 @@
 								"Ruby on Rails": "ruby"
 							},
 							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Python/Python.tmLanguage",
+							"syntax": "Packages/HTML/HTML.tmLanguage",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 171.0,
+						"translation.y": 988.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 3,
-					"file": "Python Work/views/createNewDrink.tpl",
+					"file": "Python Work/views/drinkList.tpl",
 					"settings":
 					{
-						"buffer_size": 1204,
+						"buffer_size": 103,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								415,
-								415
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": true,
-							"sublimelinter_gutter_marks_theme": "simple",
-							"sublimelinter_mark_style": "none",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "Python Work/views/getDrinkProto.tpl",
-					"settings":
-					{
-						"buffer_size": 369,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": true,
-							"sublimelinter_gutter_marks_theme": "simple",
-							"sublimelinter_mark_style": "none",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "DrinkatronArduino/drinks.cpp",
-					"settings":
-					{
-						"buffer_size": 5787,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": true,
-							"sublimelinter_gutter_marks_theme": "simple",
-							"sublimelinter_mark_style": "none",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "Python Work/arduinocomm.py",
-					"settings":
-					{
-						"buffer_size": 2891,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": true,
-							"sublimelinter_gutter_marks_theme": "simple",
-							"sublimelinter_mark_style": "none",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "Python Work/Canister.py",
-					"settings":
-					{
-						"buffer_size": 1002,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": true,
-							"sublimelinter_gutter_marks_theme": "simple",
-							"sublimelinter_mark_style": "none",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "Python Work/views/index.tpl",
-					"settings":
-					{
-						"buffer_size": 4615,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": true,
-							"sublimelinter_gutter_marks_theme": "simple",
-							"sublimelinter_mark_style": "none",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "Python Work/static/images/spilled-soda.jpg",
-					"settings":
-					{
-						"buffer_size": 197233,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"annotations":
-							[
-								"TODO",
-								"README",
-								"FIXME"
-							],
-							"csslint_options":
-							{
-								"adjoining-classes": "warning",
-								"box-model": true,
-								"box-sizing": "warning",
-								"compatible-vendor-prefixes": "warning",
-								"display-property-grouping": true,
-								"duplicate-background-images": "warning",
-								"duplicate-properties": true,
-								"empty-rules": true,
-								"errors": true,
-								"fallback-colors": "warning",
-								"floats": "warning",
-								"font-faces": "warning",
-								"font-sizes": "warning",
-								"gradients": "warning",
-								"ids": "warning",
-								"import": "warning",
-								"important": "warning",
-								"known-properties": true,
-								"outline-none": "warning",
-								"overqualified-elements": "warning",
-								"qualified-headings": "warning",
-								"regex-selectors": "warning",
-								"rules-count": "warning",
-								"shorthand": "warning",
-								"star-property-hack": "warning",
-								"text-indent": "warning",
-								"underscore-property-hack": "warning",
-								"unique-headings": "warning",
-								"universal-selector": "warning",
-								"vendor-prefix": true,
-								"zero-units": "warning"
-							},
-							"gjslint_ignore":
-							[
-								110
-							],
-							"gjslint_options":
-							[
-							],
-							"javascript_linter": "jshint",
-							"jshint_options":
-							{
-								"browser": true,
-								"evil": true,
-								"regexdash": true,
-								"sub": true,
-								"trailing": true,
-								"wsh": true
-							},
-							"pep8": true,
-							"pep8_ignore":
-							[
-								"E501"
-							],
-							"perl_linter": "perlcritic",
-							"pyflakes_ignore":
-							[
-							],
-							"pyflakes_ignore_import_*": true,
-							"sublimelinter": true,
-							"sublimelinter_delay": 2,
-							"sublimelinter_disable":
-							[
-							],
-							"sublimelinter_executable_map":
-							{
-							},
-							"sublimelinter_fill_outlines": false,
-							"sublimelinter_gutter_marks": true,
-							"sublimelinter_gutter_marks_theme": "simple",
-							"sublimelinter_mark_style": "none",
-							"sublimelinter_notes": false,
-							"sublimelinter_objj_check_ascii": false,
-							"sublimelinter_popup_errors_on_save": false,
-							"sublimelinter_syntax_map":
-							{
-								"C++": "c",
-								"Python Django": "python",
-								"Ruby on Rails": "ruby"
-							},
-							"sublimelinter_wrap_find": true,
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "Python Work/views/404.tpl",
-					"settings":
-					{
-						"buffer_size": 152,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								152,
-								152
+								96,
+								96
 							]
 						],
 						"settings":
@@ -1887,6 +1098,262 @@
 						"zoom_level": 1.0
 					},
 					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "Python Work/views/createNewDrink.tpl",
+					"settings":
+					{
+						"buffer_size": 2901,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								890,
+								890
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": true,
+							"sublimelinter_gutter_marks_theme": "simple",
+							"sublimelinter_mark_style": "none",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 114.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "Python Work/views/getDrinkProto.tpl",
+					"settings":
+					{
+						"buffer_size": 374,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								371,
+								371
+							]
+						],
+						"settings":
+						{
+							"annotations":
+							[
+								"TODO",
+								"README",
+								"FIXME"
+							],
+							"csslint_options":
+							{
+								"adjoining-classes": "warning",
+								"box-model": true,
+								"box-sizing": "warning",
+								"compatible-vendor-prefixes": "warning",
+								"display-property-grouping": true,
+								"duplicate-background-images": "warning",
+								"duplicate-properties": true,
+								"empty-rules": true,
+								"errors": true,
+								"fallback-colors": "warning",
+								"floats": "warning",
+								"font-faces": "warning",
+								"font-sizes": "warning",
+								"gradients": "warning",
+								"ids": "warning",
+								"import": "warning",
+								"important": "warning",
+								"known-properties": true,
+								"outline-none": "warning",
+								"overqualified-elements": "warning",
+								"qualified-headings": "warning",
+								"regex-selectors": "warning",
+								"rules-count": "warning",
+								"shorthand": "warning",
+								"star-property-hack": "warning",
+								"text-indent": "warning",
+								"underscore-property-hack": "warning",
+								"unique-headings": "warning",
+								"universal-selector": "warning",
+								"vendor-prefix": true,
+								"zero-units": "warning"
+							},
+							"gjslint_ignore":
+							[
+								110
+							],
+							"gjslint_options":
+							[
+							],
+							"javascript_linter": "jshint",
+							"jshint_options":
+							{
+								"browser": true,
+								"evil": true,
+								"regexdash": true,
+								"sub": true,
+								"trailing": true,
+								"wsh": true
+							},
+							"pep8": true,
+							"pep8_ignore":
+							[
+								"E501"
+							],
+							"perl_linter": "perlcritic",
+							"pyflakes_ignore":
+							[
+							],
+							"pyflakes_ignore_import_*": true,
+							"sublimelinter": true,
+							"sublimelinter_delay": 2,
+							"sublimelinter_disable":
+							[
+							],
+							"sublimelinter_executable_map":
+							{
+							},
+							"sublimelinter_fill_outlines": false,
+							"sublimelinter_gutter_marks": true,
+							"sublimelinter_gutter_marks_theme": "simple",
+							"sublimelinter_mark_style": "none",
+							"sublimelinter_notes": false,
+							"sublimelinter_objj_check_ascii": false,
+							"sublimelinter_popup_errors_on_save": false,
+							"sublimelinter_syntax_map":
+							{
+								"C++": "c",
+								"Python Django": "python",
+								"Ruby on Rails": "ruby"
+							},
+							"sublimelinter_wrap_find": true,
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
 				}
 			]
 		}
@@ -1961,6 +1428,46 @@
 		"selected_items":
 		[
 			[
+				"web",
+				"Python Work/Webclient.py"
+			],
+			[
+				"create",
+				"Python Work/views/createNewDrink.tpl"
+			],
+			[
+				"index.",
+				"Python Work/views/index.tpl"
+			],
+			[
+				"index.tpl",
+				"Python Work/views/index.tpl"
+			],
+			[
+				"webc",
+				"Python Work/Webclient.py"
+			],
+			[
+				"index",
+				"Python Work/views/index.tpl"
+			],
+			[
+				"webcl",
+				"Python Work/Webclient.py"
+			],
+			[
+				"drinkli",
+				"Python Work/DrinkList.tpl"
+			],
+			[
+				"dbinterfa",
+				"Python Work/dbinterface.py"
+			],
+			[
+				"views",
+				"Python Work/views/index.tpl"
+			],
+			[
 				"drin",
 				"Python Work/drinks.py"
 			],
@@ -1973,15 +1480,7 @@
 				"Python Work/dbinterface.py"
 			],
 			[
-				"webc",
-				"Python Work/Webclient.py"
-			],
-			[
 				"we",
-				"Python Work/Webclient.py"
-			],
-			[
-				"web",
 				"Python Work/Webclient.py"
 			],
 			[
@@ -2042,10 +1541,6 @@
 			],
 			[
 				"webcli",
-				"Python Work/Webclient.py"
-			],
-			[
-				"webcl",
 				"Python Work/Webclient.py"
 			],
 			[

@@ -28,9 +28,6 @@ class DB:
         sql = "SELECT * FROM drinks ORDER BY drink_name ASC"
         results = self.executeSql(sql, None)
         self.log.info("Leaving -> listDrinksByName()")
-        # for item in results:
-        #    print(item)
-        # temp commented out for readability
         return results
 
     def listDrinksByIngredient(self, ingredient):
