@@ -32,12 +32,13 @@ log.info("Entering -> WebClient")
 bottle.debug(True)
 # initializaing a master list for all drinks that is accessible all
 # around webclient.
-shownDrinkList = []
+drinkNames = []
 drinkDictList = []
+drinkIndexes = {}
 
 
 def initDrinkList():
-    global shownDrinkList
+    global drinkNames
     global drinkDictList
     drinkList = []
     del drinkDictList[:]
@@ -73,11 +74,6 @@ def initDrinkList():
         tempDict['upvotes'] = drink[4]
         tempDict['downvotes'] = drink[5]
         tempDict['imagePath'] = drink[6]
-        # initially set all ingredients to 0 for KeyError avoidance
-        # for ingredient in constants.INGREDIENTLIST:
-        #    tempDict[ingredient] = 0
-        # The following SQLITE call hits the ingredient_instance table
-        # in order to grab all associated ingredients based on drink_id.
         strID = (str(drink[0]),)
         drinkIng = cursor.execute('''SELECT T_INGREDIENT.ingredient_name, T_INGREDIENT_INSTANCE.amount
                                     FROM  T_Ingredient_instance
@@ -94,15 +90,19 @@ def initDrinkList():
             totalSize += ingPair[1]
         tempDict['totalSize'] = totalSize
         drinkDictList.append(tempDict)
+        #stores indexes for later lookup.
+        drinkIndexes[tempDict['name']] = drinkDictList.index(tempDict)
 
-    shownDrinkList = list(drinkDictList)
+
+    print(drinkIndexes)
+    drinkNames = list(drink['name'] for drink in drinkDictList)
     conn.close()
 
 
 # this is the main page.
 @app.route('/')
 def index():
-    return bottle.template('index', drinkList=shownDrinkList)
+    return bottle.template('index', drinkList=drinkNames)
 
 
 # this is the static file server. TODO: add some validations based on
