@@ -7,6 +7,7 @@ import sqlite3
 import socket
 import Canister
 import random
+import time
 
 arduino = arduinocomm.Connection()
 
@@ -178,15 +179,15 @@ def sortByIngredient(db):
                                drinkList=[drink['name'] for drink in drinkDictList])
 
     ingList = []
+
     sqlString = '''SELECT T_INGREDIENT.ingredient_id
                 FROM T_INGREDIENT
                 WHERE T_INGREDIENT.ingredient_name = ?'''
 
     for ingredient in ingredientDict.values():
         ingID = db.execute(sqlString, (ingredient,)).fetchone()[0]
-        print("RETURNED ING ID IS : ")
+        log.info("RETURNED ING ID IS : " + str(ingID))
         ingList.append(ingID)
-        print(ingList)
 
     sqlString = ""
     argString = []
@@ -205,46 +206,81 @@ def sortByIngredient(db):
         argString.append(int(ingredient))
 
     dbResponse = db.execute(sqlString, argString).fetchall()
+
     l1 = [item[0] for item in dbResponse]
     print(l1)
     return bottle.template('drinkList', drinkList=l1)
 
 
+@app.route('/remove/:name')
+def removeDrink(name,db):
+
+    drinkIndex = drinkIndexes[name]
+    try:
+        drinkID = drinkDictList[drinkIndex]['drinkID']
+    except KeyError:
+        log.error("Couldnt find drink named: " + name)
+
+    print("Found drink id is: " + str(drinkID))
+    args = (drinkID,)
+
+    sql = '''DELETE FROM T_DRINK
+            WHERE T_DRINK.drink_id = ?
+          '''
+    try:
+        db.execute(sql, args)
+    except:
+        log.error("Could not delete " +  name)
+
+    sql ='''DELETE FROM T_INGREDIENT_INSTANCE
+            WHERE T_INGREDIENT_INSTANCE.drink_id = ?
+        '''
+
+    try:
+        db.execute(sql, args)
+    except:
+        log.error("Could not Delete" + name)
+
+
+
 # simple route which allows a user to increase upvote count on a drink
 @app.route('/upvote/:name')
 def upvote(name, db):
-    for drink in drinkDictList:
-        if drink['name'] == name:
-            drinkID = drink['drinkID']
-            sql = '''UPDATE T_DRINK
-                SET upvotes = upvotes + 1
-                WHERE drink_id = ?
-                '''
-            args = (drinkID,)
-            db.execute(sql, args).fetchone()
-            return 'success'
-        else:
-            drinkID = None
-    return 'Could not find drink to upvote'
+    start_time = time.time()
+    try:
+        drinkID = drinkDictList[drinkIndexes[name]]['drinkID']
+    except KeyError:
+        return 'Could not find drink to upvote'
+    sql = '''UPDATE T_DRINK
+        SET upvotes = upvotes + 1
+        WHERE drink_id = ?
+        '''
+    args = (drinkID,)
+    try:
+        db.execute(sql, args).fetchone()
+    except:
+        log.error("Could not upvote!!")
+    log.info("execution time for optimized upvote is " + str(time.time() - start_time) + " seconds.")
+    return 'Your vote has been saved. Thank you!'
 
 # simple route which allows a user to increase downvote count on a drink
-
-
 @app.route('/downvote/:name')
 def downvote(name, db):
-    for drink in drinkDictList:
-        if drink['name'] == name:
-            drinkID = drink['drinkID']
-            sql = '''UPDATE drinks
-                SET downvotes = downvotes + 1
-                WHERE drink_id = ?
-                '''
-            args = (drinkID,)
-            db.execute(sql, args).fetchone()
-            return 'success'
-        else:
-            drinkID = None
-    return 'Could not find drink to downvote'
+    start_time = time.time()
+    try:
+        drinkID = drinkDictList[drinkIndexes[name]]['drinkID']
+    except KeyError:
+        return 'Could not find drink to downvote'
+    sql = '''UPDATE drinks
+        SET downvotes = downvotes + 1
+        WHERE drink_id = ?
+        '''
+    args = (drinkID,)
+    db.execute(sql, args).fetchone()
+    log.info("execution time for optimized upvote is " + str(time.time() - start_time) + " seconds.")
+    return 'success'
+
+
 
 
 # This is now the primary createDrink method.
@@ -296,23 +332,6 @@ def randomDrink(db):
 # Old primary dispense tool. Dispenses by name lookup in the dictionary list.
 
 
-@app.route('/dispense/known/:name')
-def dispense(name, db):
-    log.info("Entering -> Dispense(name) for %s" % name)
-    dirtyList = []
-    for drink in drinkDictList:
-        if drink['name'] == name:
-            dirtyList = convertDictToList(drink)
-            ident = (drink['drinkID'],)
-            db.execute(
-                "UPDATE T_DRINK SET dispense_count = dispense_count + 1 WHERE drink_id = ?", ident)
-            db.execute("INSERT INTO T_DISPENSE (drink_id) VALUES (?)", ident)
-            response = pourDrink(dirtyList)
-            return response
-            log.info("Leaving -> Dispense(name) for %s. Found Drink." % name)
-    log.error("Leaving -> Dispense(name) for %s. Drink could not be found" %
-              name)
-    return "Drink could not be found!"
 
 
 # Old primary custom dispenser based on an ingredientlist delimited by
@@ -404,6 +423,25 @@ def pourDrink(drinkArray):
 def userSettings():
     return bottle.template('settings', userSettings=constants.USERSETTINGS,
                            cupInfo=constants.CUPINFO)
+
+#THIS IS DEPRECATED AND UNUSED. Keeping it around because who knows.
+@app.route('/dispense/known/:name')
+def dispense(name, db):
+    log.info("Entering -> Dispense(name) for %s" % name)
+    dirtyList = []
+    for drink in drinkDictList:
+        if drink['name'] == name:
+            dirtyList = convertDictToList(drink)
+            ident = (drink['drinkID'],)
+            db.execute(
+                "UPDATE T_DRINK SET dispense_count = dispense_count + 1 WHERE drink_id = ?", ident)
+            db.execute("INSERT INTO T_DISPENSE (drink_id) VALUES (?)", ident)
+            response = pourDrink(dirtyList)
+            return response
+            log.info("Leaving -> Dispense(name) for %s. Found Drink." % name)
+    log.error("Leaving -> Dispense(name) for %s. Drink could not be found" %
+              name)
+    return "Drink could not be found!"
 
 
 @app.route('/Analytics')
