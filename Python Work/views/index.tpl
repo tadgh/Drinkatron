@@ -1,4 +1,4 @@
-%import constants
+%import settings
 <!DOCTYPE html>
 <html id="theHtml">
 <head>
@@ -208,7 +208,7 @@ $(document).ready(function() {
 
 	</div><!-- /end .ui-right -->
     <form>
-        %for ingredient in constants.INGREDIENTLIST:
+        %for ingredient in settings.INGREDIENTLIST:
             <input type="checkbox" class="ingBox" value="{{ingredient}}">{{ingredient}}<br>
         %end
     </form>
@@ -221,6 +221,7 @@ $(document).ready(function() {
     $(function () {
         $(".d-list").draggable({ axis: "y", scroll: true, containment:[0,-dlimit,0,0]});
      });
+
 </script>
 
 </div><!-- /end .container -->

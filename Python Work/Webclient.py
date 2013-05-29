@@ -1,10 +1,9 @@
 import logging
-import constants
+import settings
 import arduinocomm
 import bottle
 import bottle_sqlite
 import sqlite3
-import socket
 import Canister
 import random
 import time
@@ -13,7 +12,7 @@ arduino = arduinocomm.Connection()
 
 # initializing all the canisters with the ingredients pulled from the DB
 canisterList = []
-for ingredient in constants.INGREDIENTLIST:
+for ingredient in settings.INGREDIENTLIST:
     canisterList.append(Canister.Canister(ingredient))
 
 # quick check to display canister fullness.
@@ -22,7 +21,7 @@ for canister in canisterList:
 
 # setting up the SQLITE plugin
 app = bottle.Bottle()
-plugin = bottle_sqlite.Plugin(dbfile=constants.DBLOCATION, autocommit=True)
+plugin = bottle_sqlite.Plugin(dbfile=settings.DBLOCATION, autocommit=True)
 app.install(plugin)
 
 
@@ -46,7 +45,7 @@ def initDrinkList():
     # one-time SQL connection to snag all drinks in the DB, based on which
     # ingredients are currently in canisters. If an ingredient is not in a
     # canister, it is skipped.
-    conn = sqlite3.connect(constants.DBLOCATION)
+    conn = sqlite3.connect(settings.DBLOCATION)
     cursor = conn.cursor()
     tempDict = {}
     drinkList = cursor.execute('''SELECT T_DRINK.drink_id, T_DRINK.drink_name,
@@ -91,11 +90,11 @@ def initDrinkList():
             totalSize += ingPair[1]
         tempDict['totalSize'] = totalSize
         drinkDictList.append(tempDict)
-        #stores indexes for later lookup.
+        #stores index of drink in the list for later lookup.
         drinkIndexes[tempDict['name']] = drinkDictList.index(tempDict)
 
 
-    print(drinkIndexes)
+    log.info(drinkIndexes)
     drinkNames = list(drink['name'] for drink in drinkDictList)
     conn.close()
 
@@ -123,12 +122,11 @@ def getDrinks():
 
 @app.route('/getDrink/:name')
 def getDrink(name):
-    print(name)
-    for drink in drinkDictList:
-        if drink['name'] == name:
-            print(drink)
-            # return bottle.template('getDrink', selectedDrink=drink)
-            return bottle.template('getDrinkProto', selectedDrink=drink)
+    log.info(name)
+    drink = drinkDictList[drinkIndexes[name]]
+    log.info(drink)
+    # return bottle.template('getDrink', selectedDrink=drink)
+    return bottle.template('getDrinkProto', selectedDrink=drink)
 
 
 # this route allows for the creation of new drinks, and is currently non-
@@ -137,7 +135,7 @@ def getDrink(name):
 @app.route('/createDrink/', method='POST')
 def createDrinkGet(db):
     newDrink = bottle.request.json['newDrink']
-    print(newDrink)
+    log.info(newDrink)
     argList = (newDrink['name'], newDrink['description'])
     try:
         # inserting drink information(non-ingredient)
@@ -147,22 +145,22 @@ def createDrinkGet(db):
         # grabbing ID of drink we just created
         newDrinkId = db.execute("SELECT T_DRINK.drink_id FROM T_DRINK \
                     WHERE T_DRINK.drink_name = ?", (newDrink['name'],)).fetchone()[0]
-        print("newDrink ID is: " + str(newDrinkId))
+        log.info("newDrink ID is: " + str(newDrinkId))
         # using that just-grabbed ID to insert ingredient instances.
         for key in newDrink.keys():
-            if key in constants.INGREDIENTLIST:
+            if key in settings.INGREDIENTLIST:
                 # grabbing ingredient ID based on the name.
                 ingID = db.execute("SELECT T_INGREDIENT.ingredient_id \
                                     FROM T_INGREDIENT \
                                     WHERE T_INGREDIENT.ingredient_name = ?", (key,)).fetchone()[0]
-                print("ING ID FOR " + str(key) + " is " + str(ingID))
+                log.info("ING ID FOR " + str(key) + " is " + str(ingID))
                 # using that ingredient ID and Drink ID to generate the actual
                 # instance.
                 db.execute("INSERT INTO T_INGREDIENT_INSTANCE(drink_id,ingredient_id,amount) \
                             VALUES (?, ?, ?)", (newDrinkId, ingID, newDrink[key]))
 
     except Exception as e:
-        print("Unexpected error in DB insert: " + str(e))
+        log.info("Unexpected error in DB insert: " + str(e))
 
     return "Drink Created"
 
@@ -173,10 +171,8 @@ def sortByIngredient(db):
     ingredientDict = bottle.request.json['selectedIngredients']
     if not ingredientDict:
         log.info("no boxes checkd, returning full list")
-        originalList = list()
-        log.info(originalList)
         return bottle.template('drinkList',
-                               drinkList=[drink['name'] for drink in drinkDictList])
+                               drinkList=drinkNames)
 
     ingList = []
 
@@ -207,9 +203,8 @@ def sortByIngredient(db):
 
     dbResponse = db.execute(sqlString, argString).fetchall()
 
-    l1 = [item[0] for item in dbResponse]
-    print(l1)
-    return bottle.template('drinkList', drinkList=l1)
+    newDrinkNames = [item[0] for item in dbResponse]
+    return bottle.template('drinkList', drinkList=newDrinkNames)
 
 
 @app.route('/remove/:name')
@@ -221,7 +216,7 @@ def removeDrink(name,db):
     except KeyError:
         log.error("Couldnt find drink named: " + name)
 
-    print("Found drink id is: " + str(drinkID))
+    log.info("Found drink id is: " + str(drinkID))
     args = (drinkID,)
 
     sql = '''DELETE FROM T_DRINK
@@ -241,6 +236,12 @@ def removeDrink(name,db):
     except:
         log.error("Could not Delete" + name)
 
+@app.route('/save/', method='POST')
+@app.route('/save' , method='POST')
+def saveSettings():
+    cupType = bottle.request.forms.get('selectedCup')
+    settings.change('Current Cup', cupType)
+    log.info(cupType)
 
 
 # simple route which allows a user to increase upvote count on a drink
@@ -290,7 +291,7 @@ def createDrinkPost(db):
     return bottle.template('createNewDrink')
     # pulling the JSON out of the AJAX call from the client.
     dataDict = bottle.request.json['theDict']
-    print(dataDict)
+    log.info(dataDict)
     dirtyList = convertDictToList(dataDict)
 
     try:
@@ -316,7 +317,7 @@ def createDrinkPost(db):
     except:
         return("Unexpected error in DB insert")
 
-    print(res)
+    log.info(res)
     return "Call successul!"
 
 
@@ -365,30 +366,34 @@ def dispenseProto():
 
 def convertDictToList(ingredientDict):
     dirtyList = []
-    for ingredient in range(len(constants.INGREDIENTLIST)):
+
+    # Here is what is happening:
+    # 1. There are 12 canisters. The For Loop goes through each of them in order.(i)
+    # 2. It attempts to append the value of the particular ingredient frmo the ingredientDict
+    # 3. If it results in a key error, that is, that key does not exist, that is, that ingredient is not used in the drink,
+    # Then it simply appends 0. We need to do this, because the arduino always accepts exactly 12 numbers, and no keys, only their
+    # Physical canister positions are important.
+    # 4. Seeing as when we initialize all the ingredients in the canisters at the start, this will work even if we move where
+    # Each ingredient is.
+    for ingredient in range(len(settings.INGREDIENTLIST)):
         try:
-            dirtyList.append(int(ingredientDict[
-                             constants.INGREDIENTLIST[ingredient]]))
+            dirtyList.append(int(ingredientDict[settings.INGREDIENTLIST[ingredient]]))
         except KeyError:
             dirtyList.append(0)
-    print(dirtyList)
+    log.info(dirtyList)
     return dirtyList
 
-# This is the grand-daddy of all dispensing, All dispense methods eventually
+# All dispense methods eventually
 # route here. Here we calculated proportions to ensure that all drinks
 # are crunched into 75 units(our approximate solo cup size)
 
 
 def pourDrink(drinkArray):
-    cleanedList = []
     drinkSize = 0
     for item in drinkArray:
         drinkSize += item
-    for i in range(len(drinkArray)):
-        # this is disgusting and we need to find proper dispense time.
-        # can use list comprehension instead here.
-        cleanedList.append(round(drinkArray[i] / float(drinkSize) * 75))
-
+    #todo change this 75 value to the value from settings.py that is generated.
+    cleanedList = [round(drinkArray[i] / float(drinkSize) * 75) for i in range(len(drinkArray))]
     index = 0
     # Preliminary check that we can dispense all necessary ingredients without
     # hitting under a certain threshold(<10%)
@@ -421,8 +426,8 @@ def pourDrink(drinkArray):
 @app.route('/Settings', method='GET')
 @app.route('/Settings/', method='GET')
 def userSettings():
-    return bottle.template('settings', userSettings=constants.USERSETTINGS,
-                           cupInfo=constants.CUPINFO)
+    return bottle.template('settings', userSettings=settings.USERSETTINGS,
+                           cupInfo=settings.CUPINFO)
 
 #THIS IS DEPRECATED AND UNUSED. Keeping it around because who knows.
 @app.route('/dispense/known/:name')
@@ -455,6 +460,5 @@ def mistake404(code):
     return bottle.template('404')
 
 if __name__ == '__main__':
-    localIP = socket.gethostbyname(socket.gethostname())
     initDrinkList()
     bottle.run(app, host='0.0.0.0', port=80, server='cherrypy')

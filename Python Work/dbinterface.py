@@ -1,6 +1,6 @@
 import sqlite3
 import logging
-import constants
+import settings
 import datetime
 
 logging.basicConfig(file="runLog.txt", level=logging.INFO)

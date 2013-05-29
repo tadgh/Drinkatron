@@ -3,12 +3,9 @@ import logging
 import configparser
 import sqlite3
 
-
 DBLOCATION = os.path.join(os.path.dirname(
     __file__), "..", "DB", "Drinkatron.s3db")
 LOGLEVEL = logging.ERROR
-
-
 db = sqlite3.connect(DBLOCATION)
 cursor = db.cursor()
 ingList = cursor.execute('''SELECT T_CANISTER.canister_id, T_INGREDIENT.ingredient_name
@@ -23,15 +20,10 @@ print(INGREDIENTLIST)
 NUMBEROFINGREDIENTS = len(INGREDIENTLIST)
 VERSION = 0.01
 
-
-
 Config = configparser.ConfigParser()
 Config.read("Startup.ini")
-
-
 USERSETTINGS = {}
 CUPINFO = {}
-
 
 #initializing cup info
 cupOptions = Config.options('CUPINFO')
@@ -50,5 +42,10 @@ for option in userOptions:
         print("shi")
 
 
-print(USERSETTINGS)
-print(CUPINFO)
+
+def change(key, value):
+       Config.set('USERSETTINGS', key, value)
+       with open('startup.ini', 'w') as configfile:
+            Config.write(configfile)
+
+

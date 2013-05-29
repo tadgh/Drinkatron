@@ -6,7 +6,7 @@ from time import sleep
 import platform
 import glob
 import Canister
-import constants
+import settings
 
 
 class Connection:
