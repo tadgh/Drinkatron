@@ -7,8 +7,8 @@ It's essentially an automated bartender. Not much more needs to be said. Still i
 * Randomly select a drink
 * temporarily modify a drink's preset ingredient values for a single dispense.
 * Stores all recorded dispenses.
+* Creation of new drinks.
 
 ##Coming soon:##
 * Canister fluid level tracking
 * Graphs and charts for dispensing information
-* Creation of new drinks.
