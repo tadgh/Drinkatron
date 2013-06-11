@@ -66,29 +66,18 @@ def initDrinkList():
     # This makes it easier to work with and we can also add validity checks
     # to the data.
     for drink in drinkList:
-        tempDict = {}
-        tempDict['drinkID'] = drink[0]
-        tempDict['name'] = drink[1]
-        tempDict['description'] = drink[2]
-        tempDict['dispenseCount'] = drink[3]
-        tempDict['upvotes'] = drink[4]
-        tempDict['downvotes'] = drink[5]
-        tempDict['imagePath'] = drink[6]
+        keys = ['drinkID', 'name', 'description', 'dispenseCount', 'upvotes', 'downvotes', 'imagePath']
+        tempDict = {keys[i]: drink[i] for i in range(7)} #swapped to a comprehension RANGE 7 IS CURRENTLY IMPORTANT
         strID = (str(drink[0]),)
-        drinkIng = cursor.execute('''SELECT T_INGREDIENT.ingredient_name, T_INGREDIENT_INSTANCE.amount
+        drink_ing = cursor.execute('''SELECT T_INGREDIENT.ingredient_name, T_INGREDIENT_INSTANCE.amount
                                     FROM  T_Ingredient_instance
                                     INNER JOIN T_INGREDIENT
                                     ON T_INGREDIENT_INSTANCE.ingredient_id = T_INGREDIENT.ingredient_id
                                     LEFT JOIN T_CANISTER
                                     ON T_INGREDIENT_INSTANCE.ingredient_id = T_CANISTER.ingredient_id
                                     WHERE T_INGREDIENT_INSTANCE.drink_id = ? ''', strID).fetchall()
-        totalSize = 0
-        # setting relevant ingredients to non-zero, and also getting
-        # total size of the drink for future calculations.
-        for ingPair in drinkIng:
-            tempDict[ingPair[0]] = ingPair[1]
-            totalSize += ingPair[1]
-        tempDict['totalSize'] = totalSize
+        tempDict.update({ing_pair[0]: ing_pair[1] for ing_pair in drink_ing})
+        tempDict['totalSize'] = sum([ing_pair[1] for ing_pair in drink_ing])
         drinkDictList.append(tempDict)
         #stores index of drink in the list for later lookup.
         drinkIndexes[tempDict['name']] = drinkDictList.index(tempDict)
