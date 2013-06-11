@@ -32,16 +32,16 @@ log.info("Entering -> WebClient")
 bottle.debug(True)
 # initializaing a master list for all drinks that is accessible all
 # around webclient.
-drinkNames = []
-drinkDictList = []
-drinkIndexes = {}
+drink_names = []
+drink_dict_list = []
+drink_indexes = {}
 
 
 def initDrinkList():
-    global drinkNames
-    global drinkDictList
+    global drink_names
+    global drink_dict_list
     drinkList = []
-    del drinkDictList[:]
+    del drink_dict_list[:]
     # one-time SQL connection to snag all drinks in the DB, based on which
     # ingredients are currently in canisters. If an ingredient is not in a
     # canister, it is skipped.
@@ -78,20 +78,20 @@ def initDrinkList():
                                     WHERE T_INGREDIENT_INSTANCE.drink_id = ? ''', strID).fetchall()
         tempDict.update({ing_pair[0]: ing_pair[1] for ing_pair in drink_ing})
         tempDict['totalSize'] = sum([ing_pair[1] for ing_pair in drink_ing])
-        drinkDictList.append(tempDict)
+        drink_dict_list.append(tempDict)
         #stores index of drink in the list for later lookup.
-        drinkIndexes[tempDict['name']] = drinkDictList.index(tempDict)
+        drink_indexes[tempDict['name']] = drink_dict_list.index(tempDict)
 
 
-    log.info(drinkIndexes)
-    drinkNames = list(drink['name'] for drink in drinkDictList)
+    log.info(drink_indexes)
+    drink_names = list(drink['name'] for drink in drink_dict_list)
     conn.close()
 
 
 # this is the main page.
 @app.route('/')
 def index():
-    return bottle.template('index', drinkList=drinkNames)
+    return bottle.template('index', drinkList=drink_names)
 
 
 # this is the static file server. TODO: add some validations based on
@@ -103,7 +103,7 @@ def static(path):
 
 @app.route('/getDrinks')
 def getDrinks():
-    return bottle.template('getDrinks', drinkDictList=drinkDictList)
+    return bottle.template('getDrinks', drinkDictList=drink_dict_list)
 
 # this sends off the correct drink, from the list, to the template
 # that strips out all relevant ingredient data and returns it to the client.
@@ -112,7 +112,7 @@ def getDrinks():
 @app.route('/getDrink/:name')
 def getDrink(name):
     log.info(name)
-    drink = drinkDictList[drinkIndexes[name]]
+    drink = drink_dict_list[drink_indexes[name]]
     log.info(drink)
     # return bottle.template('getDrink', selectedDrink=drink)
     return bottle.template('getDrinkProto', selectedDrink=drink)
@@ -161,7 +161,7 @@ def sortByIngredient(db):
     if not ingredientDict:
         log.info("no boxes checkd, returning full list")
         return bottle.template('drinkList',
-                               drinkList=drinkNames)
+                               drinkList=drink_names)
 
     ingList = []
 
@@ -192,16 +192,16 @@ def sortByIngredient(db):
 
     dbResponse = db.execute(sqlString, argString).fetchall()
 
-    newDrinkNames = [item[0] for item in dbResponse]
-    return bottle.template('drinkList', drinkList=newDrinkNames)
+    newdrink_names = [item[0] for item in dbResponse]
+    return bottle.template('drinkList', drinkList=newdrink_names)
 
 
 @app.route('/remove/:name')
 def removeDrink(name,db):
 
-    drinkIndex = drinkIndexes[name]
+    drinkIndex = drink_indexes[name]
     try:
-        drinkID = drinkDictList[drinkIndex]['drinkID']
+        drinkID = drink_dict_list[drinkIndex]['drinkID']
     except KeyError:
         log.error("Couldnt find drink named: " + name)
 
@@ -238,7 +238,7 @@ def saveSettings():
 def upvote(name, db):
     start_time = time.time()
     try:
-        drinkID = drinkDictList[drinkIndexes[name]]['drinkID']
+        drinkID = drink_dict_list[drink_indexes[name]]['drinkID']
     except KeyError:
         return 'Could not find drink to upvote'
     sql = '''UPDATE T_DRINK
@@ -258,7 +258,7 @@ def upvote(name, db):
 def downvote(name, db):
     start_time = time.time()
     try:
-        drinkID = drinkDictList[drinkIndexes[name]]['drinkID']
+        drinkID = drink_dict_list[drink_indexes[name]]['drinkID']
     except KeyError:
         return 'Could not find drink to downvote'
     sql = '''UPDATE drinks
@@ -313,7 +313,7 @@ def createDrinkPost(db):
 # route which grabs a random drink out of the list, and dispenses it.
 @app.route('/dispense/random')
 def randomDrink(db):
-    randomDrink = drinkDictList[random.randint(0, len(drinkDictList))]
+    randomDrink = drink_dict_list[random.randint(0, len(drink_dict_list))]
     # DB method is included here because the subsequent dispense call needs it.
     # This is a re-route to /dispense/known/:name
     dispense(randomDrink['name'], db)
@@ -423,7 +423,7 @@ def userSettings():
 def dispense(name, db):
     log.info("Entering -> Dispense(name) for %s" % name)
     dirtyList = []
-    for drink in drinkDictList:
+    for drink in drink_dict_list:
         if drink['name'] == name:
             dirtyList = convertDictToList(drink)
             ident = (drink['drinkID'],)
