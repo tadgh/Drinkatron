@@ -1,3 +1,5 @@
+UPDATE: This is here solely for historical purposes. It was the first real solo project I tried while learning python!
+
 The Drinkatron is a little side project that myself and a school friend are working on. 
 It's essentially an automated bartender. Not much more needs to be said. 
 
